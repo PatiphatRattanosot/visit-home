@@ -5,7 +5,13 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <div></div>
+      <div className="h-[68.75vh]">
+        <img
+          src="hero.webp"
+          alt="hero"
+          className="h-full w-full object-cover"
+        />
+      </div>
       <Footer />
     </>
   );

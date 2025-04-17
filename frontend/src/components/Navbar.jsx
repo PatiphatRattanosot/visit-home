@@ -1,5 +1,5 @@
 const Navbar = () => {
-  const user = "กิตติพัฒน์";
+  const user = "";
   return (
     <div className="w-screen flex justify-between py-2 px-3 shadow-lg">
       {/* Left zone */}
