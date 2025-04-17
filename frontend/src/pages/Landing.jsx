@@ -5,7 +5,7 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <div className="h-[68.75vh]">
+      <div className="h-[68.5vh]">
         <img
           src="hero.webp"
           alt="hero"
