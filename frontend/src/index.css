@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+.btn {
+  @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#f9fafb] text-[#1f2937] hover:bg-[#f3f4f6] hover:cursor-pointer;
+}
+
+.btn-green {
+  @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#34d399] text-[#fff] hover:bg-[#6ee7b7] hover:cursor-pointer;
+}
+
+.btn-red {
+  @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#f87171] text-[#fff] hover:bg-[#fca5a5] hover:cursor-pointer;
+}
+
+.btn-blue {
+  @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#433bca] text-[#fff] hover:bg-[#4f46e5] hover:cursor-pointer;
+}
+
+.btn-yellow {
+  @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#fcbf49] text-[#fff] hover:bg-[#fde047] hover:cursor-pointer;
+}
