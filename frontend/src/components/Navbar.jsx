@@ -1,5 +1,10 @@
+import { useContext } from "react";
+import { AuthContext } from "../contexts/auth.context";
+
 const Navbar = () => {
-  const user = "";
+  const { user, googleSignIn, logout } = useContext(AuthContext);
+  console.log(user);
+
   return (
     <div className="w-screen flex justify-between py-2 px-3 shadow-lg">
       {/* Left zone */}
@@ -16,12 +21,18 @@ const Navbar = () => {
       {/* Right zone */}
       {user ? (
         <div className="flex gap-2 items-center">
-          <span className="text-sm text-[#03045e]">สวัสดี {user}</span>
-          <button className="btn-red">ออกจากระบบ</button>
+          <span className="text-sm text-[#03045e]">
+            สวัสดี {user?.displayName}
+          </span>
+          <button onClick={logout} className="btn-red">
+            ออกจากระบบ
+          </button>
         </div>
       ) : (
         <>
-          <button className="btn-blue">ลงชื่อเข้าใช้งาน</button>
+          <button onClick={googleSignIn} className="btn-blue">
+            ลงชื่อเข้าใช้งาน
+          </button>
         </>
       )}
     </div>
