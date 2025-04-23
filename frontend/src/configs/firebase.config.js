@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APIKEY,
@@ -10,6 +16,14 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APPID,
 };
 
+// initialize firebase app and auth
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+// create authentication methods
+const googleSignIn = () => signInWithPopup(auth, googleProvider);
+const logout = () => signOut(auth);
+const listenToAuthChanges = (callback) => onAuthStateChanged(auth, callback);
+
+export { auth, googleSignIn, logout, listenToAuthChanges };

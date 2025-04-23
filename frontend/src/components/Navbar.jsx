@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import { AuthContext } from "../contexts/auth.context";
-
-const Navbar = () => {
-  const { user, googleSignIn, logout } = useContext(AuthContext);
+const Navbar = ({ user, googleSignIn, logout }) => {
   console.log(user);
 
   return (
