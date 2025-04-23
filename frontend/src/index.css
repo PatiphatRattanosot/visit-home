@@ -19,3 +19,11 @@
 .btn-yellow {
   @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#fcbf49] text-[#fff] hover:bg-[#fde047] hover:cursor-pointer;
 }
+
+.btn-ghost {
+  @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-none text-[#1f2937] hover:bg-[#f3f4f6] hover:cursor-pointer;
+}
+
+.btn-hamburger {
+  @apply py-3 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-none text-[#1f2937] hover:bg-[#f3f4f6] hover:cursor-pointer;
+}
