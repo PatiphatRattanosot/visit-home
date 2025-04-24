@@ -2,8 +2,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
 import { getNavLinks } from "../utils/navbarRole";
 
-const Navbar = ({ user, googleSignIn, logout }) => {
+const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
   const [toggleHamburger, setToggleHamburger] = useState(false);
+  console.log(userInfo);
 
   return (
     <div className="w-screen flex justify-between py-2 px-3 shadow-lg">
@@ -25,7 +26,7 @@ const Navbar = ({ user, googleSignIn, logout }) => {
               } mt-2 w-64 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg`}
             >
               <div className="py-1 px-2 list-none">
-                {getNavLinks("Student")}
+                {getNavLinks(userInfo?.role[0])}
               </div>
             </div>
           </div>
@@ -41,14 +42,14 @@ const Navbar = ({ user, googleSignIn, logout }) => {
       {/* Center zone */}
       {user && (
         <div className="md:flex items-center list-none gap-6 hidden">
-          {getNavLinks("Student")}
+          {getNavLinks(userInfo?.role[0])}
         </div>
       )}
       {/* Right zone */}
       {user ? (
         <div className="flex gap-2 items-center">
           <span className="text-sm text-[#03045e]">
-            สวัสดี {user?.displayName}
+            สวัสดี {userInfo?.first_name} {userInfo?.last_name}
           </span>
           <button onClick={logout} className="btn-red">
             ออกจากระบบ

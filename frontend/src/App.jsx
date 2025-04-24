@@ -7,7 +7,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 function App() {
-  const { user, isLoading, signInSystem, signOutSystem } = useAuthStore();
+  const { user, userInfo, isLoading, signInSystem, signOutSystem } =
+    useAuthStore();
   if (isLoading)
     return (
       <div className="h-screen w-full flex justify-center items-center">
@@ -16,7 +17,12 @@ function App() {
     );
   return (
     <>
-      <Navbar user={user} googleSignIn={signInSystem} logout={signOutSystem} />
+      <Navbar
+        user={user}
+        userInfo={userInfo}
+        googleSignIn={signInSystem}
+        logout={signOutSystem}
+      />
       <Routes>
         <Route path="/" element={<Landing />} />
       </Routes>
