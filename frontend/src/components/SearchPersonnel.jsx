@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const SearchPersonnel = ({ personnel, setFilteredPersonnel, setCurrentPage }) => {
-
+const SearchPersonnel = ({
+  personnel,
+  setFilteredPersonnel,
+  setCurrentPage,
+}) => {
   const [keyword, setKeyword] = useState("");
 
   const handleChange = (e) => {
