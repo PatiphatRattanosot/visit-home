@@ -7,15 +7,12 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AdminPage from "./pages/Admin/Home";
 import Personnel from "./pages/Admin/Personnel";
+import Status from "./pages/students/Status";
+import SelfInfo from "./pages/students/SelfInfo";
 
 function App() {
-  const {
-    user,
-    userInfo,
-    isLoading,
-    signInSystem,
-    signOutSystem,
-  } = useAuthStore();
+  const { user, userInfo, isLoading, signInSystem, signOutSystem } =
+    useAuthStore();
   if (isLoading)
     return (
       <div className="h-screen w-full flex justify-center items-center">
@@ -45,12 +42,18 @@ function App() {
             )
           }
         />
+        {/* Admin */}
         <Route
           path="admin"
-          // element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
+          element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
         >
           <Route index element={<AdminPage />} />
           <Route path="personnel" element={<Personnel />} />
+        </Route>
+        {/* Student */}
+        <Route path="student">
+          <Route path="status" element={<Status />} />
+          <Route path="self-info" element={<SelfInfo />} />
         </Route>
       </Routes>
       <Footer />
