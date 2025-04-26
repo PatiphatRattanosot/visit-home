@@ -28,3 +28,24 @@
 .btn-hamburger {
   @apply py-3 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-none text-[#1f2937] hover:bg-[#f3f4f6] hover:cursor-pointer md:hidden;
 }
+
+.text-input {
+  @apply w-full min-w-0 flex-auto 
+    rounded-md bg-white/20 
+    px-3 py-2 
+    text-base text-gray-800 
+    placeholder-gray-400 
+    outline-none ring-1 ring-inset ring-black/10 
+    focus:ring-2 focus:ring-inset focus:ring-gray-500 
+    sm:text-sm;
+}
+
+.text-input:disabled {
+  @apply w-full min-w-0 flex-auto 
+    rounded-md bg-gray-50
+    px-3 py-2 
+    text-base text-gray-400 
+    placeholder-gray-400 
+    outline-none
+    sm:text-sm;
+}
