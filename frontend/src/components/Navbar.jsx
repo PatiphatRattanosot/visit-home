@@ -33,7 +33,12 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
       {user ? (
         <div className="flex gap-2 items-center">
           <span className="text-sm text-[#03045e]">
-            สวัสดี {userInfo?.first_name} {userInfo?.last_name}
+            สวัสดี{" "}
+            {userInfo?.prefix +
+              " " +
+              userInfo?.first_name +
+              " " +
+              userInfo?.last_name}
           </span>
           <button onClick={logout} className="btn-red">
             ออกจากระบบ

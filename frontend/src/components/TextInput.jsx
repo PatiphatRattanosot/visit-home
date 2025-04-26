@@ -1,30 +1,32 @@
 const TextInput = ({
-    label,
-    name,
-    value,
-    onChange,
-    placeholder,
-    type = "text",
-    disabled,
-    className = "",
-  }) => {
-    return (
-      <div className={`flex flex-col ${className}`}>
-        <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
-          {label} : <span className="text-red-600">*</span>
-        </label>
-        <input
-          type={type}
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className="input w-64 md:w-72"
-        />
-      </div>
-    );
-  };
-  
-  export default TextInput;
+  label,
+  name,
+  value,
+  onChange,
+  placeholder,
+  type,
+  disabled,
+}) => {
+  return (
+    <div className="mb-4 w-full">
+      <label
+        htmlFor={name}
+        className="block text-sm font-medium text-gray-700 mb-1"
+      >
+        {label}
+      </label>
+      <input
+        type={type}
+        name={name}
+        id={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="text-input"
+        disabled={disabled}
+      />
+    </div>
+  );
+};
+
+export default TextInput;
