@@ -5,6 +5,8 @@ import { useAuthStore } from "./stores/auth.store";
 import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Status from "./pages/students/Status";
+import SelfInfo from "./pages/students/SelfInfo";
 
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
@@ -25,6 +27,10 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="student">
+          <Route path="status" element={<Status />} />
+          <Route path="self-info" element={<SelfInfo />} />
+        </Route>
       </Routes>
       <Footer />
       <Toaster />

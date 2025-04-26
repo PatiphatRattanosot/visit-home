@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <div className="flex h-[25vh] py-10">
       <div className="w-1/5 flex justify-center">
-        <img src="logo.png" alt="logo" className="size-20" />
+        <img src="/logo.png" alt="logo" className="size-20" />
       </div>
       <nav className="w-2/5 text-lg">
         <p>โรงเรียนบางแพปฐมพิทยา</p>
