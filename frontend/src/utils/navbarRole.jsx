@@ -44,7 +44,7 @@ export const getNavLinks = (role) => {
       return (
         <>
           <li>
-            <a href="/student" className={baseLink}>
+            <a href="/student/status" className={baseLink}>
               หน้าหลัก
             </a>
           </li>

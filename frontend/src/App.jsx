@@ -6,7 +6,7 @@ import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Status from "./pages/students/Status";
-import SelfInfo from "./pages/students/SelfInfo";
+import SelfInfo from "./pages/students/self-info/SelfInfo";
 
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
