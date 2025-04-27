@@ -1,4 +1,5 @@
 import { create } from "zustand";
+// middleware สำหรับทำให้ข้อมูลไม่หายเวลารีโหลดหน้าเว็บ
 import { persist } from "zustand/middleware";
 import Swal from "sweetalert2";
 import {
