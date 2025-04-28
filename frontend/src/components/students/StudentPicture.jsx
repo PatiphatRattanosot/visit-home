@@ -14,7 +14,11 @@ const StudentPicture = ({ studentPic, handleChange }) => {
       onClick={handleOpenInput}
     >
       {studentPic ? (
-        <img src={URL.createObjectURL(studentPic)} alt="Student" />
+        <img
+          src={URL.createObjectURL(studentPic)}
+          alt="Student"
+          className="h-full w-full bg-cover object-cover rounded-md p-1"
+        />
       ) : (
         <FiPlus className="size-[6rem] text-[#1F2937]" />
       )}
