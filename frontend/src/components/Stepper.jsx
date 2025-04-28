@@ -41,7 +41,7 @@ const Stepper = () => {
                 {index + 1}
               </div>
               <span
-                className={`mt-2 text-sm font-medium 
+                className={`mt-2 text-sm font-medium group-hover:underline
                   ${isActive ? "text-orange-700" : "text-orange-600"}`}
               >
                 {step.label}
