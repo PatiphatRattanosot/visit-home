@@ -117,22 +117,9 @@
 }
 
 .text-input {
-  @apply w-full min-w-0 flex-auto 
-    rounded-md bg-white/20 
-    px-3 py-2 
-    text-base text-gray-800 
-    placeholder-gray-400 
-    outline-none ring-1 ring-inset ring-black/10 
-    focus:ring-2 focus:ring-inset focus:ring-gray-500 
-    sm:text-sm;
+  @apply p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
 .text-input:disabled {
-  @apply w-full min-w-0 flex-auto 
-    rounded-md bg-gray-50
-    px-3 py-2 
-    text-base text-gray-400 
-    placeholder-gray-400 
-    outline-none
-    sm:text-sm;
+  @apply bg-gray-100 text-gray-500 cursor-not-allowed opacity-70;
 }
