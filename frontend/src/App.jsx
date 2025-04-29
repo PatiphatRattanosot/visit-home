@@ -5,10 +5,17 @@ import { useAuthStore } from "./stores/auth.store";
 import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AdminPage from "./pages/Admin/Home"
+import Personnel from "./pages/Admin/Personnel";
 
 function App() {
-  const { user, userInfo, isLoading, signInSystem, signOutSystem } =
-    useAuthStore();
+  const {
+    user,
+    userInfo,
+    isLoading,
+    signInSystem,
+    signOutSystem,
+  } = useAuthStore();
   if (isLoading)
     return (
       <div className="h-screen w-full flex justify-center items-center">
@@ -25,6 +32,10 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="admin">
+          <Route index element={<AdminPage />} />
+          <Route path="personnel" element={<Personnel />} />
+        </Route>
       </Routes>
       <Footer />
       <Toaster />
