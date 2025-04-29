@@ -9,6 +9,7 @@ import AdminPage from "./pages/Admin/Home";
 import Personnel from "./pages/Admin/Personnel";
 import Status from "./pages/students/Status";
 import SelfInfo from "./pages/students/self-info/SelfInfo";
+import AddSelfInfoForm from "./pages/students/self-info/AddSelfInfoForm";
 
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
@@ -53,7 +54,10 @@ function App() {
         {/* Student */}
         <Route path="student">
           <Route path="status" element={<Status />} />
-          <Route path="self-info" element={<SelfInfo />} />
+          <Route path="self-info">
+            <Route path="" element={<SelfInfo />} />
+            <Route path="add" element={<AddSelfInfoForm />} />
+          </Route>
         </Route>
       </Routes>
       <Footer />

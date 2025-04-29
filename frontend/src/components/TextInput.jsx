@@ -4,26 +4,25 @@ const TextInput = ({
   value,
   onChange,
   placeholder,
-  type,
+  type = "text",
   disabled,
+  i,
+  className = "",
 }) => {
   return (
-    <div className="mb-4 w-full">
-      <label
-        htmlFor={name}
-        className="block text-sm font-medium text-gray-700 mb-1"
-      >
+    <div key={i} className={`flex flex-col ${className}`}>
+      <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
         {label}
       </label>
       <input
         type={type}
-        name={name}
         id={name}
+        name={name}
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
-        placeholder={placeholder}
-        className="text-input"
         disabled={disabled}
+        className="text-input w-full"
       />
     </div>
   );
