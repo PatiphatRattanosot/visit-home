@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const UserSchema = new Schema(
   {
     //email sd: <user_id>bp@bangpaeschool.ac.th
-    //email tc: bp<user_id>@bangpaeschool.ac.th
+    //email tc: `bp${user_id}@bangpaeschool.ac.th`
     email: {
       type: String,
       required: true,
@@ -29,11 +29,10 @@ const UserSchema = new Schema(
         default: "Student",
       },
     ],
-    tpye: {
+    type: {
       type: String,
       required: true,
-      enum: ["tc", "sd"],
-      default: "sd",
+      enum: ["Teacher", "Student"],
     },
   },
   {
