@@ -1,8 +1,8 @@
-import TeacherModel, { ITeacher } from "../../models/users/teacher.model";
+import TeacherModel, { ITeacher } from "../../models/users/teacher_model"; // นำเข้าโมเดล TeacherModel และ ITeacher จากไฟล์ teacher_model.ts
 import { Elysia, t } from "elysia";
 
 // ฟังก์ชัน createTeacher ใช้สำหรับสร้าง endpoint "/teacher" เพิ่มข้อมูลครูที่ปรึกษา
-const createTeacher = async (app: Elysia) =>
+const create_teacher = async (app: Elysia) =>
   app.post(
     "/",
     async ({ body, set }) => {
@@ -22,8 +22,8 @@ const createTeacher = async (app: Elysia) =>
         }
 
         // ตรวจสอบว่าผู้ใช้มีอยู่ในฐานข้อมูลหรือไม่
-        const existingTeacher = await TeacherModel.findOne({ user_id });
-        if (existingTeacher) {
+        const existing_teacher = await TeacherModel.findOne({ user_id });
+        if (existing_teacher) {
           set.status = 400; // ตั้งค่า HTTP status เป็น 400 (Bad Request)
           return { message: "มีข้อมูลครูที่ปรึกษานี้ในระบบแล้ว" };
         }
@@ -65,7 +65,7 @@ const createTeacher = async (app: Elysia) =>
   );
 
 // ฟังก์ชัน getTeacher ใช้สำหรับสร้าง endpoint "/" เพื่อดึงข้อมูลครูที่ปรึกษา
-const getTeacher = async (app: Elysia) =>
+const get_teacher = async (app: Elysia) =>
   app.get(
     "/",
     async ({ set }) => {
@@ -88,7 +88,7 @@ const getTeacher = async (app: Elysia) =>
     }
   );
 
-const updateTeacher = async (app: Elysia) =>
+const update_teacher = async (app: Elysia) =>
   app.put(
     "/",
     async ({ body, set }) => {
@@ -132,8 +132,8 @@ const updateTeacher = async (app: Elysia) =>
   );
 
 const TeacherController = {
-  createTeacher,
-  getTeacher,
-  updateTeacher,
+  create_teacher,
+  get_teacher,
+  update_teacher,
 };
 export default TeacherController;
