@@ -3,11 +3,12 @@ import { fetchUsers, deleteUser } from "../../services/user.service";
 import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
+import SearchPersonnel from "../../components/SearchPersonnel";
 const Personnel = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("ทั้งหมด"); // << เพิ่มตรงนี้
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
-
+  const [filteredPersonnel, setFilteredPersonnel] = useState([]);
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
@@ -40,7 +41,7 @@ const Personnel = () => {
         });
 
         // ลบจาก state
-        setPersonnel((prev) => prev.filter((person) => person.user_id !== id));
+        setPersonnel((prev) => prev.filter((person) => person.id !== id));
       } catch (error) {
         Swal.fire({
           title: "เกิดข้อผิดพลาด",
@@ -58,6 +59,7 @@ const Personnel = () => {
       try {
         const response = await fetchUsers();
         setPersonnel(response);
+        setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
       } catch (error) {
         console.error("Error fetching personnel data:", error);
       }
@@ -104,13 +106,9 @@ const Personnel = () => {
           )}
         </div>
         {/* ช่องค้นหา */}
-        <div className="relative w-60">
-          <input
-            className="w-full px-4 py-2 rounded-full focus:outline-none"
-            type="text"
-            placeholder="ค้นหาบุคลากร"
-          />
-        </div>
+        <SearchPersonnel personnel={personnel} setFilteredPersonnel={setFilteredPersonnel} />
+
+
         {/* ปุ่มเพิ่มบุคลากร */}
         <div className="relative w-40">
           <button className="btn btn-green">เพิ่มบุคลากร</button>
@@ -140,7 +138,8 @@ const Personnel = () => {
         </thead>
         <tbody>
           {/* เพิ่มข้อมูลบุคลากรตรงนี้ */}
-          {personnel.map((person, index) => (
+          {filteredPersonnel.map((person, index) => (
+
             <tr key={index} className="hover:bg-gray-100 cursor-pointer">
               <th>
                 <label>
