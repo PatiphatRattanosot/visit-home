@@ -8,15 +8,9 @@ import { cors } from "@elysiajs/cors";
 import "./database/db_setup";
 
 // Import Controllers
-<<<<<<< HEAD
 import AuthController from "./controllers/auth_controller";
 import TeacherController from "./controllers/users/teacher_controller";
 import UserController from "./controllers/users/user_controller";
-=======
-import AuthController from "./controllers/auth.controller";
-import TeacherController from "./controllers/users/teacher.controller";
-import UserController from "./controllers/users/user.controller";
->>>>>>> 007f41c (Add user and teacher management endpoints with updated API documentation)
 
 const app = new Elysia()
   //middleware
@@ -67,7 +61,6 @@ const app = new Elysia()
     app
       // User
       .use(UserController.get_users)
-<<<<<<< HEAD
       .use(UserController.delete_user)
       .use(UserController.add_admin_role)
       .use(UserController.remove_admin_role)
@@ -77,16 +70,6 @@ const app = new Elysia()
           .use(TeacherController.create_teacher)
           .use(TeacherController.get_teacher)
           .use(TeacherController.update_teacher)
-=======
-      .use(UserController.addAdminRole)
-      .use(UserController.removeAdminRole)
-      // Teacher
-      .group("/teacher", (app) =>
-        app
-          .use(TeacherController.createTeacher)
-          .use(TeacherController.getTeacher)
-          .use(TeacherController.updateTeacher)
->>>>>>> 007f41c (Add user and teacher management endpoints with updated API documentation)
       )
   )
   // Home Page
