@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
 import { jwt } from "@elysiajs/jwt";
-import UserModel from "../models/users/user.model";
+import UserModel from "../models/users/user_model";
 
 // ฟังก์ชัน sign ใช้สำหรับสร้าง endpoint "/sign" เพื่อเข้าสู่ระบบ
 const sign = async (app: Elysia) =>

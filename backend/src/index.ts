@@ -5,10 +5,12 @@ import { jwt } from "@elysiajs/jwt";
 import { cors } from "@elysiajs/cors";
 
 // Connect Database
-import "./database/db.setup";
+import "./database/db_setup";
 
 // Import Controllers
-import AuthController from "./controllers/auth.controller";
+import AuthController from "./controllers/auth_controller";
+import TeacherController from "./controllers/users/teacher_controller";
+import UserController from "./controllers/users/user_controller";
 
 const app = new Elysia()
   //middleware
@@ -31,12 +33,7 @@ const app = new Elysia()
         info: {
           title: "เอกสาร API ระบบเยี่ยมบ้าน",
           description: "description",
-          version: "0.1.0",
-          contact: {
-            name: "Elysia",
-            url: "https://elysiajs.com",
-            email: "",
-          },
+          version: "0.2.0",
         },
         servers: [
           {
@@ -60,6 +57,21 @@ const app = new Elysia()
   )
   // Controllers
   .group("/auth", (app) => app.use(AuthController.sign))
+  .group("/users", (app) =>
+    app
+      // User
+      .use(UserController.get_users)
+      .use(UserController.delete_user)
+      .use(UserController.add_admin_role)
+      .use(UserController.remove_admin_role)
+      // Teacher
+      .group("/teacher", (app) =>
+        app
+          .use(TeacherController.create_teacher)
+          .use(TeacherController.get_teacher)
+          .use(TeacherController.update_teacher)
+      )
+  )
   // Home Page
   .get(
     "/",
@@ -67,10 +79,21 @@ const app = new Elysia()
       `<html>
         <head>
           <title>Visit Home API</title>
+          <script src="https://cdn.tailwindcss.com"></script>
         </head>
-        <body>
-          <h1>Hello Elysia</h1>
-          <p>Go to <a href='/swagger'>swagger</a> for API documentation.</p>
+        <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+          <div class="text-center p-8 bg-white shadow-lg rounded-lg">
+            <h1 class="text-4xl font-bold text-blue-600 mb-6">
+              ยินดีต้อนรับสู่ API ระบบเยี่ยมบ้านนักโรงเรียนบางแพปฐมพิทยา
+            </h1>
+            <p class="text-lg text-gray-700">
+              ไปที่ 
+              <a href='/swagger' class="text-blue-500 underline hover:text-blue-700">
+                เอกสาร API
+              </a> 
+              เพื่อดูรายละเอียด API ทั้งหมดที่มีในระบบ
+            </p>
+          </div>
         </body>
       </html>`,
     { detail: { tags: ["App"] } }

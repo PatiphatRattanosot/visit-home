@@ -1,7 +1,18 @@
-import { Schema, model } from "mongoose";
-import UserModel from "./user.model";
+import { Schema, Document } from "mongoose";
+import UserModel from "./user_model";
 
-const TeacherSchema = new Schema(
+interface ITeacher extends Document {
+  email: string;
+  first_name: string;
+  last_name: string;
+  prefix: string;
+  role: string[];
+  user_id: string;
+  phone: string;
+  status: string;
+}
+
+const TeacherSchema = new Schema<ITeacher>(
   {
     user_id: {
       type: String,
@@ -23,3 +34,4 @@ const TeacherSchema = new Schema(
 );
 const TeacherModel = UserModel.discriminator("Teacher", TeacherSchema);
 export default TeacherModel;
+export { ITeacher };
