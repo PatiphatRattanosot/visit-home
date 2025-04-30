@@ -37,11 +37,6 @@ const AddSelfInfoForm = () => {
     setSelfInfo({ ...selfInfo, [name]: value });
   };
 
-  const handlePrefixChange = (e) => {
-    const { name, value } = e.target;
-    setPrefixData({ ...prefixData, [name]: value });
-  };
-
   const handlePictureChange = (e) => {
     const file = e.target.files[0];
     if (file) {
