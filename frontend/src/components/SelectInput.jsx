@@ -1,30 +1,37 @@
-const TextInput = ({
-  label,
+import React from "react";
+
+const SelectInput = ({
+  options,
+  defaultOpt,
   name,
   value,
+  label,
   onChange,
-  placeholder,
-  type = "text",
   disabled,
-  className = "",
+  className = "w-1/4",
 }) => {
   return (
     <div className={`flex flex-col ${className}`}>
       <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
         {label} : <span className="text-red-600">*</span>
       </label>
-      <input
-        type={type}
+      <select
+        className="select-input"
         id={name}
         name={name}
-        placeholder={placeholder}
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className="text-input"
-      />
+      >
+        <option value="">{defaultOpt}</option>
+        {options?.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
 
-export default TextInput;
+export default SelectInput;
