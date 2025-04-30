@@ -6,13 +6,12 @@ const TextInput = ({
   placeholder,
   type = "text",
   disabled,
-  i,
   className = "",
 }) => {
   return (
-    <div key={i} className={`flex flex-col ${className}`}>
+    <div className={`flex flex-col ${className}`}>
       <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
-        {label}
+        {label} : <span className="text-red-600">*</span>
       </label>
       <input
         type={type}
@@ -22,7 +21,7 @@ const TextInput = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className="text-input w-full"
+        className="text-input"
       />
     </div>
   );
