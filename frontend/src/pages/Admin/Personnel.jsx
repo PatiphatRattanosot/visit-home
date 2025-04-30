@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, deleteUser } from "../../services/user.service";
+import {deleteUser } from "../../services/user.service";
 import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
@@ -44,6 +44,7 @@ const Personnel = () => {
     if (result.isConfirmed) {
       try {
         await deleteUser(id); // ไม่ต้องเช็ค status ถ้าไม่มี return status
+        setPersonnel((prev) => prev.filter((user) => user.id !== id));
         Swal.fire({
           title: "ลบข้อมูลสำเร็จ",
           text: "ข้อมูลของคุณถูกลบเรียบร้อยแล้ว",
@@ -51,9 +52,7 @@ const Personnel = () => {
           confirmButtonText: "ตกลง",
         });
 
-        // ลบจาก state
-        setPersonnel((prev) => prev.filter((person) => person.id !== id));
-      } catch (error) {
+         } catch (error) {
         Swal.fire({
           title: "เกิดข้อผิดพลาด",
           text: "ไม่สามารถลบข้อมูลได้",
@@ -68,9 +67,10 @@ const Personnel = () => {
   useEffect(() => {
     const fetchPersonnel = async () => {
       try {
-        const response = await fetchUsers();
-        setPersonnel(response);
-        setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        const response = await fetch("http://localhost:3000/user");
+        const data = await response.json();
+        setPersonnel(data); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        setFilteredPersonnel(data); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
       } catch (error) {
         console.error("Error fetching personnel data:", error);
       }
@@ -80,6 +80,28 @@ const Personnel = () => {
   }, []);
   console.log(personnel);
 
+  const showStatus = (status) => {
+    switch (status) {
+      case "รับราชการ":
+        return (
+          <div className="inline-block px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
+            รับราชการ
+          </div>
+        );
+      case "เกษียณ":
+        return (
+          <div className="inline-block px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">
+            เกษียณ
+          </div>
+        );
+      default:
+        return (
+          <div className="inline-block px-2 py-1 text-xs font-semibold text-red-800 bg-red-100 rounded-full">
+            ลาออก
+          </div>
+        );
+    }
+  };
   return (
     <div>
       <h1>รายชื่อบุคลากร</h1>
@@ -165,7 +187,7 @@ const Personnel = () => {
               <td className="text-center">{person.last_name}</td>
               <td className="text-center">{person.rank}</td>
               <td className="text-center">{person.phone}</td>
-              <td className="text-center">{person.status}</td>
+              <td className="text-center">{showStatus(person.status)}</td>
               <td className="flex gap-4 items-center justify-center">
                 <button className="text-yellow-500 hover:text-yellow-700 text-4xl transition">
                   <BiSolidEdit />
