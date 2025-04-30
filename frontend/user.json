@@ -1,0 +1,125 @@
+{
+  "user": [
+    {
+      "id": "2",
+      "type": "teacher",
+      "user_id": "002",
+      "prefix": "นางสาว",
+      "first_name": "สมหญิง",
+      "last_name": "ทดสอบ",
+      "rank": "ครูที่ปรึกษา",
+      "phone": "0812432678",
+      "status": "รับราชการ"
+    },
+    {
+      "id": "3",
+      "type": "teacher",
+      "user_id": "003",
+      "prefix": "นางสาว",
+      "first_name": "นฤมล",
+      "last_name": "สุดประเสริฐ",
+      "rank": "ครูที่ปรึกษา",
+      "phone": "0824445566",
+      "status": "ลาออก"
+    },
+    {
+      "id": "4",
+      "type": "teacher",
+      "user_id": "004",
+      "prefix": "นาย",
+      "first_name": "ปกรณ์",
+      "last_name": "อารีรักษ์",
+      "rank": "เจ้าหน้าที่ฝ่ายทะเบียน",
+      "phone": "0823334455",
+      "status": "เกษียณอายุ"
+    },
+    {
+      "id": "5",
+      "type": "Admin",
+      "user_id": "005",
+      "prefix": "นาง",
+      "first_name": "จารุวรรณ",
+      "last_name": "พัฒนากุล",
+      "rank": "เจ้าหน้าที่ฝ่ายบุคคล",
+      "phone": "0861234567",
+      "status": "รับราชการ"
+    },
+    {
+      "id": "6",
+      "type": "teacher",
+      "user_id": "006",
+      "prefix": "นาย",
+      "first_name": "วีระชัย",
+      "last_name": "สุวรรณ",
+      "rank": "ครูผู้ช่วย",
+      "phone": "0876543210",
+      "status": "รับราชการ"
+    },
+    {
+      "id": "7",
+      "type": "teacher",
+      "user_id": "007",
+      "prefix": "นางสาว",
+      "first_name": "กนกพร",
+      "last_name": "อุดมผล",
+      "rank": "ครูผู้ช่วย",
+      "phone": "0898765432",
+      "status": "รับราชการ"
+    },
+    {
+      "id": "8",
+      "type": "teacher",
+      "user_id": "008",
+      "prefix": "นาย",
+      "first_name": "ธีรภัทร",
+      "last_name": "ชาญศิลป์",
+      "rank": "ครูอาวุโส",
+      "phone": "0881234567",
+      "status": "เกษียณอายุ"
+    },
+    {
+      "id": "9",
+      "type": "teacher",
+      "user_id": "009",
+      "prefix": "นางสาว",
+      "first_name": "พิมพ์ชนก",
+      "last_name": "สายสมร",
+      "rank": "ครูที่ปรึกษา",
+      "phone": "0839876543",
+      "status": "รับราชการ"
+    },
+    {
+      "id": "10",
+      "type": "Admin",
+      "user_id": "010",
+      "prefix": "นาย",
+      "first_name": "ธนากร",
+      "last_name": "บุญช่วย",
+      "rank": "เจ้าหน้าที่การเงิน",
+      "phone": "0855556666",
+      "status": "รับราชการ"
+    },
+    {
+      "id": "11",
+      "type": "teacher",
+      "user_id": "011",
+      "prefix": "นาง",
+      "first_name": "อรพิน",
+      "last_name": "สุขเกษม",
+      "rank": "ครูประจำชั้น",
+      "phone": "0844443333",
+      "status": "ลาออก"
+    },
+    {
+      "id": "12",
+      "type": "teacher",
+      "user_id": "012",
+      "prefix": "นาย",
+      "first_name": "ศุภชัย",
+      "last_name": "เกษมศักดิ์",
+      "rank": "ครูอาวุโส",
+      "phone": "0867778888",
+      "status": "เกษียณอายุ"
+    }
+  ]
+}
