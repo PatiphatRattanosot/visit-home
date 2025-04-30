@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextInput from "../../../components/TextInput";
 import SelectInput from "../../../components/SelectInput";
 import StudentPicture from "../../../components/students/StudentPicture";
-import Stepper from "../../../components/Stepper";
 import { useAuthStore } from "../../../stores/auth.store";
+import axios from "axios";
 
-const AddSelfInfoForm = () => {
+const UpdateSelfInfoForm = () => {
   const { userInfo } = useAuthStore();
   const [selfInfo, setSelfInfo] = useState({
     father_prefix: "",
@@ -27,6 +27,21 @@ const AddSelfInfoForm = () => {
     lat: "",
     lng: "",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/studentInfo");
+        if (res.status === 200) {
+          setSelfInfo(res.data.personal_info);
+          setImage(res.data.personal_info.image);
+        }
+      } catch (error) {
+        console.log("บ้าจริง", error, "ติดแต่บัค");
+      }
+    };
+    fetchData();
+  }, []);
 
   const [image, setImage] = useState(null);
 
@@ -53,9 +68,7 @@ const AddSelfInfoForm = () => {
           ข้อมูลส่วนตัวของ{" "}
           <span className="text-gray-600">{`${userInfo?.prefix} ${userInfo?.first_name} ${userInfo?.last_name}`}</span>
         </h3>
-        <div className="flex justify-center my-3">
-          <Stepper />
-        </div>
+
         <div className="mt-8 flex justify-center">
           <StudentPicture
             studentPic={image}
@@ -234,11 +247,11 @@ const AddSelfInfoForm = () => {
         </div>
         <div className="flex justify-between mt-10 space-x-2">
           <button className="btn-red w-1/2">ยกเลิก</button>
-          <button className="btn w-1/2">ถัดไป</button>
+          <button className="btn-green w-1/2">บันทึก</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default AddSelfInfoForm;
+export default UpdateSelfInfoForm;

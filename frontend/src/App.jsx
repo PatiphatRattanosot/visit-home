@@ -10,6 +10,7 @@ import Personnel from "./pages/Admin/Personnel";
 import Status from "./pages/students/Status";
 import SelfInfo from "./pages/students/self-info/SelfInfo";
 import AddSelfInfoForm from "./pages/students/self-info/AddSelfInfoForm";
+import UpdateSelfInfoForm from "./pages/students/self-info/UpdateSelfInfoForm";
 
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
@@ -57,6 +58,7 @@ function App() {
           <Route path="self-info">
             <Route path="" element={<SelfInfo />} />
             <Route path="add" element={<AddSelfInfoForm />} />
+            <Route path="update" element={<UpdateSelfInfoForm />} />
           </Route>
         </Route>
       </Routes>

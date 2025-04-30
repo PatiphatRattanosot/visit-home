@@ -13,9 +13,14 @@ const StudentPicture = ({ studentPic, handleChange }) => {
       className="border-1 border-gray-200 bg-white w-[13.875rem] h-[18.5rem] rounded-md flex justify-center items-center hover:bg-gray-50 hover:cursor-pointer"
       onClick={handleOpenInput}
     >
+      {/* ใช้ typeof เช็คว่าตัวแปรที่รับมาเป็นตัวแปรที่เป็นตัวอักษรรึป่าว */}
       {studentPic ? (
         <img
-          src={URL.createObjectURL(studentPic)}
+          src={
+            typeof studentPic === "string"
+              ? studentPic
+              : URL.createObjectURL(studentPic)
+          }
           alt="Student"
           className="h-full w-full bg-cover object-cover rounded-md p-1"
         />

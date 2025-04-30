@@ -14,7 +14,7 @@ const SelectInput = ({
         {label} : <span className="text-red-600">*</span>
       </label>
       <select
-        className="select"
+        className="select-input"
         id={name}
         name={name}
         value={value}

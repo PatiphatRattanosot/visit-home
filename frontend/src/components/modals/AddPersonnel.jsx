@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { Navigate, useNavigate } from "react-router";
 const AddPersonnel = () => {
   const navigate = useNavigate();
- 
+
   const prefixOptions = ["นาย", "นาง", "นางสาว"];
   const rankOptions = ["เจ้าหน้าที่ฝ่ายทะเบียน", "ครูที่ปรึกษา"];
   const statusOptions = ["ลาออก", "เกษียณ", "รับราชการ"];
@@ -17,16 +17,15 @@ const AddPersonnel = () => {
   const formik = useFormik({
     initialValues: {
       prefix: "",
-    first_name: "",
-    last_name: "",
-    user_id: "",
-    rank: "",
-    phone: "",
-    status: "รับราชการ",
+      first_name: "",
+      last_name: "",
+      user_id: "",
+      rank: "",
+      phone: "",
+      status: "รับราชการ",
     },
     validationSchema: PersonnelSchema,
     onSubmit: async (values, actions) => {
-  ;
       console.log("Submitting", values);
       console.log("Submitting", actions);
       try {
@@ -34,7 +33,6 @@ const AddPersonnel = () => {
         toast.success("เพิ่มข้อมูลบุคลากรเรียบร้อยแล้ว!");
         document.getElementById("add_personnel").close();
 
-  
         navigate("/admin/personnel");
       } catch (error) {
         toast.error("เกิดข้อผิดพลาดในการเพิ่มข้อมูล!");
@@ -43,15 +41,12 @@ const AddPersonnel = () => {
     },
   });
 
-  
-
-  
   return (
     <div>
       <dialog id="add_personnel" className="modal">
         <div className="modal-box flex flex-col items-center justify-center w-11/12">
           <h3 className="font-bold text-lg text-center">เพิ่มข้อมูลบุคลากร</h3>
-  
+
           <div className="flex flex-col items-center justify-center space-y-2">
             <SelectInputInModal
               name="prefix"
@@ -66,7 +61,7 @@ const AddPersonnel = () => {
               onBlur={formik.handleBlur}
               className="w-64 md:w-72"
             />
-  
+
             <TextInputInModal
               name="first_name"
               placeholder="ชื่อ"
@@ -78,7 +73,7 @@ const AddPersonnel = () => {
               touched={formik.touched.first_name}
               onBlur={formik.handleBlur}
             />
-  
+
             <TextInputInModal
               name="last_name"
               placeholder="นามสกุล"
@@ -90,7 +85,7 @@ const AddPersonnel = () => {
               touched={formik.touched.last_name}
               onBlur={formik.handleBlur}
             />
-  
+
             <TextInputInModal
               name="user_id"
               placeholder="เลขที่ประจำตัวบุคลากร"
@@ -102,7 +97,7 @@ const AddPersonnel = () => {
               touched={formik.touched.user_id}
               onBlur={formik.handleBlur}
             />
-  
+
             <SelectInputInModal
               name="rank"
               value={formik.values.rank}
@@ -116,7 +111,7 @@ const AddPersonnel = () => {
               onBlur={formik.handleBlur}
               className="w-64 md:w-72"
             />
-  
+
             <TextInputInModal
               name="phone"
               placeholder="เบอร์โทรศัพท์"
@@ -130,37 +125,37 @@ const AddPersonnel = () => {
             />
 
             <SelectInputInModal
-            name="status"
-            value={formik.values.status}
-            onChange={formik.handleChange}
-            label="สถานะ"
-            disabled={false}
-            options={statusOptions}
-            error={formik.errors.status}
-            touched={formik.touched.status}
-            onBlur={formik.handleBlur}
-            className="w-64 md:w-72"
-          />
+              name="status"
+              value={formik.values.status}
+              onChange={formik.handleChange}
+              label="สถานะ"
+              disabled={false}
+              options={statusOptions}
+              error={formik.errors.status}
+              touched={formik.touched.status}
+              onBlur={formik.handleBlur}
+              className="w-64 md:w-72"
+            />
           </div>
-  
-          
-  
-  <div className="modal-action">
+
+          <div className="modal-action">
             <form onSubmit={formik.handleSubmit} method="dialog mt-2">
               <div className="flex gap-6">
-                <button disabled={formik.isSubmitting} type="submit" className="btn-green">
-                บันทึก
-              </button>
-              <button className="btn-red">ยกเลิก</button>
+                <button
+                  disabled={formik.isSubmitting}
+                  type="submit"
+                  className="btn-green"
+                >
+                  บันทึก
+                </button>
+                <button className="btn-red">ยกเลิก</button>
               </div>
-              
             </form>
           </div>
         </div>
       </dialog>
     </div>
   );
-  
 };
 
 export default AddPersonnel;
