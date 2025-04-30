@@ -1,6 +1,7 @@
-import UserModel from "../../models/users/user.model";
+import UserModel from "../../models/users/user_model";
 import { Elysia, t } from "elysia";
 
+// ฟังก์ชัน get_users เพื่อดึงข้อมูลผู้ใช้ทั้งหมดจากฐานข้อมูล
 const get_users = async (app: Elysia) =>
   app.get(
     "/",
@@ -23,7 +24,17 @@ const get_users = async (app: Elysia) =>
     }
   );
 
-const addAdminRole = async (app: Elysia) =>
+// ฟังก์ชัน deleteUser สำหรับลบผู้ใช้ตามอีเมล์
+const delete_user = async (app: Elysia) =>
+  app.delete("/:email", async ({ params: { email }, set }) => {}, {
+    detail: { tags: ["User"], description: "ลบข้อมูลผู้ใช้" },
+    body: t.Object({
+      email: t.String(),
+    }),
+  });
+
+// ฟังก์ชัน addAdminRole เพื่อเพิ่มสิทธิ์ Admin ให้กับผู้ใช้
+const add_admin_role = async (app: Elysia) =>
   app.patch(
     "/add/:email",
     async ({ params: { email }, set }) => {
@@ -66,7 +77,8 @@ const addAdminRole = async (app: Elysia) =>
     }
   );
 
-const removeAdminRole = async (app: Elysia) =>
+// ฟังก์ชัน removeAdminRole เพื่อเอาสิทธิ์ Admin ออกจากผู้ใช้
+const remove_admin_role = async (app: Elysia) =>
   app.patch(
     "/remove/:email",
     async ({ params: { email }, set }) => {
@@ -101,8 +113,9 @@ const removeAdminRole = async (app: Elysia) =>
 
 const UserContrller = {
   get_users,
-  addAdminRole,
-  removeAdminRole,
+  delete_user,
+  add_admin_role,
+  remove_admin_role,
 };
 
 export default UserContrller;

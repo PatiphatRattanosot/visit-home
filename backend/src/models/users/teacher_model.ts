@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import UserModel from "./user.model";
+import { Schema, Document } from "mongoose";
+import UserModel from "./user_model";
 
 interface ITeacher extends Document {
   email: string;
@@ -34,3 +34,4 @@ const TeacherSchema = new Schema<ITeacher>(
 );
 const TeacherModel = UserModel.discriminator("Teacher", TeacherSchema);
 export default TeacherModel;
+export { ITeacher };
