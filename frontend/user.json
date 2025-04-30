@@ -120,39 +120,6 @@
       "rank": "ครูอาวุโส",
       "phone": "0867778888",
       "status": "เกษียณอายุ"
-    },
-    {
-      "id": "13",
-      "type": "teacher",
-      "user_id": "013",
-      "prefix": "นางสาว",
-      "first_name": "พัชรี",
-      "last_name": "เทพประทาน",
-      "rank": "ครูผู้ช่วย",
-      "phone": "0822223333",
-      "status": "รับราชการ"
-    },
-    {
-      "id": "14",
-      "type": "teacher",
-      "user_id": "014",
-      "prefix": "นาง",
-      "first_name": "อุษา",
-      "last_name": "มโนรมย์",
-      "rank": "ครูประจำชั้น",
-      "phone": "0811112222",
-      "status": "รับราชการ"
-    },
-    {
-      "id": "15",
-      "type": "teacher",
-      "user_id": "015",
-      "prefix": "นาย",
-      "first_name": "เอกชัย",
-      "last_name": "ใจมั่น",
-      "rank": "ครูที่ปรึกษา",
-      "phone": "0899998888",
-      "status": "รับราชการ"
     }
   ]
 }
