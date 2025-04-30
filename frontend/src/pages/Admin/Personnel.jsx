@@ -9,6 +9,17 @@ const Personnel = () => {
   const [selectedOption, setSelectedOption] = useState("ทั้งหมด"); // << เพิ่มตรงนี้
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
   const [filteredPersonnel, setFilteredPersonnel] = useState([]);
+  // สร้าง satate สำหรับ Paginations
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPersonnel.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
@@ -106,8 +117,11 @@ const Personnel = () => {
           )}
         </div>
         {/* ช่องค้นหา */}
-        <SearchPersonnel personnel={personnel} setFilteredPersonnel={setFilteredPersonnel} />
-
+        <SearchPersonnel
+          personnel={personnel}
+          setFilteredPersonnel={setFilteredPersonnel}
+          setCurrentPage={setCurrentPage}
+        />
 
         {/* ปุ่มเพิ่มบุคลากร */}
         <div className="relative w-40">
@@ -138,8 +152,7 @@ const Personnel = () => {
         </thead>
         <tbody>
           {/* เพิ่มข้อมูลบุคลากรตรงนี้ */}
-          {filteredPersonnel.map((person, index) => (
-
+          {currentItems.map((person, index) => (
             <tr key={index} className="hover:bg-gray-100 cursor-pointer">
               <th>
                 <label>
@@ -168,6 +181,41 @@ const Personnel = () => {
           ))}
         </tbody>
       </table>
+       {/* Pagination */}
+       <div className="flex justify-center mt-4 gap-2">
+  <button
+    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+    disabled={currentPage === 1}
+    className="px-3 py-1 rounded border bg-white disabled:opacity-50"
+  >
+    &laquo;
+  </button>
+
+  {Array.from({ length: Math.ceil(filteredPersonnel.length / itemsPerPage) }, (_, i) => i + 1).map((number) => (
+    <button
+      key={number}
+      onClick={() => setCurrentPage(number)}
+      className={`px-3 py-1 rounded border ${
+        number === currentPage ? "bg-blue-500 text-white" : "bg-white"
+      }`}
+    >
+      {number}
+    </button>
+  ))}
+
+  <button
+    onClick={() =>
+      setCurrentPage((prev) =>
+        Math.min(prev + 1, Math.ceil(filteredPersonnel.length / itemsPerPage))
+      )
+    }
+    disabled={currentPage === Math.ceil(filteredPersonnel.length / itemsPerPage)}
+    className="px-3 py-1 rounded border bg-white disabled:opacity-50"
+  >
+    &raquo;
+  </button>
+</div>
+
     </div>
   );
 };
