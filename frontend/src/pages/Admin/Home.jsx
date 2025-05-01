@@ -14,7 +14,7 @@ const Home = () => {
       try {
         const response = await Userservices.getUsers();
 
-        // === สถานะบุคลากร ===
+        //สถานะบุคลากร
         const statusCount = {};
         response.forEach((user) => {
           const status = user.status;
@@ -49,7 +49,7 @@ const Home = () => {
           ],
         });
 
-        // === ตำแหน่งบุคลากร ===
+        //ตำแหน่งบุคลากร 
         const rankCount = {};
         response.forEach((user) => {
           const rank = user.rank;
