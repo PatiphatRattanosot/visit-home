@@ -73,6 +73,20 @@
       "prefix": "นาย",
       "first_name": "ธีรภัทร",
       "last_name": "ชาญศิลป์",
+<<<<<<< HEAD
+=======
+      "rank": "ครูที่ปรึกษา",
+      "phone": "0881234567",
+      "status": "เกษียณ"
+    },
+    {
+      "id": "9",
+      "type": "teacher",
+      "user_id": "009",
+      "prefix": "นางสาว",
+      "first_name": "พิมพ์ชนก",
+      "last_name": "สายสมร",
+>>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
       "rank": "ครูที่ปรึกษา",
       "phone": "0881234567",
       "status": "เกษียณ"
@@ -109,6 +123,7 @@
       "rank": "ครูที่ปรึกษา",
       "phone": "0867778888",
       "status": "เกษียณ"
+<<<<<<< HEAD
     },
     {
       "id": "9140",
@@ -138,6 +153,8 @@
       "rank": "ครูที่ปรึกษา",
       "phone": "0837462839",
       "status": "เกษียณ"
+=======
+>>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
     }
   ]
 }

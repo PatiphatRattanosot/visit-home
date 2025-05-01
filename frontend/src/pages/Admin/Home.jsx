@@ -12,9 +12,15 @@ const Home = () => {
   useEffect(() => {
     const getChartData = async () => {
       try {
+<<<<<<< HEAD
         const response = await Userservices.getAllUsers();
 
         //สถานะบุคลากร
+=======
+        const response = await Userservices.getUsers();
+
+        // === สถานะบุคลากร ===
+>>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
         const statusCount = {};
         response.forEach((user) => {
           const status = user.status;
@@ -49,7 +55,11 @@ const Home = () => {
           ],
         });
 
+<<<<<<< HEAD
         //ตำแหน่งบุคลากร 
+=======
+        // === ตำแหน่งบุคลากร ===
+>>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
         const rankCount = {};
         response.forEach((user) => {
           const rank = user.rank;
