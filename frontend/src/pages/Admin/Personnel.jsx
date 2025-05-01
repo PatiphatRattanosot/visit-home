@@ -4,13 +4,9 @@ import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import SearchPersonnel from "../../components/SearchPersonnel";
-<<<<<<< HEAD
 import FilterDropdown from "../../components/FilterDropdown";
 import ModalAddPersonnel from "../../components/modals/AddPersonnel";
 import ModalEditPersonnel from "../../components/modals/EditPersonnel";
-=======
-import FilterDropdown from "../../components/FilterDropdown"; // นำเข้า FilterDropdown
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
 const Personnel = () => {
   const [selectedOption, setSelectedOption] = useState("ทั้งหมด");
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
@@ -41,11 +37,7 @@ const Personnel = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-<<<<<<< HEAD
           await Userservice.deleteUser(id); // ลบหลังจากผู้ใช้ยืนยันแล้ว
-=======
-          await Userservice.deleteUser(id); // ✅ ลบหลังจากผู้ใช้ยืนยันแล้ว
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
 
           Swal.fire({
             title: "ลบข้อมูลบุคลากรเรียบร้อย",
@@ -82,11 +74,7 @@ const Personnel = () => {
     const fetchPersonnel = async () => {
       try {
         const response = await Userservice.getAllUsers();
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
         setPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
         setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
       } catch (error) {
@@ -147,32 +135,10 @@ const Personnel = () => {
       <div className="flex justify-between mb-4 m-10">
         {/* Dropdown สำหรับการกรองข้อมูล */}
         <FilterDropdown
-<<<<<<< HEAD
   selectedOption={selectedOption}
   onOptionSelect={handleOptionSelect}
 />
 
-=======
-          selectedOption={selectedOption}
-          onOptionSelect={(option) => {
-            setSelectedOption(option);
-
-            if (option === "ลำดับตัวอักษร ก-ฮ") {
-              const sorted = [...filteredPersonnel].sort((a, b) =>
-                a.first_name.localeCompare(b.first_name, "th")
-              );
-              setFilteredPersonnel(sorted);
-            } else if (option === "ลำดับตัวอักษร ฮ-ก") {
-              const sorted = [...filteredPersonnel].sort((a, b) =>
-                b.first_name.localeCompare(a.first_name, "th")
-              );
-              setFilteredPersonnel(sorted);
-            } else {
-              setFilteredPersonnel(personnel); // ทั้งหมด
-            }
-          }}
-        />
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
 
         {/* ช่องค้นหา */}
         <SearchPersonnel
@@ -193,46 +159,16 @@ const Personnel = () => {
         {/* Modal เพิ่มบุคลากร */}
         <ModalAddPersonnel />
       </div>
-<<<<<<< HEAD
       {/* ตารางแสดงข้อมูลบุคลากร */}
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           <thead>
             <tr>
-=======
-
-      <table className="table-fixed w-full">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              เลขที่ประจำตัวบุคลากร
-            </th>
-
-            <th className="border border-gray-300 px-4 py-2">คำนำหน้าชื่อ</th>
-            <th className="border border-gray-300 px-4 py-2">ชื่อ</th>
-            <th className="border border-gray-300 px-4 py-2">นามสกุล</th>
-            <th className="border border-gray-300 px-4 py-2">ตำแหน่ง</th>
-            <th className="border border-gray-300 px-4 py-2">เบอร์โทรศัพท์</th>
-            <th className="border border-gray-300 px-4 py-2">สถานะ</th>
-            <th className="border border-gray-300 px-4 py-2">แก้ไข/ลบ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* เพิ่มข้อมูลบุคลากรตรงนี้ */}
-          {currentItems.map((person, index) => (
-            <tr key={index} className="hover:bg-gray-100 cursor-pointer">
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
               <th>
                 <label>
                   <input type="checkbox" className="checkbox" />
                 </label>
               </th>
-<<<<<<< HEAD
               <th>เลขที่ประจำตัว</th>
               <th>คำนำหน้า</th>
               <th>ชื่อ</th>
@@ -294,40 +230,6 @@ const Personnel = () => {
           &laquo;
         </button>
 
-=======
-              <td className="text-center">{person.user_id}</td>
-              <td className="text-center">{person.prefix}</td>
-              <td className="text-center">{person.first_name}</td>
-              <td className="text-center">{person.last_name}</td>
-              <td className="text-center">{person.rank}</td>
-              <td className="text-center">{person.phone}</td>
-              <td className="text-center">{showStatus(person.status)}</td>
-              <td className="flex gap-4 items-center justify-center">
-                <button className="text-yellow-500 hover:text-yellow-700 text-4xl transition">
-                  <BiSolidEdit />
-                </button>
-                <button
-                  className="text-red-500 hover:text-red-700 text-4xl transition"
-                  onClick={() => handleDeleteUser(person.id)}
-                >
-                  <AiOutlineDelete />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <div className="flex justify-center mt-4 gap-2">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-3 py-1 rounded border bg-white disabled:opacity-50"
-        >
-          &laquo;
-        </button>
-
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
         {Array.from(
           { length: Math.ceil(filteredPersonnel.length / itemsPerPage) },
           (_, i) => i + 1
