@@ -4,10 +4,9 @@ import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import SearchPersonnel from "../../components/SearchPersonnel";
-import FilterDropdown from "../../components/FilterDropdown"; // นำเข้า FilterDropdown
+import FilterDropdown from "../../components/FilterDropdown"; 
 const Personnel = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("ทั้งหมด"); // << เพิ่มตรงนี้
+  const [selectedOption, setSelectedOption] = useState("ทั้งหมด"); 
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
   const [filteredPersonnel, setFilteredPersonnel] = useState([]);
   // สร้าง satate สำหรับ Paginations
@@ -36,7 +35,7 @@ const Personnel = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await Userservice.deleteUser(id); // ✅ ลบหลังจากผู้ใช้ยืนยันแล้ว
+          await Userservice.deleteUser(id); // ลบหลังจากผู้ใช้ยืนยันแล้ว
 
           Swal.fire({
             title: "ลบข้อมูลบุคลากรเรียบร้อย",
@@ -73,7 +72,7 @@ const Personnel = () => {
     const fetchPersonnel = async () => {
       try {
         const response = await Userservice.getAllUsers();
-        
+
         setPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
         setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
       } catch (error) {
