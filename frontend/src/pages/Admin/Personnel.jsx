@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {deleteUser } from "../../services/user.service";
+import Userservice from "../../services/user.service";
 import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import SearchPersonnel from "../../components/SearchPersonnel";
+import FilterDropdown from "../../components/FilterDropdown"; // นำเข้า FilterDropdown
 const Personnel = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("ทั้งหมด"); // << เพิ่มตรงนี้
@@ -20,57 +21,61 @@ const Personnel = () => {
     indexOfLastItem
   );
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
+  // ฟังก์ชันสำหรับลบข้อมูลบุคลากร
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option); // ตั้งค่าที่เลือก
-    setIsDropdownOpen(false); // ปิด dropdown หลังเลือกเสร็จ
-  };
-
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
+  const handleDeleteUser = async (id) => {
+    Swal.fire({
       title: "คุณแน่ใจหรือไม่?",
-      text: "คุณต้องการลบข้อมูลนี้หรือไม่ (ไม่สามารถกู้คืนได้)",
+      text: "คุณต้องการลบข้อมูลบุคลากรนี้!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "ใช่, ลบเลย!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
       cancelButtonText: "ยกเลิก",
-    });
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await Userservice.deleteUser(id); // ✅ ลบหลังจากผู้ใช้ยืนยันแล้ว
 
-    if (result.isConfirmed) {
-      try {
-        await deleteUser(id); // ไม่ต้องเช็ค status ถ้าไม่มี return status
-        setPersonnel((prev) => prev.filter((user) => user.id !== id));
+          Swal.fire({
+            title: "ลบข้อมูลบุคลากรเรียบร้อย",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            const updatedPersonnel = personnel.filter(
+              (person) => person.id !== id
+            );
+            setPersonnel(updatedPersonnel);
+            setFilteredPersonnel(updatedPersonnel);
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "เกิดข้อผิดพลาด",
+            text: "ไม่สามารถลบข้อมูลบุคลากรได้",
+            icon: "error",
+            confirmButtonText: "ตกลง",
+          });
+        }
+      } else if (result.isDismissed) {
         Swal.fire({
-          title: "ลบข้อมูลสำเร็จ",
-          text: "ข้อมูลของคุณถูกลบเรียบร้อยแล้ว",
-          icon: "success",
-          confirmButtonText: "ตกลง",
+          title: "ยกเลิกการลบข้อมูล",
+          icon: "info",
+          showConfirmButton: false,
+          timer: 1500,
         });
-
-         } catch (error) {
-        Swal.fire({
-          title: "เกิดข้อผิดพลาด",
-          text: "ไม่สามารถลบข้อมูลได้",
-          icon: "error",
-          confirmButtonText: "ตกลง",
-        });
-        console.error("Error deleting user:", error);
       }
-    }
+    });
   };
 
   useEffect(() => {
     const fetchPersonnel = async () => {
       try {
-        const response = await fetch("http://localhost:3000/user");
-        const data = await response.json();
-        setPersonnel(data); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-        setFilteredPersonnel(data); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        const response = await Userservice.getAllUsers();
+        
+        setPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
       } catch (error) {
         console.error("Error fetching personnel data:", error);
       }
@@ -107,37 +112,28 @@ const Personnel = () => {
       <h1>รายชื่อบุคลากร</h1>
 
       <div className="flex justify-between mb-4 m-10">
-        <div className="relative">
-          <button
-            onClick={toggleDropdown}
-            className="group relative border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10"
-          >
-            {selectedOption}
-          </button>
+        {/* Dropdown สำหรับการกรองข้อมูล */}
+        <FilterDropdown
+          selectedOption={selectedOption}
+          onOptionSelect={(option) => {
+            setSelectedOption(option);
 
-          {isDropdownOpen && (
-            <div className="absolute top-full w-40 rounded-lg p-3 mt-1 bg-white shadow-md z-10">
-              <a
-                className="block px-2 py-1 text-gray-700 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleOptionClick("ทั้งหมด")}
-              >
-                ทั้งหมด
-              </a>
-              <a
-                className="block px-2 py-1 text-gray-700 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleOptionClick("ลำดับตัวอักษร ก-ฮ")}
-              >
-                ลำดับตัวอักษร ก-ฮ
-              </a>
-              <a
-                className="block px-2 py-1 text-gray-700 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleOptionClick("ลำดับตัวอักษร ฮ-ก")}
-              >
-                ลำดับตัวอักษร ฮ-ก
-              </a>
-            </div>
-          )}
-        </div>
+            if (option === "ลำดับตัวอักษร ก-ฮ") {
+              const sorted = [...filteredPersonnel].sort((a, b) =>
+                a.first_name.localeCompare(b.first_name, "th")
+              );
+              setFilteredPersonnel(sorted);
+            } else if (option === "ลำดับตัวอักษร ฮ-ก") {
+              const sorted = [...filteredPersonnel].sort((a, b) =>
+                b.first_name.localeCompare(a.first_name, "th")
+              );
+              setFilteredPersonnel(sorted);
+            } else {
+              setFilteredPersonnel(personnel); // ทั้งหมด
+            }
+          }}
+        />
+
         {/* ช่องค้นหา */}
         <SearchPersonnel
           personnel={personnel}
@@ -154,7 +150,7 @@ const Personnel = () => {
       <table className="table-fixed w-full">
         <thead>
           <tr>
-            <th>
+            <th className="border border-gray-300 px-4 py-2">
               <label>
                 <input type="checkbox" className="checkbox" />
               </label>
@@ -194,7 +190,7 @@ const Personnel = () => {
                 </button>
                 <button
                   className="text-red-500 hover:text-red-700 text-4xl transition"
-                  onClick={() => handleDelete(person.id)}
+                  onClick={() => handleDeleteUser(person.id)}
                 >
                   <AiOutlineDelete />
                 </button>
@@ -203,41 +199,48 @@ const Personnel = () => {
           ))}
         </tbody>
       </table>
-       {/* Pagination */}
-       <div className="flex justify-center mt-4 gap-2">
-  <button
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-    className="px-3 py-1 rounded border bg-white disabled:opacity-50"
-  >
-    &laquo;
-  </button>
+      {/* Pagination */}
+      <div className="flex justify-center mt-4 gap-2">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-3 py-1 rounded border bg-white disabled:opacity-50"
+        >
+          &laquo;
+        </button>
 
-  {Array.from({ length: Math.ceil(filteredPersonnel.length / itemsPerPage) }, (_, i) => i + 1).map((number) => (
-    <button
-      key={number}
-      onClick={() => setCurrentPage(number)}
-      className={`px-3 py-1 rounded border ${
-        number === currentPage ? "bg-blue-500 text-white" : "bg-white"
-      }`}
-    >
-      {number}
-    </button>
-  ))}
+        {Array.from(
+          { length: Math.ceil(filteredPersonnel.length / itemsPerPage) },
+          (_, i) => i + 1
+        ).map((number) => (
+          <button
+            key={number}
+            onClick={() => setCurrentPage(number)}
+            className={`px-3 py-1 rounded border ${
+              number === currentPage ? "bg-blue-500 text-white" : "bg-white"
+            }`}
+          >
+            {number}
+          </button>
+        ))}
 
-  <button
-    onClick={() =>
-      setCurrentPage((prev) =>
-        Math.min(prev + 1, Math.ceil(filteredPersonnel.length / itemsPerPage))
-      )
-    }
-    disabled={currentPage === Math.ceil(filteredPersonnel.length / itemsPerPage)}
-    className="px-3 py-1 rounded border bg-white disabled:opacity-50"
-  >
-    &raquo;
-  </button>
-</div>
-
+        <button
+          onClick={() =>
+            setCurrentPage((prev) =>
+              Math.min(
+                prev + 1,
+                Math.ceil(filteredPersonnel.length / itemsPerPage)
+              )
+            )
+          }
+          disabled={
+            currentPage === Math.ceil(filteredPersonnel.length / itemsPerPage)
+          }
+          className="px-3 py-1 rounded border bg-white disabled:opacity-50"
+        >
+          &raquo;
+        </button>
+      </div>
     </div>
   );
 };
