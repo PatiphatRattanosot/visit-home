@@ -36,7 +36,7 @@ export const useAuthStore = create(
 
           Swal.fire({
             title: "สำเร็จ!",
-            text: "ลงชื่อเข้าใช้งานสำเร็จ",
+            text: res.data?.message,
             icon: "success",
             timer: 1500,
             showConfirmButton: false,
@@ -46,10 +46,9 @@ export const useAuthStore = create(
           await logout(); // ทำการ logout ออกทุกครั้งที่เกิด error
           Swal.fire({
             title: "เกิดข้อผิดพลาด",
-            text: "ไม่สามารถเข้าสู่ระบบได้ โปรดลองอีกครั้ง",
+            text: error?.response?.data?.message,
             icon: "error",
-            timer: 1500,
-            showConfirmButton: false,
+            showConfirmButton: true,
           });
         }
       },
