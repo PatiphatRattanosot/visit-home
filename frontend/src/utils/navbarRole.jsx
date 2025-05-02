@@ -44,12 +44,12 @@ export const getNavLinks = (role) => {
       return (
         <>
           <li>
-            <a href="/student" className={baseLink}>
+            <a href="/student/status" className={baseLink}>
               หน้าหลัก
             </a>
           </li>
           <li>
-            <a href="/student" className={baseLink}>
+            <a href="/student/visit-info" className={baseLink}>
               จัดการข้อมูลการเยี่ยมบ้าน
             </a>
           </li>

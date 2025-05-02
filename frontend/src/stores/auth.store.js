@@ -9,7 +9,7 @@ import {
 import AuthServices from "../services/auth.service";
 
 export const useAuthStore = create(
-  persist((set, get) => {
+  persist((set) => {
     // listen to auth state changes on load
     listenToAuthChanges((user) => {
       set({ user, isLoading: false });
@@ -22,26 +22,35 @@ export const useAuthStore = create(
       isLoading: false,
       signInSystem: async () => {
         try {
-          await googleSignIn().then(async (result) => {
-            // const email = result.user.email;
-            const email = "bp999@bangpaeschool.ac.th";
+          const result = await googleSignIn();
+          const email = result.user.email;
 
-            const res = await AuthServices.sign({ email });
-            if (res.status === 200) {
-              const userInfo = res.data?.user;
-              // save response data to userInfo
-              set({ userInfo });
-              Swal.fire({
-                title: "สำเร็จ!",
-                text: "ลงชื่อเข้าใช้งานสำเร็จ",
-                icon: "success",
-                timer: 1500,
-                showConfirmButton: false,
-              });
-            }
+          const res = await AuthServices.sign({ email });
+
+          if (res.status !== 200) {
+            throw new Error("เกิดปัญหาที่ AuthServices");
+          }
+
+          const userInfo = res.data?.user;
+          set({ userInfo });
+
+          Swal.fire({
+            title: "สำเร็จ!",
+            text: "ลงชื่อเข้าใช้งานสำเร็จ",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
           });
         } catch (error) {
-          console.log("error at login:", error);
+          console.error("error at login:", error);
+          await logout(); // ทำการ logout ออกทุกครั้งที่เกิด error
+          Swal.fire({
+            title: "เกิดข้อผิดพลาด",
+            text: "ไม่สามารถเข้าสู่ระบบได้ โปรดลองอีกครั้ง",
+            icon: "error",
+            timer: 1500,
+            showConfirmButton: false,
+          });
         }
       },
       signOutSystem: () => {
@@ -70,6 +79,13 @@ export const useAuthStore = create(
           });
         } catch (error) {
           console.log("error at logout:", error);
+          Swal.fire({
+            title: "เกิดข้อผิดพลาด",
+            text: "ไม่สามารถลงชื่อออกจากระบบได้ โปรดลองอีกครั้ง",
+            icon: "error",
+            timer: 1500,
+            showConfirmButton: false,
+          });
         }
       },
     };

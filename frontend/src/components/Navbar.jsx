@@ -1,35 +1,19 @@
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
 import { getNavLinks } from "../utils/navbarRole";
 
 const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
-  const [toggleHamburger, setToggleHamburger] = useState(false);
   console.log(userInfo);
 
   return (
-    <div className="w-screen flex justify-between py-2 px-3 shadow-lg">
+    <div className="navbar bg-base-100 shadow-sm justify-between">
       {/* Left zone */}
       <div className="flex space-x-1.5 items-center">
         {/* Hamburger btn */}
-        {user && (
-          <div className="relative inline-block text-left md:hidden">
-            <button
-              onClick={() => setToggleHamburger(!toggleHamburger)}
-              className="btn-hamburger"
-            >
-              <RxHamburgerMenu className="size-4.5" />
-            </button>
-
-            <div
-              className={`absolute left-0 z-10 ${
-                toggleHamburger ? "" : "hidden"
-              } mt-2 w-64 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg`}
-            >
-              <div className="py-1 px-2 list-none">
-                {getNavLinks(userInfo?.role[0])}
-              </div>
-            </div>
-          </div>
+        {/* Drawer Toggle */}
+        {user && userInfo && (
+          <label htmlFor="my-drawer" className="btn-hamburger drawer-button">
+            <RxHamburgerMenu className="size-4.5" />
+          </label>
         )}
         {/* Home btn */}
         <a href="/" className="flex items-center gap-2" id="btn-home">
@@ -62,6 +46,14 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
           </button>
         </>
       )}
+      {/* Drawer Structure (outside navbar for layout control) */}
+      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-side z-50">
+        <label htmlFor="my-drawer" className="drawer-overlay"></label>
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+          {getNavLinks(userInfo?.role[0])}
+        </ul>
+      </div>
     </div>
   );
 };
