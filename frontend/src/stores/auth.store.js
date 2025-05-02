@@ -10,7 +10,7 @@ import {
 import AuthServices from "../services/auth.service";
 
 export const useAuthStore = create(
-  persist((set, get) => {
+  persist((set) => {
     // listen to auth state changes on load
     listenToAuthChanges((user) => {
       set({ user, isLoading: false });
@@ -24,8 +24,7 @@ export const useAuthStore = create(
       signInSystem: async () => {
         try {
           await googleSignIn().then(async (result) => {
-            // const email = result.user.email;
-            const email = "bp999@bangpaeschool.ac.th";
+            const email = result.user.email;
 
             const res = await AuthServices.sign({ email });
             if (res.status === 200) {
