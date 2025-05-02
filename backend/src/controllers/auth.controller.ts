@@ -14,7 +14,7 @@ const sign = async (app: Elysia) =>
           // ตรวจสอบว่ามี email หรือไม่
           if (!email) {
             set.status = 400; // ตั้งค่า HTTP status เป็น 400 (Bad Request)
-            return { error: "ต้องการอีเมล" };
+            return { message: "ต้องการอีเมล" };
           }
 
           const user = await UserModel.findOne({ email: email }); // ค้นหาผู้ใช้ในฐานข้อมูลด้วย email
@@ -22,7 +22,7 @@ const sign = async (app: Elysia) =>
           // หากไม่พบผู้ใช้
           if (!user) {
             set.status = 404; // ตั้งค่า HTTP status เป็น 404 (Not Found)
-            return { error: "ไม่พบอีเมลนี้ในระบบ" };
+            return { message: "ไม่พบอีเมลนี้ในระบบ" };
           }
 
           // สร้าง JWT token โดยใส่ข้อมูล email และ role ของผู้ใช้
@@ -46,7 +46,6 @@ const sign = async (app: Elysia) =>
         } catch (error) {
           // หากเกิดข้อผิดพลาด
           set.status = 500; // ตั้งค่า HTTP status เป็น 500 (Internal Server Error)
-          console.log(error);
           return { message: "เซิฟเวอร์เกิดข้อผิดพลาดไม่สามารถเข้าสู่ระบบได้" };
         }
       },
