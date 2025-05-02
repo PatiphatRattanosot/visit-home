@@ -1,99 +1,57 @@
-// Define the nav links based on the role
-export const getNavLinks = (role) => {
-  const baseLink = "block px-4 py-2 hover:bg-gray-100 text-sm";
+import { SlArrowDown } from "react-icons/sl";
 
+export const getNavLinks = (role) => {
   switch (role) {
     case "Admin":
       return (
-        <>
+        <ul className="menu menu-vertical md:menu-horizontal px-1">
           <li>
-            <a href="/admin" className={baseLink}>
-              หน้าหลัก
-            </a>
+            <a>หน้าแรก</a>
           </li>
           <li>
-            <a href="/admin/personnel" className={baseLink}>
-              บุคลากร
-            </a>
+            <a>จัดการบุคลากร</a>
           </li>
-        </>
+        </ul>
       );
 
     case "Teacher":
       return (
-        <>
+        <ul className="menu menu-vertical md:menu-horizontal px-1">
           <li>
-            <a href="/teacher" className={baseLink}>
-              หน้าหลัก
-            </a>
+            <a>หน้าแรก</a>
           </li>
           <li>
-            <a href="/teacher" className={baseLink}>
-              รายชื่อนักเรียน
-            </a>
+            <a>รายชื่อนักเรียน</a>
           </li>
           <li>
-            <a href="/teacher" className={baseLink}>
-              ผลประเมิน SDQ
-            </a>
+            <a>ผลประเมิน SDQ</a>
           </li>
-        </>
+        </ul>
       );
 
     case "Student":
       return (
-        <>
+        <ul className="menu menu-vertical md:menu-horizontal px-1">
           <li>
-            <a href="/student/status" className={baseLink}>
-              หน้าหลัก
-            </a>
+            <a href="/student/status">หน้าแรก</a>
           </li>
           <li>
-            <a href="/student/visit-info" className={baseLink}>
-              จัดการข้อมูลการเยี่ยมบ้าน
-            </a>
+            <a href="/student/visit-info">ข้อมูลการเยี่ยมบ้าน</a>
           </li>
-          <li tabIndex={0} className="relative">
-            <details className="group">
-              <summary
-                className={`cursor-pointer flex items-center ${baseLink}`}
-              >
-                ประเมิน SDQ
-                <svg
-                  className="ml-1 h-4 w-4 transition-transform group-open:rotate-180"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </summary>
-              <ul className="absolute mt-2 bg-white border border-gray-200 rounded-md shadow-lg w-40 py-1 z-10">
+          <li>
+            <details>
+              <summary>ประเมิน SDQ</summary>
+              <ul className="p-2">
                 <li>
-                  <a
-                    href="/student"
-                    className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                  >
-                    ผู้ปกครอง
-                  </a>
+                  <a href="/student">นักเรียน</a>
                 </li>
                 <li>
-                  <a
-                    href="/student"
-                    className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                  >
-                    นักเรียน
-                  </a>
+                  <a href="/student">ผู้ปกครอง</a>
                 </li>
               </ul>
             </details>
           </li>
-        </>
+        </ul>
       );
 
     default:
