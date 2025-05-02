@@ -11,7 +11,10 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
         {/* Hamburger btn */}
         {/* Drawer Toggle */}
         {user && userInfo && (
-          <label htmlFor="my-drawer" className="btn-hamburger drawer-button">
+          <label
+            htmlFor="navbar-drawer"
+            className="btn-hamburger drawer-button"
+          >
             <RxHamburgerMenu className="size-4.5" />
           </label>
         )}
@@ -25,14 +28,14 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
       </div>
       {/* Center zone */}
       {user && (
-        <div className="md:flex items-center list-none gap-6 hidden">
+        <div className="md:flex items-center list-none gap-6 hidden text-sm">
           {getNavLinks(userInfo?.role[0])}
         </div>
       )}
       {/* Right zone */}
       {user ? (
         <div className="flex gap-2 items-center">
-          <span className="text-sm text-[#03045e]">
+          <span className="text-sm text-[#03045e] hidden md:flex">
             สวัสดี{" "}
             {userInfo?.prefix +
               " " +
@@ -52,9 +55,9 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
         </>
       )}
       {/* Drawer Structure (outside navbar for layout control) */}
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-side z-50">
-        <label htmlFor="my-drawer" className="drawer-overlay"></label>
+      <input id="navbar-drawer" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-side z-50 md:hidden">
+        <label htmlFor="navbar-drawer" className="drawer-overlay"></label>
         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
           {getNavLinks(userInfo?.role[0])}
         </ul>
