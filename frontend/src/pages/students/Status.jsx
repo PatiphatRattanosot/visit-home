@@ -2,7 +2,7 @@ import StudentProgress from "../../components/students/StudentProgress";
 
 const Status = () => {
   return (
-    <div className="min-h-[68.5vh] bg-gray-100 flex justify-center items-center px-4">
+    <div className="min-h-[73.75vh] bg-gray-100 flex justify-center items-center px-4">
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-4xl mx-auto justify-center">
         <StudentProgress
           title="สถานะข้อมูลการเยี่ยมบ้าน"
