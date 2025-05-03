@@ -9,6 +9,9 @@ const SelectInput = ({
   onChange,
   disabled,
   className = "w-1/4",
+  error,
+  touched,
+  onBlur,
 }) => {
   return (
     <div className={`flex flex-col ${className}`}>
@@ -21,6 +24,7 @@ const SelectInput = ({
         name={name}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         disabled={disabled}
       >
         <option value="">{defaultOpt}</option>
@@ -30,6 +34,9 @@ const SelectInput = ({
           </option>
         ))}
       </select>
+      {error && touched && (
+        <div className="text-red-600 text-xs mt-1">{error}</div>
+      )}
     </div>
   );
 };

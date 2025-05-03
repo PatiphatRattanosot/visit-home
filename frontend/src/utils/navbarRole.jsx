@@ -1,6 +1,4 @@
-import { SlArrowDown } from "react-icons/sl";
-
-export const getNavLinks = (role) => {
+export const getNavLinks = (role, _id) => {
   switch (role) {
     case "Admin":
       return (
@@ -33,10 +31,10 @@ export const getNavLinks = (role) => {
       return (
         <ul className="menu menu-vertical md:menu-horizontal px-1">
           <li>
-            <a href="/student/status">หน้าแรก</a>
+            <a href={`/student/${_id}`}>หน้าแรก</a>
           </li>
           <li>
-            <a href="/student/visit-info">ข้อมูลการเยี่ยมบ้าน</a>
+            <a href={`/student/${_id}/self-info`}>ข้อมูลการเยี่ยมบ้าน</a>
           </li>
           <li>
             <details>

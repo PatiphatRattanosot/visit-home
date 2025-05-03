@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./stores/auth.store";
 import Landing from "./pages/Landing";
@@ -13,12 +13,14 @@ import UpdateSelfInfoForm from "./pages/students/self-info/UpdateSelfInfoForm";
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
     useAuthStore();
+
   if (isLoading)
     return (
       <div className="h-screen w-full flex justify-center items-center">
         Loading...
       </div>
     );
+
   return (
     <>
       <Navbar
@@ -29,12 +31,17 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="student">
-          <Route path="status" element={<Status />} />
-          <Route path="self-info">
-            <Route path="" element={<SelfInfo />} />
-            <Route path="add" element={<AddSelfInfoForm />} />
-            <Route path="update" element={<UpdateSelfInfoForm />} />
+        <Route
+          path="student"
+          element={userInfo?.role[0] !== "Student" && <Navigate to={"/"} />}
+        >
+          <Route path=":uid">
+            <Route path="" element={<Status />} />
+            <Route path="self-info">
+              <Route path="" element={<SelfInfo />} />
+              <Route path="add" element={<AddSelfInfoForm />} />
+              <Route path="update" element={<UpdateSelfInfoForm />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
