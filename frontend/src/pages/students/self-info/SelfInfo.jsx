@@ -29,6 +29,14 @@ const SelfInfo = () => {
   // Tab spacing
   const tabSpacing = "\u00A0\u00A0\u00A0\u00A0";
 
+  // stepper path
+  const stepperPath = {
+    stepOne: `/student/${userInfo?._id}/self-info`,
+    stepTwo: `/student/${userInfo?._id}/relation`,
+    stepThree: `/student/${userInfo?._id}/family-status`,
+    stepFour: `/student/${userInfo?._id}/behavior`,
+  };
+
   return (
     <div className="h-screen py-9 bg-gray-100 flex justify-center">
       <div className="bg-white px-4 py-6 w-9/12 rounded-lg">
@@ -44,8 +52,17 @@ const SelfInfo = () => {
           </span>
         </h3>
         {/* Stepper */}
-        <div className="my-3">
-          <Stepper />
+        <div className="my-3 flex justify-center">
+          <Stepper step={1} path={stepperPath} />
+        </div>
+        {/* Manage info btn */}
+        <div className="flex justify-end my-6">
+          <a
+            className="btn-green"
+            href={`/student/${userInfo?._id}/self-info/add`}
+          >
+            เพิ่มข้อมูล
+          </a>
         </div>
         {/* แสดงรูป */}
         <div className="flex justify-center mt-8">

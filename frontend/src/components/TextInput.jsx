@@ -2,7 +2,10 @@ const TextInput = ({
   label,
   name,
   value,
+  error,
+  touched,
   onChange,
+  onBlur,
   placeholder,
   type = "text",
   disabled,
@@ -21,8 +24,12 @@ const TextInput = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
+        onBlur={onBlur}
         className="text-input"
       />
+      {error && touched && (
+        <div className="text-red-600 text-xs mt-1">{error}</div>
+      )}
     </div>
   );
 };

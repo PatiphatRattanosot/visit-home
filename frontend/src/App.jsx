@@ -16,12 +16,14 @@ import UpdateSelfInfoForm from "./pages/students/self-info/UpdateSelfInfoForm";
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
     useAuthStore();
+
   if (isLoading)
     return (
       <div className="h-screen w-full flex justify-center items-center">
         Loading...
       </div>
     );
+
   return (
     <>
       <Navbar
@@ -46,6 +48,7 @@ function App() {
               )
             }
           />
+          {/* Admin */}
           <Route
             path="admin"
             element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
