@@ -15,12 +15,14 @@ import UpdateSelfInfoForm from "./pages/students/self-info/UpdateSelfInfoForm";
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
     useAuthStore();
+
   if (isLoading)
     return (
       <div className="h-screen w-full flex justify-center items-center">
         Loading...
       </div>
     );
+
   return (
     <>
       <Navbar
@@ -53,7 +55,10 @@ function App() {
           <Route path="personnel" element={<Personnel />} />
         </Route>
         {/* Student */}
-        <Route path="student">
+        <Route
+          path="student"
+          element={!userInfo?.role.includes("Student") && <Navigate to={"/"} />}
+        >
           <Route path="status" element={<Status />} />
           <Route path="self-info">
             <Route path="" element={<SelfInfo />} />
