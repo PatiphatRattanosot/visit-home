@@ -58,7 +58,12 @@ function App() {
             <Route path="year" element={<YearManagement />} />
           </Route>
           {/* Student */}
-          <Route path="student">
+          <Route
+            path="student"
+            element={
+              !userInfo?.role.includes("Student") && <Navigate to={"/"} />
+            }
+          >
             <Route path="" element={<Status />} />
             <Route path="self-info">
               <Route path="" element={<SelfInfo />} />
