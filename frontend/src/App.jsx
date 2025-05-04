@@ -37,7 +37,7 @@ function App() {
               <Navigate to={"/admin"} />
             ) : userInfo?.role[0] === "Teacher" ? (
               <Navigate to={"/teacher"} />
-            ) : userInfo.role[0] === "Student" ? (
+            ) : userInfo?.role[0] === "Student" ? (
               <Navigate to={"/student"} />
             ) : (
               <Landing />
