@@ -30,18 +30,29 @@ function App() {
         logout={signOutSystem}
       />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route
+          path="/"
+          element={
+            userInfo?.role[0] === "Admin" ? (
+              <Navigate to={"/admin"} />
+            ) : userInfo?.role[0] === "Teacher" ? (
+              <Navigate to={"/teacher"} />
+            ) : userInfo.role[0] === "Student" ? (
+              <Navigate to={"/student"} />
+            ) : (
+              <Landing />
+            )
+          }
+        />
         <Route
           path="student"
-          element={userInfo?.role[0] !== "Student" && <Navigate to={"/"} />}
+          element={!userInfo?.role.includes("Student") && <Navigate to={"/"} />}
         >
-          <Route path=":uid">
-            <Route path="" element={<Status />} />
-            <Route path="self-info">
-              <Route path="" element={<SelfInfo />} />
-              <Route path="add" element={<AddSelfInfoForm />} />
-              <Route path="update" element={<UpdateSelfInfoForm />} />
-            </Route>
+          <Route path="" element={<Status />} />
+          <Route path="self-info">
+            <Route path="" element={<SelfInfo />} />
+            <Route path="add" element={<AddSelfInfoForm />} />
+            <Route path="update" element={<UpdateSelfInfoForm />} />
           </Route>
         </Route>
       </Routes>

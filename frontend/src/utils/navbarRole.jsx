@@ -1,4 +1,4 @@
-export const getNavLinks = (role, _id) => {
+export const getNavLinks = (role) => {
   switch (role) {
     case "Admin":
       return (
@@ -31,10 +31,10 @@ export const getNavLinks = (role, _id) => {
       return (
         <ul className="menu menu-vertical md:menu-horizontal px-1">
           <li>
-            <a href={`/student/${_id}`}>หน้าแรก</a>
+            <a href={`/student`}>หน้าแรก</a>
           </li>
           <li>
-            <a href={`/student/${_id}/self-info`}>ข้อมูลการเยี่ยมบ้าน</a>
+            <a href={`/student/self-info`}>ข้อมูลการเยี่ยมบ้าน</a>
           </li>
           <li>
             <details>
