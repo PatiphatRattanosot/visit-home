@@ -29,7 +29,7 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
       {/* Center zone */}
       {user && (
         <div className="md:flex items-center list-none gap-6 hidden text-sm">
-          {getNavLinks(userInfo?.role[0], userInfo?._id)}
+          {getNavLinks(userInfo?.role[0])}
         </div>
       )}
       {/* Right zone */}
@@ -59,7 +59,7 @@ const Navbar = ({ user, userInfo, googleSignIn, logout }) => {
       <div className="drawer-side z-50 md:hidden">
         <label htmlFor="navbar-drawer" className="drawer-overlay"></label>
         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-          {getNavLinks(userInfo?.role[0], userInfo?._id)}
+          {getNavLinks(userInfo?.role[0])}
         </ul>
       </div>
     </div>
