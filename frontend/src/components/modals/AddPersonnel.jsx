@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import TextInputInModal from "./TexInputInModal";
 import SelectInputInModal from "./SelectInputInModal";
-=======
-import TextInput from "../TextInput";
-import SelectInput from "../SelectInput";
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-import TextInputInModal from "./TexInputInModal";
-import SelectInputInModal from "./SelectInputInModal";
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
+
 import Userservices from "../../services/user.service";
 import { toast } from "react-hot-toast";
 import { Navigate, useNavigate } from "react-router";
@@ -59,15 +51,7 @@ const AddPersonnel = () => {
         <div className="modal-box flex flex-col items-center justify-center w-11/12">
           <h3 className="font-bold text-lg text-center">เพิ่มข้อมูลบุคลากร</h3>
           <div className="flex flex-col items-center justify-center space-y-2">
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <SelectInputInModal
-=======
-          <SelectInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-          <SelectInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
+            <SelectInputInModal
               name={"prefix"}
               value={personnel.prefix}
               onChange={handleChange}
@@ -77,15 +61,8 @@ const AddPersonnel = () => {
               options={prefixOptions}
               className="w-64 md:w-72"
             />
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             <TextInputInModal
-=======
-            <TextInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-            <TextInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
               name={"first_name"}
               placeholder={"ชื่อ"}
               disabled={false}
@@ -93,15 +70,8 @@ const AddPersonnel = () => {
               onChange={handleChange}
               label={"ชื่อ"}
             />
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             <TextInputInModal
-=======
-            <TextInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-            <TextInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
               name={"last_name"}
               placeholder={"นามสกุล"}
               disabled={false}
@@ -109,15 +79,8 @@ const AddPersonnel = () => {
               onChange={handleChange}
               label={"นามสกุล"}
             />
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             <TextInputInModal
-=======
-            <TextInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-            <TextInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
               name={"user_id"}
               placeholder={"เลขที่ประจำตัวบุคลากร"}
               disabled={false}
@@ -125,15 +88,8 @@ const AddPersonnel = () => {
               onChange={handleChange}
               label={"เลขที่ประจำตัวบุคลากร"}
             />
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             <SelectInputInModal
-=======
-            <SelectInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-            <SelectInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
               name={"rank"}
               value={personnel.rank}
               onChange={handleChange}
@@ -142,17 +98,9 @@ const AddPersonnel = () => {
               defaultOpt={"ตำแหน่ง"}
               options={rankOptions}
               className="w-64 md:w-72"
-              
             />
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             <TextInputInModal
-=======
-            <TextInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-            <TextInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
               name={"phone"}
               placeholder={"เบอร์โทรศัพท์"}
               disabled={false}
@@ -161,28 +109,21 @@ const AddPersonnel = () => {
               label={"เบอร์โทรศัพท์"}
             />
           </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
           <SelectInputInModal
-=======
-          <SelectInput
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
-          <SelectInputInModal
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
-              name={"status"}
-              value={personnel.status}
-              onChange={handleChange}
-              label={"สถานะ"}
-              disabled={false}
-              
-              options={statusOptions}
-              className="w-64 md:w-72"
-              
-            />
+            name={"status"}
+            value={personnel.status}
+            onChange={handleChange}
+            label={"สถานะ"}
+            disabled={false}
+            options={statusOptions}
+            className="w-64 md:w-72"
+          />
           <div className="modal-action">
             <form method="dialog mt-2">
-              <button onClick={handleSubmit} className="btn bg-green-400 mr-8">บันทึก</button>
+              <button onClick={handleSubmit} className="btn bg-green-400 mr-8">
+                บันทึก
+              </button>
               <button className="btn bg-red-400 mr-8">ยกเลิก</button>
             </form>
           </div>

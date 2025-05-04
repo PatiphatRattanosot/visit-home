@@ -73,34 +73,26 @@
       "prefix": "นาย",
       "first_name": "ธีรภัทร",
       "last_name": "ชาญศิลป์",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
+
       "rank": "ครูที่ปรึกษา",
       "phone": "0881234567",
       "status": "เกษียณ"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       "id": "9",
       "type": "teacher",
       "user_id": "009",
       "prefix": "นางสาว",
       "first_name": "พิมพ์ชนก",
       "last_name": "สายสมร",
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
+
       "rank": "ครูที่ปรึกษา",
       "phone": "0881234567",
       "status": "เกษียณ"
     },
     {
-=======
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
+
       "id": "10",
       "type": "Admin",
       "user_id": "010",
@@ -132,13 +124,7 @@
       "rank": "ครูที่ปรึกษา",
       "phone": "0867778888",
       "status": "เกษียณ"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
+
     },
     {
       "id": "9140",
@@ -168,14 +154,6 @@
       "rank": "ครูที่ปรึกษา",
       "phone": "0837462839",
       "status": "เกษียณ"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
-=======
->>>>>>> e5ac807 (Edit name service and CRD not U)
-=======
->>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
     }
   ]
 }
