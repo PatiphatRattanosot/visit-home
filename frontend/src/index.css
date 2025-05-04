@@ -2,8 +2,41 @@
 @plugin "daisyui";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
+=======
+
+@theme {
+  --color-green_light: #a5dc86;
+  --color-neutral_content: #f9fafb;
+  --color-neutral_content_hover: #f3f4f6;
+  --color-back: #000000;
+  --color-white: #ffffff;
+  --color-emerald_hover: #6ee7b7;
+  --color-emerald: #34d399;
+  --color-red: #f87171;
+  --color-red_hover: #fca5a5;
+  --color-yellow: #fcbf49;
+  --color-yellow_hover: #fde047;
+  --color-darkbule: #4338ca;
+  --color-darkbule_hover: #4f46e5;
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 1rem;
+  /* ขนาดอักษรพื้นฐาน */
+  --font-size-base: 1.25rem;
+  /* หัวข้อ */
+  --font-size-lg: 2rem;
+  --font-size-xl: 3rem;
+  --font-size-2xl: 3.5rem;
+}
+
+.section-container {
+  @apply max-w-screen-2xl container mx-auto xl:px-24 px-4 mt-8;
+}
+
+>>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
 
 @theme {
   --color-green_light: #a5dc86;

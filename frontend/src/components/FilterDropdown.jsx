@@ -1,5 +1,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
 import React from "react";
 
 const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
@@ -22,6 +25,7 @@ const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
         </li>
       </ul>
     </details>
+<<<<<<< HEAD
 =======
 import React, { useState } from "react";
 =======
@@ -74,6 +78,8 @@ const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
       </ul>
     </details>
 >>>>>>> e5ac807 (Edit name service and CRD not U)
+=======
+>>>>>>> 38642ad78cd08acf6b2ff37a30fa321128604915
   );
 };
 
