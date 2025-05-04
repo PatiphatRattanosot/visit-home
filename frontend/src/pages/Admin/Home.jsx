@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const getChartData = async () => {
       try {
-        const response = await Userservices.getUsers();
+        const response = await Userservices.getAllUsers();
 
         //สถานะบุคลากร
         const statusCount = {};

@@ -22,8 +22,14 @@ export const useAuthStore = create(
       isLoading: false,
       signInSystem: async () => {
         try {
+<<<<<<< HEAD
           const result = await googleSignIn();
           const email = result.user.email;
+=======
+          await googleSignIn().then(async (result) => {
+            const email = result.user.email;
+            // const email = "bp999@bangpaeschool.ac.th";
+>>>>>>> bc38144 (Edit name service and CRD not U)
 
           const res = await AuthServices.sign({ email });
 
