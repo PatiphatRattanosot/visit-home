@@ -23,8 +23,8 @@ export const useAuthStore = create(
       signInSystem: async () => {
         try {
           await googleSignIn().then(async (result) => {
-            // const email = result.user.email;
-            const email = "bp999@bangpaeschool.ac.th";
+            const email = result.user.email;
+            // const email = "bp999@bangpaeschool.ac.th";
 
             const res = await AuthServices.sign({ email });
             if (res.status === 200) {

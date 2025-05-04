@@ -4,9 +4,11 @@ import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import SearchPersonnel from "../../components/SearchPersonnel";
-import FilterDropdown from "../../components/FilterDropdown"; 
+import FilterDropdown from "../../components/FilterDropdown";
+import ModalAddPersonnel from "../../components/modals/AddPersonnel";
+import ModalEditPersonnel from "../../components/modals/EditPersonnel";
 const Personnel = () => {
-  const [selectedOption, setSelectedOption] = useState("ทั้งหมด"); 
+  const [selectedOption, setSelectedOption] = useState("ทั้งหมด");
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
   const [filteredPersonnel, setFilteredPersonnel] = useState([]);
   // สร้าง satate สำหรับ Paginations
@@ -84,6 +86,26 @@ const Personnel = () => {
   }, []);
   console.log(personnel);
 
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  
+    if (option === "ลำดับตัวอักษร ก-ฮ") {
+      const sorted = [...personnel].sort((a, b) =>
+        a.first_name.localeCompare(b.first_name, "th")
+      );
+      setFilteredPersonnel(sorted);
+    } else if (option === "ลำดับตัวอักษร ฮ-ก") {
+      const sorted = [...personnel].sort((a, b) =>
+        b.first_name.localeCompare(a.first_name, "th")
+      );
+      setFilteredPersonnel(sorted);
+    } else {
+      setFilteredPersonnel(personnel);
+    }
+  };
+  
+  
+
   const showStatus = (status) => {
     switch (status) {
       case "รับราชการ":
@@ -107,31 +129,16 @@ const Personnel = () => {
     }
   };
   return (
-    <div>
-      <h1>รายชื่อบุคลากร</h1>
+    <div className="section-container w-full">
+      <h1 className="text-center">รายชื่อบุคลากร</h1>
 
       <div className="flex justify-between mb-4 m-10">
         {/* Dropdown สำหรับการกรองข้อมูล */}
         <FilterDropdown
-          selectedOption={selectedOption}
-          onOptionSelect={(option) => {
-            setSelectedOption(option);
+  selectedOption={selectedOption}
+  onOptionSelect={handleOptionSelect}
+/>
 
-            if (option === "ลำดับตัวอักษร ก-ฮ") {
-              const sorted = [...filteredPersonnel].sort((a, b) =>
-                a.first_name.localeCompare(b.first_name, "th")
-              );
-              setFilteredPersonnel(sorted);
-            } else if (option === "ลำดับตัวอักษร ฮ-ก") {
-              const sorted = [...filteredPersonnel].sort((a, b) =>
-                b.first_name.localeCompare(a.first_name, "th")
-              );
-              setFilteredPersonnel(sorted);
-            } else {
-              setFilteredPersonnel(personnel); // ทั้งหมด
-            }
-          }}
-        />
 
         {/* ช่องค้นหา */}
         <SearchPersonnel
@@ -142,62 +149,77 @@ const Personnel = () => {
 
         {/* ปุ่มเพิ่มบุคลากร */}
         <div className="relative w-40">
-          <button className="btn btn-green">เพิ่มบุคลากร</button>
+          <button
+            onClick={() => document.getElementById("add_personnel").showModal()}
+            className="btn btn-green"
+          >
+            เพิ่มบุคลากร
+          </button>
         </div>
+        {/* Modal เพิ่มบุคลากร */}
+        <ModalAddPersonnel />
       </div>
-
-      <table className="table-fixed w-full">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              เลขที่ประจำตัวบุคลากร
-            </th>
-
-            <th className="border border-gray-300 px-4 py-2">คำนำหน้าชื่อ</th>
-            <th className="border border-gray-300 px-4 py-2">ชื่อ</th>
-            <th className="border border-gray-300 px-4 py-2">นามสกุล</th>
-            <th className="border border-gray-300 px-4 py-2">ตำแหน่ง</th>
-            <th className="border border-gray-300 px-4 py-2">เบอร์โทรศัพท์</th>
-            <th className="border border-gray-300 px-4 py-2">สถานะ</th>
-            <th className="border border-gray-300 px-4 py-2">แก้ไข/ลบ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* เพิ่มข้อมูลบุคลากรตรงนี้ */}
-          {currentItems.map((person, index) => (
-            <tr key={index} className="hover:bg-gray-100 cursor-pointer">
+      {/* ตารางแสดงข้อมูลบุคลากร */}
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full">
+          <thead>
+            <tr>
               <th>
                 <label>
-                  <input type="checkbox" className="form-checkbox" />
+                  <input type="checkbox" className="checkbox" />
                 </label>
               </th>
-              <td className="text-center">{person.user_id}</td>
-              <td className="text-center">{person.prefix}</td>
-              <td className="text-center">{person.first_name}</td>
-              <td className="text-center">{person.last_name}</td>
-              <td className="text-center">{person.rank}</td>
-              <td className="text-center">{person.phone}</td>
-              <td className="text-center">{showStatus(person.status)}</td>
-              <td className="flex gap-4 items-center justify-center">
-                <button className="text-yellow-500 hover:text-yellow-700 text-4xl transition">
-                  <BiSolidEdit />
-                </button>
-                <button
-                  className="text-red-500 hover:text-red-700 text-4xl transition"
-                  onClick={() => handleDeleteUser(person.id)}
-                >
-                  <AiOutlineDelete />
-                </button>
-              </td>
+              <th>เลขที่ประจำตัว</th>
+              <th>คำนำหน้า</th>
+              <th>ชื่อ</th>
+              <th>นามสกุล</th>
+              <th>ตำแหน่ง</th>
+              <th>เบอร์โทรศัพท์</th>
+              <th>สถานะ</th>
+              <th>แก้ไข/ลบ</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentItems.map((person, index) => (
+              <tr key={index}>
+                <td>
+                  <label>
+                    <input type="checkbox" className="checkbox" />
+                  </label>
+                </td>
+                <td>{person.user_id}</td>
+                <td>{person.prefix}</td>
+                <td>{person.first_name}</td>
+                <td>{person.last_name}</td>
+                <td>{person.rank}</td>
+                <td>{person.phone}</td>
+                <td>{showStatus(person.status)}</td>
+                <td className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      document.getElementById("edit_personnel").showModal()
+                    }
+                    className="btn btn-warning"
+                  >
+                    <BiSolidEdit size={20} />
+                  </button>
+                  <ModalEditPersonnel
+                    personnel={person}
+                    setPersonnel={setPersonnel}
+                  />
+                  <button
+                    onClick={() => handleDeleteUser(person.id)}
+                    className="btn btn-error"
+                  >
+                    <AiOutlineDelete size={20} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       {/* Pagination */}
       <div className="flex justify-center mt-4 gap-2">
         <button

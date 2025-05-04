@@ -5,6 +5,11 @@ const getAllUsers = async () => {
   return res.data;
 };
 
+const getUserById = async (id) => {
+  return await api.get(`/user/${id}`);
+};
+
+
 const addUser = async (data) => {
   return await api.post("/user", data);
 }
@@ -25,6 +30,7 @@ const Uservervices = {
   getAllUsers,
   addUser,
   updateUser,
+  getUserById,
 };
 
 export default Uservervices;
