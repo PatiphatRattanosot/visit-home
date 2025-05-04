@@ -82,10 +82,10 @@ const AddSelfInfoForm = () => {
 
   // stepper path
   const stepperPath = {
-    stepOne: `/student/${userInfo?._id}/self-info/add`,
-    stepTwo: `/student/${userInfo?._id}/relation/add`,
-    stepThree: `/student/${userInfo?._id}/family-status/add`,
-    stepFour: `/student/${userInfo?._id}/behavior/add`,
+    stepOne: `/student/self-info/add`,
+    stepTwo: `/student/relation/add`,
+    stepThree: `/student/family-status/add`,
+    stepFour: `/student/behavior/add`,
   };
 
   return (
@@ -433,8 +433,8 @@ const AddSelfInfoForm = () => {
           </div>
           <div className="flex justify-between mt-10 space-x-2">
             <button className="btn-red w-1/2">ยกเลิก</button>
-            <button type="submit" className="btn-green w-1/2">
-              บันทึก
+            <button type="submit" className="btn-gray w-1/2">
+              ถัดไป
             </button>
           </div>
         </form>
