@@ -5,6 +5,7 @@ import StudentPicture from "../../../components/students/StudentPicture";
 import { useAuthStore } from "../../../stores/auth.store";
 import { useFormik } from "formik";
 import { SelfInfoSchema } from "../../../schemas/selfInfo";
+import axios from "axios";
 
 const UpdateSelfInfoForm = () => {
   const { userInfo } = useAuthStore();
@@ -41,6 +42,7 @@ const UpdateSelfInfoForm = () => {
     },
   });
 
+  // เช็คว่ามีการติ๊กเลือกดึงข้อมูลจากบิดาหรือมารดารึป่าว และนำค่าไป่ใส่ใน formik values
   useEffect(() => {
     if (!parentToggle) {
       const parentData =
@@ -65,6 +67,43 @@ const UpdateSelfInfoForm = () => {
       );
     }
   }, [parentToggle, parentFetch]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/studentInfo");
+        if (res.status === 200 && res.data?.personal_info) {
+          const info = res.data.personal_info;
+          formik.setValues({
+            father_prefix: info.father_prefix || "",
+            father_first_name: info.father_first_name || "",
+            father_last_name: info.father_last_name || "",
+            father_phone: info.father_phone || "",
+            father_job: info.father_job || "",
+            mother_prefix: info.mother_prefix || "",
+            mother_first_name: info.mother_first_name || "",
+            mother_last_name: info.mother_last_name || "",
+            mother_phone: info.mother_phone || "",
+            mother_job: info.mother_job || "",
+            family_relation_status: info.family_relation_status || "",
+            parent_prefix: info.parent_prefix || "",
+            parent_first_name: info.parent_first_name || "",
+            parent_last_name: info.parent_last_name || "",
+            parent_phone: info.parent_phone || "",
+            parent_job: info.parent_job || "",
+            lat: info.lat || "",
+            lng: info.lng || "",
+          });
+          setImage(info?.image);
+        }
+      } catch (error) {
+        console.log("บัคอีกแล้วน้อง", error, "แบบนี้ไม่ไหวนะ");
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log(formik.values);
 
   const [image, setImage] = useState(null);
 

@@ -26,19 +26,16 @@ const SelfInfo = () => {
 
   console.log("Self-Info", personalInfo);
 
-  // Tab spacing
-  const tabSpacing = "\u00A0\u00A0\u00A0\u00A0";
-
   // stepper path
   const stepperPath = {
-    stepOne: `/student/${userInfo?._id}/self-info`,
-    stepTwo: `/student/${userInfo?._id}/relation`,
-    stepThree: `/student/${userInfo?._id}/family-status`,
-    stepFour: `/student/${userInfo?._id}/behavior`,
+    stepOne: `/student/self-info`,
+    stepTwo: `/student/relation`,
+    stepThree: `/student/family-status`,
+    stepFour: `/student/behavior`,
   };
 
   return (
-    <div className="h-screen py-9 bg-gray-100 flex justify-center">
+    <div className="min-h-screen py-9 bg-gray-100 flex justify-center">
       <div className="bg-white px-4 py-6 w-9/12 rounded-lg">
         {/* หัวข้อ */}
         <h3 className="text-center text-xl font-bold">
@@ -58,10 +55,14 @@ const SelfInfo = () => {
         {/* Manage info btn */}
         <div className="flex justify-end my-6">
           <a
-            className="btn-green"
-            href={`/student/${userInfo?._id}/self-info/add`}
+            className={personalInfo === null ? "btn-green" : "btn-yellow"}
+            href={
+              personalInfo === null
+                ? `/student/self-info/add`
+                : `/student/self-info/update`
+            }
           >
-            เพิ่มข้อมูล
+            {personalInfo === null ? "เพิ่มข้อมูล" : "แก้ไขข้อมูล"}
           </a>
         </div>
         {/* แสดงรูป */}
@@ -71,84 +72,115 @@ const SelfInfo = () => {
         {/* ข้อมูลนักเรียน */}
         <div className="flex justify-center mt-6">
           <div className="bg-gray-50 max-w-2xl w-full rounded-lg px-6 py-10 flex justify-center">
-            <div className="text-left flex flex-col gap-2.5">
-              {/* ชื่อนักเรียน */}
-              <h5 className="text-gray-600">
-                ชื่อนักเรียน :{" "}
-                <span className="text-black">
-                  {userInfo?.prefix + " " + userInfo?.first_name}
-                </span>
-                {tabSpacing}
-                นามสกุล :{" "}
-                <span className="text-black">{userInfo?.last_name}</span>
-              </h5>
-              {/* ชื่อบิดา */}
-              <h5 className="text-gray-600">
-                ชื่อบิดา :{" "}
-                <span className="text-black">
-                  {personalInfo?.father_prefix +
-                    " " +
-                    personalInfo?.father_first_name}
-                </span>
-                {tabSpacing}
-                นามสกุล :{" "}
-                <span className="text-black">
-                  {personalInfo?.father_last_name}
-                </span>
-              </h5>
-              {/* อาชีพบิดา */}
-              <h5 className="text-gray-600">
-                อาชีพบิดา :{" "}
-                <span className="text-black">{personalInfo?.father_job}</span>
-                {tabSpacing}
-                เบอร์โทรศัพท์ :{" "}
-                <span className="text-black">{personalInfo?.father_phone}</span>
-              </h5>
-              {/* ชื่อมารดา */}
-              <h5 className="text-gray-600">
-                ชื่อมารดา :{" "}
-                <span className="text-black">
-                  {personalInfo?.mother_prefix +
-                    " " +
-                    personalInfo?.mother_first_name}
-                </span>
-                {tabSpacing}
-                นามสกุล :{" "}
-                <span className="text-black">
-                  {personalInfo?.mother_last_name}
-                </span>
-              </h5>
-              {/* อาชีพมารดา */}
-              <h5 className="text-gray-600">
-                อาชีพมารดา :{" "}
-                <span className="text-black">{personalInfo?.mother_job}</span>
-                {tabSpacing}
-                เบอร์โทรศัพท์ :{" "}
-                <span className="text-black">{personalInfo?.mother_phone}</span>
-              </h5>
-              {/* ชื่อผู้ปกครอง */}
-              <h5 className="text-gray-600">
-                ชื่อผู้ปกครอง :{" "}
-                <span className="text-black">
-                  {personalInfo?.parent_prefix +
-                    " " +
-                    personalInfo?.parent_first_name}
-                </span>
-                {tabSpacing}
-                นามสกุล :{" "}
-                <span className="text-black">
-                  {personalInfo?.parent_last_name}
-                </span>
-              </h5>
-              {/* อาชีพผู้ปกครอง */}
-              <h5 className="text-gray-600">
-                อาชีพผู้ปกครอง :{" "}
-                <span className="text-black">{personalInfo?.parent_job}</span>
-                {tabSpacing}
-                เบอร์โทรศัพท์ :{" "}
-                <span className="text-black">{personalInfo?.parent_phone}</span>
-              </h5>
-            </div>
+            {personalInfo !== null ? (
+              <div className="text-left flex flex-col gap-2.5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-gray-600">
+                  {/* ชื่อนักเรียน */}
+                  <div>
+                    ชื่อนักเรียน:{" "}
+                    <span className="text-black">
+                      {userInfo?.prefix + " " + userInfo?.first_name}
+                    </span>
+                  </div>
+                  <div>
+                    นามสกุล:{" "}
+                    <span className="text-black">{userInfo?.last_name}</span>
+                  </div>
+
+                  {/* ชื่อบิดา */}
+                  <div>
+                    ชื่อบิดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.father_prefix +
+                        " " +
+                        personalInfo?.father_first_name}
+                    </span>
+                  </div>
+                  <div>
+                    นามสกุลบิดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.father_last_name}
+                    </span>
+                  </div>
+
+                  {/* อาชีพบิดา */}
+                  <div>
+                    อาชีพบิดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.father_job}
+                    </span>
+                  </div>
+                  <div>
+                    เบอร์โทรศัพท์บิดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.father_phone}
+                    </span>
+                  </div>
+
+                  {/* ชื่อมารดา */}
+                  <div>
+                    ชื่อมารดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.mother_prefix +
+                        " " +
+                        personalInfo?.mother_first_name}
+                    </span>
+                  </div>
+                  <div>
+                    นามสกุลมารดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.mother_last_name}
+                    </span>
+                  </div>
+
+                  {/* อาชีพมารดา */}
+                  <div>
+                    อาชีพมารดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.mother_job}
+                    </span>
+                  </div>
+                  <div>
+                    เบอร์โทรศัพท์มารดา:{" "}
+                    <span className="text-black">
+                      {personalInfo?.mother_phone}
+                    </span>
+                  </div>
+
+                  {/* ชื่อผู้ปกครอง */}
+                  <div>
+                    ชื่อผู้ปกครอง:{" "}
+                    <span className="text-black">
+                      {personalInfo?.parent_prefix +
+                        " " +
+                        personalInfo?.parent_first_name}
+                    </span>
+                  </div>
+                  <div>
+                    นามสกุลผู้ปกครอง:{" "}
+                    <span className="text-black">
+                      {personalInfo?.parent_last_name}
+                    </span>
+                  </div>
+
+                  {/* อาชีพผู้ปกครอง */}
+                  <div>
+                    อาชีพผู้ปกครอง:{" "}
+                    <span className="text-black">
+                      {personalInfo?.parent_job}
+                    </span>
+                  </div>
+                  <div>
+                    เบอร์โทรศัพท์ผู้ปกครอง:{" "}
+                    <span className="text-black">
+                      {personalInfo?.parent_phone}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center my-16">ยังไม่มีข้อมูล</div>
+            )}
           </div>
         </div>
       </div>
