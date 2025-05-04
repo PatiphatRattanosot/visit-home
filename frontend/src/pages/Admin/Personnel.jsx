@@ -8,7 +8,7 @@ import FilterDropdown from "../../components/FilterDropdown";
 import ModalAddPersonnel from "../../components/modals/AddPersonnel";
 import ModalEditPersonnel from "../../components/modals/EditPersonnel";
 const Personnel = () => {
-  const [selectedOption, setSelectedOption] = useState("ทั้งหมด");
+  const [selectedOption, setSelectedOption] = useState("เรียงจากน้อยไปมาก");
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
   const [filteredPersonnel, setFilteredPersonnel] = useState([]);
   // สร้าง satate สำหรับ Paginations
@@ -74,9 +74,10 @@ const Personnel = () => {
     const fetchPersonnel = async () => {
       try {
         const response = await Userservice.getAllUsers();
-
         setPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
         setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+       
+        
       } catch (error) {
         console.error("Error fetching personnel data:", error);
       }
@@ -86,23 +87,30 @@ const Personnel = () => {
   }, []);
   console.log(personnel);
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+  useEffect(() => {
+    let sorted = [...personnel];
   
-    if (option === "ลำดับตัวอักษร ก-ฮ") {
-      const sorted = [...personnel].sort((a, b) =>
-        a.first_name.localeCompare(b.first_name, "th")
-      );
-      setFilteredPersonnel(sorted);
-    } else if (option === "ลำดับตัวอักษร ฮ-ก") {
-      const sorted = [...personnel].sort((a, b) =>
-        b.first_name.localeCompare(a.first_name, "th")
-      );
-      setFilteredPersonnel(sorted);
-    } else {
-      setFilteredPersonnel(personnel);
+    switch (selectedOption) {
+      case "เรียงจากน้อยไปมาก":
+        sorted.sort((a, b) => a.user_id - b.user_id);
+        break;
+      case "เรียงจากมากไปน้อย":
+        sorted.sort((a, b) => b.user_id - a.user_id);
+        break;
+      case "เรียงตามลำดับตัวอักษร ก-ฮ":
+        sorted.sort((a, b) => a.first_name.localeCompare(b.first_name, "th"));
+        break;
+      case "เรียงตามลำดับตัวอักษร ฮ-ก":
+        sorted.sort((a, b) => b.first_name.localeCompare(a.first_name, "th"));
+        break;
+      default:
+        break;
     }
-  };
+  
+    setFilteredPersonnel(sorted);
+    setCurrentPage(1); // reset ไปหน้าแรกทุกครั้งที่เรียงใหม่
+  }, [selectedOption, personnel]);
+  
   
   
 
@@ -132,12 +140,12 @@ const Personnel = () => {
     <div className="section-container w-full">
       <h1 className="text-center">รายชื่อบุคลากร</h1>
 
-      <div className="flex justify-between mb-4 m-10">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4 mt-4 gap-2">
         {/* Dropdown สำหรับการกรองข้อมูล */}
         <FilterDropdown
-  selectedOption={selectedOption}
-  onOptionSelect={handleOptionSelect}
-/>
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
 
 
         {/* ช่องค้นหา */}
@@ -148,14 +156,12 @@ const Personnel = () => {
         />
 
         {/* ปุ่มเพิ่มบุคลากร */}
-        <div className="relative w-40">
-          <button
+        <button
             onClick={() => document.getElementById("add_personnel").showModal()}
-            className="btn btn-green"
+            className="btn-green"
           >
             เพิ่มบุคลากร
           </button>
-        </div>
         {/* Modal เพิ่มบุคลากร */}
         <ModalAddPersonnel />
       </div>
@@ -197,15 +203,15 @@ const Personnel = () => {
                 <td className="flex gap-2">
                   <button
                     onClick={() =>
-                      document.getElementById("edit_personnel").showModal()
+                      document.getElementById(`edit_personnel_${person.id}`).showModal()
                     }
                     className="btn btn-warning"
                   >
                     <BiSolidEdit size={20} />
                   </button>
                   <ModalEditPersonnel
-                    personnel={person}
-                    setPersonnel={setPersonnel}
+                    id={person.id}
+                    
                   />
                   <button
                     onClick={() => handleDeleteUser(person.id)}

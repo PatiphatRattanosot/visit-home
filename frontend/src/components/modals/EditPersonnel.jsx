@@ -1,14 +1,14 @@
 import Userservices from "../../services/user.service";
 import { toast } from "react-hot-toast";
-import { useParams, useNavigate } from "react-router";
-import TextInput from "../TextInput";
-import SelectInput from "../SelectInput";
+import { useNavigate } from "react-router";
+
 import { useEffect, useState } from "react";
+import TextInputInModal from "./TexInputInModal";
+import SelectInputInModal from "./SelectInputInModal";
 
-
-const EditPersonnel = () => {
+const EditPersonnel = ({ id }) => {
   const navigate = useNavigate();
-  const { id } = useParams(); 
+
   const [personnel, setPersonnel] = useState({
     prefix: "",
     first_name: "",
@@ -25,29 +25,31 @@ const EditPersonnel = () => {
   useEffect(() => {
     const getPersonnelById = async () => {
       try {
-        
+      
         const response = await Userservices.getUserById(id);
-        setPersonnel(response);
+        if (response.status === 200) {
+          setPersonnel(response.data);
         console.log(response);
+        }
+        
       } catch (error) {
         toast.error("เกิดข้อผิดพลาดในการดึงข้อมูล!");
-        
       }
-    }
+    };
     getPersonnelById();
   }, [id]);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPersonnel({ ...personnel, [name]: value });
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await Userservices.updateUser(id, personnel);
       toast.success("แก้ไขข้อมูลบุคลากรเรียบร้อยแล้ว!");
-      document.getElementById("edit_personnel").close();
+      document.getElementById(`edit_personnel_${id}`).close();
       setPersonnel({
         first_name: "",
         last_name: "",
@@ -60,14 +62,14 @@ const EditPersonnel = () => {
     } catch (error) {
       toast.error("เกิดข้อผิดพลาดในการแก้ไขข้อมูล!");
     }
-  }
+  };
   return (
     <div>
-      <dialog id="edit_personnel" className="modal">
+      <dialog id={`edit_personnel_${id}`} className="modal">
         <div className="modal-box flex flex-col items-center justify-center w-11/12">
           <h3 className="font-bold text-lg text-center">เพิ่มข้อมูลบุคลากร</h3>
           <div className="flex flex-col items-center justify-center space-y-2">
-          <SelectInput
+            <SelectInputInModal
               name={"prefix"}
               value={personnel.prefix}
               onChange={handleChange}
@@ -77,7 +79,7 @@ const EditPersonnel = () => {
               options={prefixOptions}
               className="w-64 md:w-72"
             />
-            <TextInput
+            <TextInputInModal
               name={"first_name"}
               placeholder={"ชื่อ"}
               disabled={false}
@@ -85,7 +87,7 @@ const EditPersonnel = () => {
               onChange={handleChange}
               label={"ชื่อ"}
             />
-            <TextInput
+            <TextInputInModal
               name={"last_name"}
               placeholder={"นามสกุล"}
               disabled={false}
@@ -93,7 +95,7 @@ const EditPersonnel = () => {
               onChange={handleChange}
               label={"นามสกุล"}
             />
-            <TextInput
+            <TextInputInModal
               name={"user_id"}
               placeholder={"เลขที่ประจำตัวบุคลากร"}
               disabled={false}
@@ -101,7 +103,7 @@ const EditPersonnel = () => {
               onChange={handleChange}
               label={"เลขที่ประจำตัวบุคลากร"}
             />
-            <SelectInput
+            <SelectInputInModal
               name={"rank"}
               value={personnel.rank}
               onChange={handleChange}
@@ -110,9 +112,8 @@ const EditPersonnel = () => {
               defaultOpt={"ตำแหน่ง"}
               options={rankOptions}
               className="w-64 md:w-72"
-              
             />
-            <TextInput
+            <TextInputInModal
               name={"phone"}
               placeholder={"เบอร์โทรศัพท์"}
               disabled={false}
@@ -121,27 +122,31 @@ const EditPersonnel = () => {
               label={"เบอร์โทรศัพท์"}
             />
           </div>
-          <SelectInput
-              name={"status"}
-              value={personnel.status}
-              onChange={handleChange}
-              label={"สถานะ"}
-              disabled={false}
-              
-              options={statusOptions}
-              className="w-64 md:w-72"
-              
-            />
+          <SelectInputInModal
+            name={"status"}
+            value={personnel.status}
+            onChange={handleChange}
+            label={"สถานะ"}
+            disabled={false}
+            defaultOpt={"สถานะ"}
+            options={statusOptions}
+            className="w-64 md:w-72"
+          />
           <div className="modal-action">
             <form method="dialog mt-2">
-              <button onClick={handleSubmit} className="btn bg-green-400 mr-8">บันทึก</button>
-              <button className="btn bg-red-400 mr-8">ยกเลิก</button>
+              <div className="flex gap-6">
+                <button onClick={handleSubmit} className="btn-green">
+                บันทึก
+              </button>
+              <button className="btn-red">ยกเลิก</button>
+              </div>
+              
             </form>
           </div>
         </div>
       </dialog>
     </div>
-  )
-}
+  );
+};
 
-export default EditPersonnel
+export default EditPersonnel;

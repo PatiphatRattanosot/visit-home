@@ -2,7 +2,9 @@ import api from "./api"; // หรือ axios instance ที่คุณตั
 
 const getAllUsers = async () => {
   const res = await api.get("/user");
-  return res.data;
+  if (res.status === 200) {
+    return res.data;
+  }
 };
 
 const getUserById = async (id) => {

@@ -1,21 +1,18 @@
-import React from "react";
 
-const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
+
+const FilterDropdown = ({ selectedOption, setSelectedOption }) => {
+ 
+const handleChange = (e) => {
+  setSelectedOption(e.target.value);
+}
+ 
   return (
-    <details className="dropdown">
-      <summary className="btn">จัดเรียง: {selectedOption}</summary>
-      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-        <li>
-          <a onClick={() => onOptionSelect("จากน้อยไปมาก")}>จากน้อยไปมาก</a>
-        </li>
-        <li>
-          <a onClick={() => onOptionSelect("ลำดับตัวอักษร ก-ฮ")}>ลำดับ ก-ฮ</a>
-        </li>
-        <li>
-          <a onClick={() => onOptionSelect("ลำดับตัวอักษร ฮ-ก")}>ลำดับ ฮ-ก</a>
-        </li>
-      </ul>
-    </details>
+    <select name="selectedOption" id="selectedOption" className="select select-bordered w-40" onChange={handleChange} value={selectedOption}>
+      <option value="เรียงจากน้อยไปมาก">เรียงจากน้อยไปมาก</option>
+      <option value="เรียงจากมากไปน้อย">เรียงจากมากไปน้อย</option>
+      <option value="เรียงตามลำดับตัวอักษร ก-ฮ">เรียงตามลำดับตัวอักษร ก-ฮ</option>
+      <option value="เรียงตามลำดับตัวอักษร ฮ-ก">เรียงตามลำดับตัวอักษร ฮ-ก</option>
+    </select>
   );
 };
 
