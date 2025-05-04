@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from "react";
 
 const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
@@ -23,18 +24,13 @@ const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
     </details>
 =======
 import React, { useState } from "react";
+=======
+import React from "react";
+>>>>>>> e5ac807 (Edit name service and CRD not U)
 
 const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => setIsOpen((prev) => !prev);
-
-  const handleSelect = (option) => {
-    onOptionSelect(option);
-    setIsOpen(false);
-  };
-
   return (
+<<<<<<< HEAD
     <div className="relative">
       <button
         onClick={toggleDropdown}
@@ -58,6 +54,26 @@ const FilterDropdown = ({ onOptionSelect, selectedOption }) => {
       )}
     </div>
 >>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
+=======
+    <details className="dropdown">
+      <summary className="btn">จัดเรียง: {selectedOption}</summary>
+      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+        <li>
+          <a onClick={() => onOptionSelect("จากน้อยไปมาก")}>จากน้อยไปมาก</a>
+        </li>
+        <li>
+          <a onClick={() => onOptionSelect("ลำดับตัวอักษร ก-ฮ")}>
+            ลำดับ ก-ฮ
+          </a>
+        </li>
+        <li>
+          <a onClick={() => onOptionSelect("ลำดับตัวอักษร ฮ-ก")}>
+            ลำดับ ฮ-ก
+          </a>
+        </li>
+      </ul>
+    </details>
+>>>>>>> e5ac807 (Edit name service and CRD not U)
   );
 };
 

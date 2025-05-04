@@ -80,6 +80,7 @@
       "status": "เกษียณ"
     },
     {
+<<<<<<< HEAD
       "id": "9",
       "type": "teacher",
       "user_id": "009",
@@ -92,6 +93,8 @@
       "status": "เกษียณ"
     },
     {
+=======
+>>>>>>> e5ac807 (Edit name service and CRD not U)
       "id": "10",
       "type": "Admin",
       "user_id": "010",
@@ -124,6 +127,9 @@
       "phone": "0867778888",
       "status": "เกษียณ"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e5ac807 (Edit name service and CRD not U)
     },
     {
       "id": "9140",
@@ -153,8 +159,11 @@
       "rank": "ครูที่ปรึกษา",
       "phone": "0837462839",
       "status": "เกษียณ"
+<<<<<<< HEAD
 =======
 >>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
+=======
+>>>>>>> e5ac807 (Edit name service and CRD not U)
     }
   ]
 }

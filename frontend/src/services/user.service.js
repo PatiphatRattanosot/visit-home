@@ -6,13 +6,19 @@ const getAllUsers = async () => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e5ac807 (Edit name service and CRD not U)
 const getUserById = async (id) => {
   return await api.get(`/user/${id}`);
 };
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
+=======
+>>>>>>> e5ac807 (Edit name service and CRD not U)
 const addUser = async (data) => {
   return await api.post("/user", data);
 }
@@ -34,9 +40,13 @@ const Uservervices = {
   addUser,
   updateUser,
 <<<<<<< HEAD
+<<<<<<< HEAD
   getUserById,
 =======
 >>>>>>> 300d35e (Test react-chartjs2 update service mockup filtered dropdown table)
+=======
+  getUserById,
+>>>>>>> e5ac807 (Edit name service and CRD not U)
 };
 
 export default Uservervices;
