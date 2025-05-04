@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import TextInput from "../TextInput";
-import SelectInput from "../SelectInput";
+import TextInputInModal from "./TexInputInModal";
+import SelectInputInModal from "./SelectInputInModal";
 import Userservices from "../../services/user.service";
 import { toast } from "react-hot-toast";
 import { Navigate, useNavigate } from "react-router";
@@ -49,7 +49,7 @@ const AddPersonnel = () => {
         <div className="modal-box flex flex-col items-center justify-center w-11/12">
           <h3 className="font-bold text-lg text-center">เพิ่มข้อมูลบุคลากร</h3>
           <div className="flex flex-col items-center justify-center space-y-2">
-          <SelectInput
+          <SelectInputInModal
               name={"prefix"}
               value={personnel.prefix}
               onChange={handleChange}
@@ -59,7 +59,7 @@ const AddPersonnel = () => {
               options={prefixOptions}
               className="w-64 md:w-72"
             />
-            <TextInput
+            <TextInputInModal
               name={"first_name"}
               placeholder={"ชื่อ"}
               disabled={false}
@@ -67,7 +67,7 @@ const AddPersonnel = () => {
               onChange={handleChange}
               label={"ชื่อ"}
             />
-            <TextInput
+            <TextInputInModal
               name={"last_name"}
               placeholder={"นามสกุล"}
               disabled={false}
@@ -75,7 +75,7 @@ const AddPersonnel = () => {
               onChange={handleChange}
               label={"นามสกุล"}
             />
-            <TextInput
+            <TextInputInModal
               name={"user_id"}
               placeholder={"เลขที่ประจำตัวบุคลากร"}
               disabled={false}
@@ -83,7 +83,7 @@ const AddPersonnel = () => {
               onChange={handleChange}
               label={"เลขที่ประจำตัวบุคลากร"}
             />
-            <SelectInput
+            <SelectInputInModal
               name={"rank"}
               value={personnel.rank}
               onChange={handleChange}
@@ -94,7 +94,7 @@ const AddPersonnel = () => {
               className="w-64 md:w-72"
               
             />
-            <TextInput
+            <TextInputInModal
               name={"phone"}
               placeholder={"เบอร์โทรศัพท์"}
               disabled={false}
@@ -103,7 +103,7 @@ const AddPersonnel = () => {
               label={"เบอร์โทรศัพท์"}
             />
           </div>
-          <SelectInput
+          <SelectInputInModal
               name={"status"}
               value={personnel.status}
               onChange={handleChange}
