@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectInput = ({
+const SelectInputInModal = ({
   options,
   defaultOpt,
   name,
@@ -34,4 +34,4 @@ const SelectInput = ({
   );
 };
 
-export default SelectInput;
+export default SelectInputInModal;

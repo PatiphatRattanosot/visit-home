@@ -1,4 +1,4 @@
-const TextInput = ({
+const TextInputInModal = ({
     label,
     name,
     value,
@@ -27,4 +27,4 @@ const TextInput = ({
     );
   };
   
-  export default TextInput;
+  export default TextInputInModal;
