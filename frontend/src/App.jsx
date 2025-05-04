@@ -59,7 +59,7 @@ function App() {
           </Route>
           {/* Student */}
           <Route path="student">
-            <Route path="status" element={<Status />} />
+            <Route path="" element={<Status />} />
             <Route path="self-info">
               <Route path="" element={<SelfInfo />} />
               <Route path="add" element={<AddSelfInfoForm />} />
