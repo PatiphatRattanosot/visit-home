@@ -11,6 +11,7 @@ import "./database/db_setup";
 import AuthController from "./controllers/auth_controller";
 import TeacherController from "./controllers/users/teacher_controller";
 import UserController from "./controllers/users/user_controller";
+import YearController from "./controllers/year_controller";
 
 const app = new Elysia()
   //middleware
@@ -33,7 +34,7 @@ const app = new Elysia()
         info: {
           title: "เอกสาร API ระบบเยี่ยมบ้าน",
           description: "description",
-          version: "0.2.0",
+          version: "0.3.0",
         },
         servers: [
           {
@@ -46,17 +47,17 @@ const app = new Elysia()
           },
         ],
         tags: [
-          { 
-            name: "App", 
-            description: "API ทั่วไปของระบบ" 
+          {
+            name: "App",
+            description: "API ทั่วไปของระบบ",
           },
           {
             name: "Auth",
             description: "API สำหรับการเข้าสู่ระบบและยืนยันตัวตน ",
           },
-          { 
-            name: "User", 
-            description: "API สำหรับการจัดการผู้ใช้" 
+          {
+            name: "User",
+            description: "API สำหรับการจัดการผู้ใช้",
           },
           {
             name: "Teacher",
@@ -81,6 +82,11 @@ const app = new Elysia()
           .use(TeacherController.create_teacher)
           .use(TeacherController.get_teacher)
           .use(TeacherController.update_teacher)
+      )
+      // Student
+      // Year
+      .group("/year", (app) =>
+        app.use(YearController.create_year).use(YearController.auto_create_year)
       )
   )
   // Home Page
