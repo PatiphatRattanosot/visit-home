@@ -6,11 +6,14 @@ import { useAuthStore } from "../../../stores/auth.store";
 import { useFormik } from "formik";
 import { SelfInfoSchema } from "../../../schemas/selfInfo";
 import Stepper from "../../../components/Stepper";
+import { useNavigate } from "react-router";
 
 const AddSelfInfoForm = () => {
   const { userInfo } = useAuthStore();
   const [parentToggle, setParentToggle] = useState(true);
   const [parentFetch, setParentFetch] = useState("dad");
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -432,7 +435,15 @@ const AddSelfInfoForm = () => {
             />
           </div>
           <div className="flex justify-between mt-10 space-x-2">
-            <button className="btn-red w-1/2">ยกเลิก</button>
+            <button
+              className="btn-red w-1/2"
+              onClick={() => {
+                formik.setValues(formik.initialValues);
+                navigate("/student/self-info");
+              }}
+            >
+              ยกเลิก
+            </button>
             <button type="submit" className="btn-gray w-1/2">
               ถัดไป
             </button>
