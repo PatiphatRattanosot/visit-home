@@ -94,7 +94,9 @@ const update_teacher = async (app: Elysia) =>
     async ({ body, set }) => {
       try {
         const { user_id, first_name, last_name, prefix, phone } = body;
-        const teacher = (await TeacherModel.findOne({ user_id })) as ITeacher; // ค้นหาครูที่ปรึกษาในฐานข้อมูลด้วย user_id
+        const teacher = (await TeacherModel.findByIdAndUpdate(
+          user_id,
+        )) as ITeacher; // ค้นหาครูที่ปรึกษาในฐานข้อมูลด้วย user_id
         if (!teacher) {
           set.status = 404; // ตั้งค่า HTTP status เป็น 404 (Not Found)
           return { message: "ไม่พบข้อมูลครูที่ปรึกษานี้ในระบบ" };
