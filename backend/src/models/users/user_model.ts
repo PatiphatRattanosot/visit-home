@@ -42,5 +42,5 @@ const UserSchema = new Schema(
 );
 
 const UserModel = model("User", UserSchema);
-
+// PascalCase
 export default UserModel;
