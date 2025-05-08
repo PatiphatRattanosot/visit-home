@@ -1,29 +1,31 @@
 {
-  "studentInfo": {
-    "studentID": 1,
-    "student_number": "1",
-    "student_class": "5",
-    "student_room": "1",
-    "personal_info": {
-      "image": "https://picsum.photos/200/300",
-      "father_prefix": "นาย",
-      "father_first_name": "สมชาย",
-      "father_last_name": "นามสมมุติ",
-      "father_phone": "000-0000000",
-      "father_job": "Software Engineer",
-      "mother_prefix": "นาง",
-      "mother_first_name": "สมหญิง",
-      "mother_last_name": "นามสมมุติ",
-      "mother_phone": "111-1111111",
-      "mother_job": "Project Manager",
-      "family_relation_status": "อยู่ด้วยกัน",
-      "parent_prefix": "นาย",
-      "parent_first_name": "สมชาย",
-      "parent_last_name": "นามสมมุติ",
-      "parent_phone": "000-0000000",
-      "parent_job": "Software Engineer",
-      "lat": "99",
-      "lng": "88"
+  "studentInfo": [
+    {
+      "id": 1,
+      "student_number": "1",
+      "student_class": "5",
+      "student_room": "1",
+      "personal_info": {
+        "image": "https://picsum.photos/200/300",
+        "father_prefix": "นาย",
+        "father_first_name": "สมชาย",
+        "father_last_name": "นามสมมุติ",
+        "father_phone": "000-0000000",
+        "father_job": "Software Engineer",
+        "mother_prefix": "นาง",
+        "mother_first_name": "สมหญิง",
+        "mother_last_name": "นามสมมุติ",
+        "mother_phone": "111-1111111",
+        "mother_job": "Project Manager",
+        "family_relation_status": "อยู่ด้วยกัน",
+        "parent_prefix": "นาย",
+        "parent_first_name": "สมชาย",
+        "parent_last_name": "นามสมมุติ",
+        "parent_phone": "000-0000000",
+        "parent_job": "Software Engineer",
+        "lat": "99",
+        "lng": "88"
+      }
     }
-  }
+  ]
 }
