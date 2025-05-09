@@ -36,7 +36,7 @@ const RadioInput = ({
       <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
         {label} <span className="text-red-600">*</span>
       </label>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3" id={id}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2" id={id}>
         {options.map((item, index) => (
           <div className="flex items-center text-sm space-x-2" key={index}>
             <input

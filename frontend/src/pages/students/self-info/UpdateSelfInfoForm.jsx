@@ -275,7 +275,7 @@ const UpdateSelfInfoForm = () => {
                 ความสัมพันธ์ของครอบครัว <span className="text-red-600">*</span>
               </label>
               <div
-                className="grid grid-cols-1 md:grid-cols-3 gap-3"
+                className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2"
                 id="family_relation"
               >
                 <div className="flex space-x-1 items-center text-sm">

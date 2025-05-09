@@ -25,7 +25,7 @@ const SelectInput = ({
         onBlur={onBlur}
         disabled={disabled}
       >
-        <option value="">{defaultOpt}</option>
+        {defaultOpt && <option value="">{defaultOpt}</option>}
         {options?.map((option) => (
           <option key={option} value={option}>
             {option}

@@ -8,7 +8,9 @@ const ShowPicture = ({ studentPic }) => {
           className="h-full w-full bg-cover object-cover rounded-md p-1"
         />
       ) : (
-        <div className="bg-gray-100 w-full h-full object-cover rounded-md p-1"></div>
+        <div className="bg-gray-100 w-full h-full object-cover rounded-md p-1 flex justify-center items-center">
+          ยังไม่มีรูปนักเรียน
+        </div>
       )}
     </div>
   );
