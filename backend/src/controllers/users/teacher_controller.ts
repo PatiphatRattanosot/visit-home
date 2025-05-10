@@ -106,6 +106,7 @@ const update_teacher = async (app: Elysia) =>
         teacher.last_name = last_name;
         teacher.prefix = prefix;
         teacher.phone = phone;
+       
 
         await teacher.save(); // บันทึกข้อมูลที่อัปเดตลงในฐานข้อมูล
         set.status = 200; // ตั้งค่า HTTP status เป็น 200 (OK)
@@ -129,6 +130,7 @@ const update_teacher = async (app: Elysia) =>
         last_name: t.String(),
         prefix: t.String(),
         phone: t.String(),
+        
       }),
     }
   );

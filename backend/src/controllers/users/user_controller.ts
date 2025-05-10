@@ -26,12 +26,18 @@ const get_users = async (app: Elysia) =>
 
 // ฟังก์ชัน deleteUser สำหรับลบผู้ใช้ตามอีเมล์
 const delete_user = async (app: Elysia) =>
-  app.delete("/:email", async ({ params: { email }, set }) => {}, {
+  app.delete("/:email", async ({ params: { email }, set }) => {
+    // ลบข้อมูลที่นี่
+    console.log("ลบผู้ใช้:", email);
+    set.status = 200;
+    return { message: "ลบสำเร็จ" };
+  }, {
     detail: { tags: ["User"], description: "ลบข้อมูลผู้ใช้" },
-    body: t.Object({
+    params: t.Object({
       email: t.String(),
     }),
   });
+
 
 // ฟังก์ชัน addAdminRole เพื่อเพิ่มสิทธิ์ Admin ให้กับผู้ใช้
 const add_admin_role = async (app: Elysia) =>

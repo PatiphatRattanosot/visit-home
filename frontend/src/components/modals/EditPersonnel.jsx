@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import Userservices from "../../services/user.service";
+import Userservices from "../../services/users/users.service";
 import { PersonnelSchema } from "../../schemas/personnel";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -12,17 +12,7 @@ import SelectInputInModal from "./SelectInputInModal";
 const EditPersonnel = ({ id }) => {
   const navigate = useNavigate();
 
-  const [personnel, setPersonnel] = useState({
-    prefix: "",
-    first_name: "",
-    last_name: "",
-    user_id: "",
-    rank: "",
-    phone: "",
-    status: "รับราชการ",
-  }); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
   const prefixOptions = ["นาย", "นาง", "นางสาว"];
-  const rankOptions = ["เจ้าหน้าที่ฝ่ายทะเบียน", "ครูที่ปรึกษา"];
   const statusOptions = ["ลาออก", "เกษียณ", "รับราชการ"];
 
   const formik = useFormik({
@@ -31,7 +21,6 @@ const EditPersonnel = ({ id }) => {
       first_name: "",
       last_name: "",
       user_id: "",
-      rank: "",
       phone: "",
       status: "รับราชการ",
     },
@@ -40,7 +29,7 @@ const EditPersonnel = ({ id }) => {
       console.log("Submitting", values);
       console.log("Submitting", actions);
       try {
-        const response = await Userservices.updateUser(id, values);
+        const response = await Userservices.updateTeacher(_id, values);
         toast.success("แก้ไขข้อมูลบุคลากรเรียบร้อยแล้ว!");
         document.getElementById(`edit_personnel_${id}`).close();
         setPersonnel({
@@ -185,7 +174,15 @@ const EditPersonnel = ({ id }) => {
                 <button disabled={formik.isSubmitting} type="submit" className="btn-green">
                 บันทึก
               </button>
-              <button className="btn-red">ยกเลิก</button>
+              <button
+                  type="button"
+                  className="btn-red"
+                  onClick={() =>
+                    document.getElementById(`edit_personnel_${id}`).close()
+                  }
+                >
+                  ยกเลิก
+                </button>
               </div>
               
             </form>

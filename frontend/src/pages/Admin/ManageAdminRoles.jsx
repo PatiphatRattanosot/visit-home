@@ -1,166 +1,147 @@
-import React from 'react'
-
+import { useEffect, useState } from "react";
+import Userservice from "../../services/users/users.service";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 const ManageAdminRoles = () => {
-  return (
-    <div className="overflow-x-auto">
-  <table className="table">
-    {/* head */}
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {/* row 1 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Hart Hagerty</div>
-              <div className="text-sm opacity-50">United States</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Zemlak, Daniel and Leannon
-          <br />
-          <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-        </td>
-        <td>Purple</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      {/* row 2 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Brice Swyre</div>
-              <div className="text-sm opacity-50">China</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Carroll Group
-          <br />
-          <span className="badge badge-ghost badge-sm">Tax Accountant</span>
-        </td>
-        <td>Red</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      {/* row 3 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Marjy Ferencz</div>
-              <div className="text-sm opacity-50">Russia</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Rowe-Schoen
-          <br />
-          <span className="badge badge-ghost badge-sm">Office Assistant I</span>
-        </td>
-        <td>Crimson</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      {/* row 4 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/5@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Yancy Tear</div>
-              <div className="text-sm opacity-50">Brazil</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Wyman-Ledner
-          <br />
-          <span className="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-        </td>
-        <td>Indigo</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-    </tbody>
-    {/* foot */}
-    <tfoot>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </tfoot>
-  </table>
-</div>
-  )
-}
+  const [personnel, setPersonnel] = useState([]);
 
-export default ManageAdminRoles
+  useEffect(() => {
+    const fetchPersonnel = async () => {
+      try {
+        const response = await Userservice.getAllUsers();
+        const activePersonnel = response.data.users.filter(
+          (person) => person.status === "รับราชการ"
+        );
+        setPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        // setFilteredPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+
+        console.log("RESPONSE =", response);
+      } catch (error) {
+        console.error("Error fetching personnel data:", error);
+      }
+    };
+
+    fetchPersonnel(); // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลบุคลากร
+  }, []);
+
+  const getRoleDisplay = (role) => {
+    const roles = Array.isArray(role) ? role : [role]; // แปลงให้เป็น array เสมอ
+    //ใช้ includes() เรียงลำดับความสำคัญของบทบาท และ คืนค่าชื่อบทบาทที่เหมาะสม
+    if (roles.includes("Admin")) return "เจ้าหน้าที่ฝ่ายทะเบียน";
+    if (roles.includes("Teacher")) return "คุณครู";
+    if (roles.includes("Student")) return "นักเรียน";
+
+    return "ไม่ทราบบทบาท";
+  };
+
+  const handleAddRole = async (email, newRole) => {
+    try {
+      const response = await Userservice.addAdminRole(email, newRole);
+      console.log("RESPONSE =", response);
+      const message = response.data.message || "บทบาทถูกเปลี่ยนเรียบร้อยแล้ว";
+
+      if (response.status === 200) {
+        toast.success(message);
+      }
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "เกิดข้อผิดพลาดในการเปลี่ยนบทบาท";
+      console.error("Error changing role:", error);
+      toast.error(errorMessage);
+    }
+  };
+
+  const handleRemoveRole = async (email, roleToRemove) => {
+    try {
+      Swal.fire({
+        title: "ยืนยันการลบบทบาท",
+        text: `คุณต้องการลบบทบาทของ ${roleToRemove} หรือไม่?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "ยืนยัน",
+        cancelButtonText: "ยกเลิก",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await Userservice.removeAdminRole(
+            email,
+            roleToRemove
+          );
+          console.log("RESPONSE =", response);
+          const message = response.data.message || "บทบาทถูกลบเรียบร้อยแล้ว";
+
+          if (response.status === 200) {
+            toast.success(message);
+          }
+        } else if (result.isDismissed) {
+          Swal.fire({
+            title: "ยกเลิกการลบบทบาท",
+            icon: "info",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "เกิดข้อผิดพลาดในการลบบทบาท";
+      console.error("Error removing role:", error);
+      toast.error(errorMessage);
+    }
+  };
+  return (
+    <div className="section-container">
+      <div className="overflow-x-auto">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>เลขที่ประจำตัว</th>
+              <th>คำนำหน้า</th>
+              <th>ชื่อ</th>
+              <th>นามสกุล</th>
+              <th>ตำแหน่ง</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {personnel.map((person, index) => (
+              <tr key={index}>
+                <td>{person.user_id}</td>
+                <td>{person.prefix}</td>
+                <td>{person.first_name}</td>
+                <td>{person.last_name}</td>
+                <td>{getRoleDisplay(person.role)}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    // ใช้ได้สองแบบเลย
+                    // checked={user.role === "admin"}
+                    checked={person.role.includes("Admin")}
+                    onChange={(e) =>
+                      e.target.checked
+                        ? handleAddRole(person.email, "Admin")
+                        : handleRemoveRole(person.email, "Admin")
+                    }
+                    className="toggle toggle-secondary"
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          {/* foot */}
+          <tfoot>
+            <tr>
+              <th>เลขที่ประจำตัว</th>
+              <th>คำนำหน้า</th>
+              <th>ชื่อ</th>
+              <th>นามสกุล</th>
+              <th>ตำแหน่ง</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default ManageAdminRoles;
