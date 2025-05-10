@@ -1,10 +1,12 @@
 import RadioInput from "../../../components/RadioInput";
 import TextInput from "../../../components/TextInput";
 import SelectInput from "../../../components/SelectInput";
+import TextArea from "../../../components/TextArea";
 import { useAuthStore } from "../../../stores/auth.store";
 import Stepper from "../../../components/Stepper";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router";
+import { RelationSchema } from "../../../schemas/relation";
 
 const AddRelationForm = () => {
   const { userInfo } = useAuthStore();
@@ -42,17 +44,38 @@ const AddRelationForm = () => {
       when_student_alone: "",
       total_household_income: 0,
       daily_total_to_school: 0,
-      received_daily_from: "",
+      received_daily_from: "บิดา",
       student_part_time: "",
       student_income: 0,
       support_from_school: "",
       support_from_organize: "",
       parent_concern: "",
     },
+    validationSchema: RelationSchema,
   });
 
   const relationOpts = ["สนิทสนม", "เฉยๆ", "ห่างเหิน", "ขัดแย้ง", "ไม่มี"];
   const studentAloneOpts = ["ญาติ", "เพื่อนบ้าน", "นักเรียนอยู่บ้านด้วยตนเอง"];
+  const familyMembers = [
+    "บิดา",
+    "มารดา",
+    "ลุง",
+    "ป้า",
+    "น้า",
+    "อา",
+    "ปู่",
+    "ย่า",
+    "ตา",
+    "ยาย",
+    "พี่ชาย",
+    "พี่สาว",
+  ];
+  const parentNeeded = [
+    "ด้านการเรียน",
+    "ด้านพฤติกรรม",
+    "ด้านเศรษฐกิจ (เช่น ขอรับทุน)",
+  ];
+  const receivedHelp = ["เบี้ยผู้สูงอายุ", "เบี้ยพิการ"];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-9">
@@ -201,6 +224,112 @@ const AddRelationForm = () => {
                 error={errors.when_student_alone}
                 touched={touched.when_student_alone}
                 extraOpt
+              />
+            </div>
+            {/* รายได้รวม */}
+            <div className="md:col-span-2">
+              <TextInput
+                label={"รายได้รวมของครัวเรือน (บาท)"}
+                type="number"
+                placeholder={"กรอกรายได้ของครอบครัว"}
+                name={"total_household_income"}
+                value={values.total_household_income}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.total_household_income}
+                touched={touched.total_household_income}
+                className="md:w-1/2 md:pr-3"
+              />
+            </div>
+            {/* เงินค่าขนม */}
+            <TextInput
+              label={"นักเรียนได้เงินมาโรงเรียนวันละ (บาท)"}
+              type="number"
+              placeholder={"กรอกเงินค่าขนมของนักเรียน"}
+              name={"daily_total_to_school"}
+              value={values.daily_total_to_school}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.daily_total_to_school}
+              touched={touched.daily_total_to_school}
+            />
+            {/* ได้เงินจาก */}
+            <SelectInput
+              label={"นักเรียนได้รับค่าใช้จ่ายจาก"}
+              options={familyMembers}
+              className="w-full"
+              name={"received_daily_from"}
+              value={values.received_daily_from}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.received_daily_from}
+              touched={touched.received_daily_from}
+            />
+            {/* งาน part-time */}
+            <TextInput
+              label={"นักเรียนทำงานหารายได้พิเศษ อาชีพ"}
+              placeholder={"กรอกอาชีพเสริมของนักเรียน"}
+              name={"student_part_time"}
+              value={values.student_part_time}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.student_part_time}
+              touched={touched.student_part_time}
+            />
+            {/* รายได้ของนักเรียน */}
+            <TextInput
+              label={"รายได้จากงานที่ทำ (บาท)"}
+              placeholder={"กรอกรายได้ที่นักเรียนได้รับจากงาน"}
+              type="number"
+              name={"student_income"}
+              value={values.student_income}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.student_income}
+              touched={touched.student_income}
+              disabled={values.student_part_time === ""}
+            />
+            {/* สิ่งที่ผู้ปกครองอากให้โรงเรียนช่วย */}
+            <div className="md:col-span-2">
+              <RadioInput
+                label={"สิ่งที่ผู้ปกครองต้องการให้โรงเรียนช่วยเหลือนักเรียน"}
+                options={parentNeeded}
+                extraOpt
+                name={"support_from_school"}
+                value={values.support_from_school}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.support_from_school}
+                touched={touched.support_from_school}
+              />
+            </div>
+            {/* ความช่วยเหลือที่เคยได้รับ */}
+            <div className="md:col-span-2">
+              <RadioInput
+                label={
+                  "ความช่วยเหลือที่ครอบครัวเคยได้รับจากหน่วยงานหรือต้องการได้รับการช่วยเหลือ"
+                }
+                options={receivedHelp}
+                extraOpt
+                name={"support_from_organize"}
+                value={values.support_from_organize}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.support_from_organize}
+                touched={touched.support_from_organize}
+              />
+            </div>
+            {/* ความห่วงใยของผู้ปกครองที่มีต่อนักเรียน */}
+            <div className="md:col-span-2">
+              <TextArea
+                label={"ความห่วงใยของผู้ปกครองที่มีต่อนักเรียน"}
+                placeholder={"กรอกความคิดเห็นที่นี่"}
+                name={"parent_concern"}
+                value={values.parent_concern}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.parent_concern}
+                touched={touched.parent_concern}
               />
             </div>
           </div>

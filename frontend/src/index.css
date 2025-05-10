@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
 @theme {
   --color-green_light: #a5dc86;
   --color-neutral_content: #f9fafb;
@@ -56,7 +55,6 @@
   --font-size-2xl: 3.5rem;
 }
 
-
 @theme {
   --color-green_light: #a5dc86;
   --color-neutral_content: #f9fafb;
@@ -85,8 +83,6 @@
 .section-container {
   @apply max-w-screen-2xl container mx-auto xl:px-24 px-4 mt-8 mb-8;
 }
-
-
 
 .btn-gray {
   @apply py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-[#f9fafb] text-[#1f2937] hover:bg-[#f3f4f6] hover:cursor-pointer;
@@ -145,5 +141,13 @@
 }
 
 .select-input:disabled {
+  @apply bg-gray-100 text-gray-500 cursor-not-allowed opacity-70;
+}
+
+.textarea-input {
+  @apply w-full p-2 border h-[15vh] text-sm border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.textarea-input:disabled {
   @apply bg-gray-100 text-gray-500 cursor-not-allowed opacity-70;
 }
