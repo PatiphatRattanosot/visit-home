@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import AdminPage from "./pages/Admin/Home";
 import Personnel from "./pages/Admin/Personnel";
 import ManageAdminRoles from "./pages/admin/ManageAdminRoles"
+import YearManagement from "./pages/admin/Year";
 
 function App() {
   const {
@@ -54,6 +55,7 @@ function App() {
           <Route index element={<AdminPage />} />
           <Route path="personnel" element={<Personnel />} />
           <Route path="manage-admin" element={<ManageAdminRoles />} />
+          <Route path="year" element={<YearManagement />} />
         </Route>
       </Routes>
       <Footer />
