@@ -48,14 +48,20 @@ const Relation = () => {
 
         {/* ข้อมูลนักเรียน */}
         <div className="flex justify-center mt-6">
-          <div className="bg-gray-50 max-w-2xl w-full rounded-lg px-6 py-10 flex justify-center">
-            {relationInfo !== null ? (
-              <div className="text-left flex flex-col gap-2.5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-gray-600"></div>
-              </div>
-            ) : (
-              <div className="text-center my-16">ยังไม่มีข้อมูล</div>
-            )}
+          <div className="w-full max-w-2xl">
+            <div className="bg-gray-50 rounded-lg px-6 py-10">
+              {relationInfo !== null ? (
+                <div className="text-left flex flex-col gap-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-gray-600">
+                    {/* Your actual data here */}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center my-16 text-gray-500">
+                  ยังไม่มีข้อมูล
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
