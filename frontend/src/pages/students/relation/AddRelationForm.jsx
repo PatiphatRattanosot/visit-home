@@ -77,6 +77,8 @@ const AddRelationForm = () => {
   ];
   const receivedHelp = ["เบี้ยผู้สูงอายุ", "เบี้ยพิการ"];
 
+  console.log(values);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-9">
       <div className="w-full max-w-5xl p-6 bg-white rounded-lg shadow-md">

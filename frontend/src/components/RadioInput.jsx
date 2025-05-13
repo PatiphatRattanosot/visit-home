@@ -16,20 +16,17 @@ const RadioInput = ({
 }) => {
   const [extraOptText, setExtraOptText] = useState("");
 
-  // When the custom input is selected, update the radio group value
+  // When value is not in options, it's the custom one
   useEffect(() => {
-    if (value === extraOptText && onChange) {
-      onChange({ target: { name, value: extraOptText } });
+    if (!options.includes(value)) {
+      setExtraOptText(value);
     }
-  }, [extraOptText]);
+  }, [value, options]);
 
   const handleExtraChange = (e) => {
     const text = e.target.value;
     setExtraOptText(text);
-    // If already selected, update the main value
-    if (value === text && onChange) {
-      onChange({ target: { name, value: text } });
-    }
+    onChange({ target: { name, value: text } });
   };
 
   return (
@@ -43,13 +40,14 @@ const RadioInput = ({
             <input
               type="radio"
               className="radio"
+              id={`${name}_${index}`}
               name={name}
               value={item}
               checked={value === item}
               onChange={onChange}
               onBlur={onBlur}
             />
-            <span>{item}</span>
+            <label htmlFor={`${name}_${index}`}>{item}</label>
           </div>
         ))}
 
@@ -58,9 +56,10 @@ const RadioInput = ({
             <input
               type="radio"
               className="radio"
+              id={`${name}_custom`}
               name={name}
               value={extraOptText}
-              checked={value === extraOptText}
+              checked={!options.includes(value)}
               onChange={() =>
                 onChange({ target: { name, value: extraOptText } })
               }
@@ -72,7 +71,7 @@ const RadioInput = ({
               className="text-input"
               onChange={handleExtraChange}
               value={extraOptText}
-              disabled={value !== extraOptText}
+              disabled={options.includes(value)} // disable when not selected
             />
           </div>
         )}
