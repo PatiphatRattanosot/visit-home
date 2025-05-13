@@ -179,7 +179,9 @@ const SelfInfo = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center my-16">ยังไม่มีข้อมูล</div>
+              <div className="text-center my-16 text-gray-500">
+                ยังไม่มีข้อมูล
+              </div>
             )}
           </div>
         </div>
