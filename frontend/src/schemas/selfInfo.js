@@ -5,82 +5,42 @@ const phoneRule = /^\d+$/;
 const latLngRegex = /^-?\d+(\.\d+)?$/;
 
 export const SelfInfoSchema = yup.object().shape({
-  father_prefix: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณาเลือกคำนำหน้า"),
+  father_prefix: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   father_first_name: yup
     .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกชื่อของบิดา"),
-  father_last_name: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกนามสกุลของบิดา"),
+    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
+  father_last_name: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   father_phone: yup
     .string()
     .matches(phoneRule, "กรุณากรอกตัวเลขอย่างเดียว")
     .min(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง")
-    .max(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง")
-    .required("กรุณากรอกเบอร์โทรศัพท์"),
-  father_job: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกอาชีพของบิดา"),
-  mother_prefix: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณาเลือกคำนำหน้า"),
+    .max(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง"),
+  father_job: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
+  mother_prefix: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   mother_first_name: yup
     .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกชื่อของมารดา"),
-  mother_last_name: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกนามสกุลของมารดา"),
+    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
+  mother_last_name: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   mother_phone: yup
     .string()
     .matches(phoneRule, "กรุณากรอกตัวเลขอย่างเดียว")
     .min(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง")
-    .max(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง")
-    .required("กรุณากรอกเบอร์โทรศัพท์"),
-  mother_job: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกอาชีพของมารดา"),
+    .max(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง"),
+  mother_job: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   family_relation_status: yup
     .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณาเลือกคำตอบ"),
-  parent_prefix: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณาเลือกคำนำหน้า"),
+    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
+  parent_prefix: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   parent_first_name: yup
     .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกชื่อของผู้ปกครอง"),
-  parent_last_name: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกนามสกุลของผู้ปกครอง"),
+    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
+  parent_last_name: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
   parent_phone: yup
     .string()
     .matches(phoneRule, "กรุณากรอกตัวเลขอย่างเดียว")
     .min(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง")
-    .max(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง")
-    .required("กรุณากรอกเบอร์โทรศัพท์"),
-  parent_job: yup
-    .string()
-    .matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย")
-    .required("กรุณากรอกอาชีพของผู้ปกครอง"),
-  lat: yup
-    .string()
-    .matches(latLngRegex, "กรุณากรอกเป็นตัวเลข")
-    .required("กรุณากรอกตำแหน่งบ้าน"),
-  lng: yup
-    .string()
-    .matches(latLngRegex, "กรุณากรอกเป็นตัวเลข")
-    .required("กรุณากรอกตำแหน่งบ้าน"),
+    .max(10, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง"),
+  parent_job: yup.string().matches(onlyThaiLang, "จำเป็นต้องเป็นภาษาไทย"),
+  lat: yup.string().matches(latLngRegex, "กรุณากรอกเป็นตัวเลข"),
+  lng: yup.string().matches(latLngRegex, "กรุณากรอกเป็นตัวเลข"),
 });
