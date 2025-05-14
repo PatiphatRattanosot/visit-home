@@ -12,14 +12,6 @@ const UpdateRelationForm = () => {
   const { userInfo } = useAuthStore();
   const navigate = useNavigate();
 
-  // stepper path
-  const stepperPath = {
-    stepOne: `/student/self-info/add`,
-    stepTwo: `/student/relation/add`,
-    stepThree: `/student/family-status/add`,
-    stepFour: `/student/behavior/add`,
-  };
-
   const {
     values,
     errors,
@@ -86,10 +78,6 @@ const UpdateRelationForm = () => {
           ข้อมูลส่วนตัวของ{" "}
           <span className="text-gray-600">{`${userInfo?.prefix} ${userInfo?.first_name} ${userInfo?.last_name}`}</span>
         </h3>
-
-        <div className="flex justify-center">
-          <Stepper step={2} path={stepperPath} />
-        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
