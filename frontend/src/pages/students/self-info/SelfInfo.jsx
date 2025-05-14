@@ -3,9 +3,11 @@ import ShowPicture from "../../../components/students/ShowPicture";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Stepper from "../../../components/Stepper";
+import { useParams } from "react-router";
 
 const SelfInfo = () => {
   const { userInfo } = useAuthStore();
+  const { year } = useParams();
   // สร้าง state มาเก็นข้อมูล
   const [personalInfo, setPersonalInfo] = useState(null);
 
@@ -58,8 +60,8 @@ const SelfInfo = () => {
             className={personalInfo === null ? "btn-green" : "btn-yellow"}
             href={
               personalInfo === null
-                ? `/student/self-info/add`
-                : `/student/self-info/update`
+                ? `/student/visit-info/${year}/self-info/add`
+                : `/student/visit-info/${year}/self-info/update`
             }
           >
             {personalInfo === null ? "เพิ่มข้อมูล" : "แก้ไขข้อมูล"}

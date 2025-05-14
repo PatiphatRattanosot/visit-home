@@ -256,6 +256,7 @@ const AddSelfInfoForm = () => {
                   <input
                     type="radio"
                     name="family_relation_status"
+                    id="family_relation_status_1"
                     className="radio"
                     value="อยู่ด้วยกัน"
                     checked={
@@ -264,51 +265,59 @@ const AddSelfInfoForm = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <span>อยู่ด้วยกัน</span>
+                  <label htmlFor="family_relation_status_1">อยู่ด้วยกัน</label>
                 </div>
                 <div className="flex space-x-1 items-center text-sm">
                   <input
                     type="radio"
                     name="family_relation_status"
+                    id="family_relation_status_2"
                     className="radio"
                     value="แยกกันอยู่"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <span>แยกกันอยู่</span>
+                  <label htmlFor="family_relation_status_2">แยกกันอยู่</label>
                 </div>
                 <div className="flex space-x-1 items-center text-sm">
                   <input
                     type="radio"
                     name="family_relation_status"
+                    id="family_relation_status_3"
                     className="radio"
                     value="อย่าร้าง"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <span>อย่าร้าง</span>
+                  <label htmlFor="family_relation_status_3">อย่าร้าง</label>
                 </div>
                 <div className="flex space-x-1 items-center text-sm">
                   <input
                     type="radio"
                     name="family_relation_status"
+                    id="family_relation_status_4"
                     className="radio"
                     value="บิดาเสียชีวิต"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <span>บิดาเสียชีวิต</span>
+                  <label htmlFor="family_relation_status_4">
+                    บิดาเสียชีวิต
+                  </label>
                 </div>
                 <div className="flex space-x-1 items-center text-sm">
                   <input
                     type="radio"
                     name="family_relation_status"
+                    id="family_relation_status_5"
                     className="radio"
                     value="มารดาเสียชีวิต"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <span>มารดาเสียชีวิต</span>
+                  <label htmlFor="family_relation_status_5">
+                    มารดาเสียชีวิต
+                  </label>
                 </div>
               </div>
               {formik.errors.family_relation_status &&
