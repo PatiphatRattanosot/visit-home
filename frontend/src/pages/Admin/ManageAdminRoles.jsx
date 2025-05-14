@@ -1,26 +1,42 @@
 import { useEffect, useState } from "react";
 import Userservice from "../../services/users/users.service";
+import FilterDropdown from "../../components/FilterDropdown";
+import SearchPersonnel from "../../components/SearchPersonnel";
+import Pagination from "../../components/Pagination";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 const ManageAdminRoles = () => {
   const [personnel, setPersonnel] = useState([]);
+  const [filteredPersonnel, setFilteredPersonnel] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("เรียงจากน้อยไปมาก");
+
+  // สร้าง satate สำหรับ Paginations
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPersonnel.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const fetchPersonnel = async () => {
+    try {
+      const response = await Userservice.getAllUsers();
+      const activePersonnel = response.data.users.filter(
+        (person) => person.status === "รับราชการ"
+      );
+      setPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+      // setFilteredPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+      setFilteredPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+
+      console.log("RESPONSE =", response);
+    } catch (error) {
+      console.error("Error fetching personnel data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchPersonnel = async () => {
-      try {
-        const response = await Userservice.getAllUsers();
-        const activePersonnel = response.data.users.filter(
-          (person) => person.status === "รับราชการ"
-        );
-        setPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-        // setFilteredPersonnel(activePersonnel); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-
-        console.log("RESPONSE =", response);
-      } catch (error) {
-        console.error("Error fetching personnel data:", error);
-      }
-    };
-
     fetchPersonnel(); // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลบุคลากร
   }, []);
 
@@ -42,6 +58,7 @@ const ManageAdminRoles = () => {
 
       if (response.status === 200) {
         toast.success(message);
+        fetchPersonnel();
       }
     } catch (error) {
       const errorMessage =
@@ -71,6 +88,7 @@ const ManageAdminRoles = () => {
 
           if (response.status === 200) {
             toast.success(message);
+            fetchPersonnel();
           }
         } else if (result.isDismissed) {
           Swal.fire({
@@ -88,9 +106,50 @@ const ManageAdminRoles = () => {
       toast.error(errorMessage);
     }
   };
+
+  useEffect(() => {
+    let sorted = [...personnel];
+
+    switch (selectedOption) {
+      case "เรียงจากน้อยไปมาก":
+        sorted.sort((a, b) => a.user_id - b.user_id);
+        break;
+      case "เรียงจากมากไปน้อย":
+        sorted.sort((a, b) => b.user_id - a.user_id);
+        break;
+      case "เรียงตามลำดับตัวอักษร ก-ฮ":
+        sorted.sort((a, b) => a.first_name.localeCompare(b.first_name, "th"));
+        break;
+      case "เรียงตามลำดับตัวอักษร ฮ-ก":
+        sorted.sort((a, b) => b.first_name.localeCompare(a.first_name, "th"));
+        break;
+      default:
+        break;
+    }
+    setFilteredPersonnel(sorted);
+  }, [selectedOption, personnel]);
   return (
     <div className="section-container">
       <div className="overflow-x-auto">
+        {/* หัวข้อ */}
+        <p className="text-xl text-center">หน้าจัดการบทบาทผู้ดูแล</p>
+        {/* ฟีเจอร์เสริม */}
+        <div className="flex flex-col md:flex-row justify-between mb-4 mt-4 gap-2">
+          {/* Dropdown สำหรับการกรองข้อมูล */}
+          <FilterDropdown
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+          />
+
+          {/* ช่องค้นหา */}
+          <div className="ml-auto">
+            <SearchPersonnel
+              personnel={personnel}
+              setFilteredPersonnel={setFilteredPersonnel}
+            />
+          </div>
+        </div>
+        
         <table className="table">
           {/* head */}
           <thead>
@@ -100,11 +159,12 @@ const ManageAdminRoles = () => {
               <th>ชื่อ</th>
               <th>นามสกุล</th>
               <th>ตำแหน่ง</th>
+              <th>บทบาทผู้ดูแล</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            {personnel.map((person, index) => (
+            {currentItems.map((person, index) => (
               <tr key={index}>
                 <td>{person.user_id}</td>
                 <td>{person.prefix}</td>
@@ -136,10 +196,18 @@ const ManageAdminRoles = () => {
               <th>ชื่อ</th>
               <th>นามสกุล</th>
               <th>ตำแหน่ง</th>
+              <th>บทบาทผู้ดูแล</th>
             </tr>
           </tfoot>
         </table>
       </div>
+      {/* Pagination */}
+      <Pagination
+        totalItems={filteredPersonnel.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };

@@ -19,9 +19,9 @@ const updateUser = async (id, data) => {
   return await api.put(`/user/${id}`, data);
 };
 
-const deleteUser = async (id) => {
-  const res = await api.delete(`/user/${id}`);
-  return res.data;
+const deleteUser = async (email) => {
+  const res = await api.delete(`/user/${email}`);
+  return res;
 };
 
 const Uservervices = {

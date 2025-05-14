@@ -6,11 +6,13 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import SearchPersonnel from "../../components/SearchPersonnel";
 import FilterDropdown from "../../components/FilterDropdown";
+import Pagination from "../../components/Pagination";
 import ModalAddPersonnel from "../../components/modals/AddPersonnel";
 import ModalEditPersonnel from "../../components/modals/EditPersonnel";
 const Personnel = () => {
   const [selectedOption, setSelectedOption] = useState("เรียงจากน้อยไปมาก");
   const [personnel, setPersonnel] = useState([]); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
+
   const [filteredPersonnel, setFilteredPersonnel] = useState([]);
   // สร้าง satate สำหรับ Paginations
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,10 +40,10 @@ const Personnel = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await Userservice.deleteUser(email); // ลบหลังจากผู้ใช้ยืนยันแล้ว
-
+          const response = await Userservice.deleteUser(email); // ลบหลังจากผู้ใช้ยืนยันแล้ว
           Swal.fire({
-            title: "ลบข้อมูลบุคลากรเรียบร้อย",
+            title: "ลบข้อมูลเรียบร้อย",
+            text: response.data.message,
             icon: "success",
             showConfirmButton: false,
             timer: 1500,
@@ -233,47 +235,12 @@ const Personnel = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-4 gap-2">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-3 py-1 rounded border bg-white disabled:opacity-50"
-        >
-          &laquo;
-        </button>
-
-        {Array.from(
-          { length: Math.ceil(filteredPersonnel.length / itemsPerPage) },
-          (_, i) => i + 1
-        ).map((number) => (
-          <button
-            key={number}
-            onClick={() => setCurrentPage(number)}
-            className={`px-3 py-1 rounded border ${
-              number === currentPage ? "bg-blue-500 text-white" : "bg-white"
-            }`}
-          >
-            {number}
-          </button>
-        ))}
-
-        <button
-          onClick={() =>
-            setCurrentPage((prev) =>
-              Math.min(
-                prev + 1,
-                Math.ceil(filteredPersonnel.length / itemsPerPage)
-              )
-            )
-          }
-          disabled={
-            currentPage === Math.ceil(filteredPersonnel.length / itemsPerPage)
-          }
-          className="px-3 py-1 rounded border bg-white disabled:opacity-50"
-        >
-          &raquo;
-        </button>
-      </div>
+      <Pagination
+        totalItems={filteredPersonnel.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };

@@ -32,23 +32,24 @@ function App() {
         logout={signOutSystem}
       />
       <Routes>
-        <Route
-          path="/"
-          element={
-            userInfo?.role[0] === "Admin" ? (
-              <Navigate to={"/admin"} />
-            ) : userInfo?.role[0] === "Teacher" ? (
-              <Navigate to={"/teacher"} />
-            ) : userInfo?.role[0] === "Student" ? (
-              <Navigate to={"/student"} />
-            ) : (
-              <Landing />
-            )
-          }
-        />
+      <Route
+  path="/"
+  element={
+    userInfo?.role.includes("Admin") ? (
+      <Navigate to={"/admin"} />
+    ) : userInfo?.role.includes("Teacher") ? (
+      <Navigate to={"/teacher"} />
+    ) : userInfo?.role.includes("Student") ? (
+      <Navigate to={"/student"} />
+    ) : (
+      <Landing />
+    )
+  }
+/>
+
         <Route
           path="admin"
-          // element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
+          element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
         >
           <Route index element={<AdminPage />} />
           <Route path="personnel" element={<Personnel />} />
