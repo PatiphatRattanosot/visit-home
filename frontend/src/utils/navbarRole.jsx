@@ -34,7 +34,7 @@ export const getNavLinks = (role) => {
             <a href={`/student`}>หน้าแรก</a>
           </li>
           <li>
-            <a href={`/student/self-info`}>ข้อมูลการเยี่ยมบ้าน</a>
+            <a href={`/student/visit-info`}>ข้อมูลการเยี่ยมบ้าน</a>
           </li>
           <li>
             <details>
