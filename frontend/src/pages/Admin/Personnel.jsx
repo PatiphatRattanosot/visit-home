@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Userservice from "../../services/user.service";
+import Userservice from "../../services/users/users.service";
 import { BiSolidEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 import SearchPersonnel from "../../components/SearchPersonnel";
 import FilterDropdown from "../../components/FilterDropdown";
 import ModalAddPersonnel from "../../components/modals/AddPersonnel";
@@ -24,7 +25,7 @@ const Personnel = () => {
 
   // ฟังก์ชันสำหรับลบข้อมูลบุคลากร
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteUser = async (email) => {
     Swal.fire({
       title: "คุณแน่ใจหรือไม่?",
       text: "คุณต้องการลบข้อมูลบุคลากรนี้!",
@@ -37,7 +38,7 @@ const Personnel = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await Userservice.deleteUser(id); // ลบหลังจากผู้ใช้ยืนยันแล้ว
+          await Userservice.deleteUser(email); // ลบหลังจากผู้ใช้ยืนยันแล้ว
 
           Swal.fire({
             title: "ลบข้อมูลบุคลากรเรียบร้อย",
@@ -46,7 +47,7 @@ const Personnel = () => {
             timer: 1500,
           }).then(() => {
             const updatedPersonnel = personnel.filter(
-              (person) => person.id !== id
+              (person) => person.email !== email
             );
             setPersonnel(updatedPersonnel);
             setFilteredPersonnel(updatedPersonnel);
@@ -74,22 +75,22 @@ const Personnel = () => {
     const fetchPersonnel = async () => {
       try {
         const response = await Userservice.getAllUsers();
-        setPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-        setFilteredPersonnel(response); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-       
-        
+        if (response.status === 200) {
+          setPersonnel(response.data.users); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+          setFilteredPersonnel(response.data.users); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        }
       } catch (error) {
-        console.error("Error fetching personnel data:", error);
+        console.error(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     };
 
     fetchPersonnel(); // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลบุคลากร
   }, []);
-  console.log(personnel);
 
   useEffect(() => {
     let sorted = [...personnel];
-  
+
     switch (selectedOption) {
       case "เรียงจากน้อยไปมาก":
         sorted.sort((a, b) => a.user_id - b.user_id);
@@ -106,13 +107,10 @@ const Personnel = () => {
       default:
         break;
     }
-  
+
     setFilteredPersonnel(sorted);
     setCurrentPage(1); // reset ไปหน้าแรกทุกครั้งที่เรียงใหม่
   }, [selectedOption, personnel]);
-  
-  
-  
 
   const showStatus = (status) => {
     switch (status) {
@@ -136,6 +134,16 @@ const Personnel = () => {
         );
     }
   };
+  const getRoleDisplay = (role) => {
+    const roles = Array.isArray(role) ? role : [role]; // แปลงให้เป็น array เสมอ
+    //ใช้ includes() เรียงลำดับความสำคัญของบทบาท และ คืนค่าชื่อบทบาทที่เหมาะสม
+    if (roles.includes("Admin")) return "เจ้าหน้าที่ฝ่ายทะเบียน";
+    if (roles.includes("Teacher")) return "คุณครู";
+    if (roles.includes("Student")) return "นักเรียน";
+
+    return "ไม่ทราบบทบาท";
+  };
+
   return (
     <div className="section-container w-full">
       <h1 className="text-center">รายชื่อบุคลากร</h1>
@@ -147,7 +155,6 @@ const Personnel = () => {
           setSelectedOption={setSelectedOption}
         />
 
-
         {/* ช่องค้นหา */}
         <SearchPersonnel
           personnel={personnel}
@@ -157,11 +164,11 @@ const Personnel = () => {
 
         {/* ปุ่มเพิ่มบุคลากร */}
         <button
-            onClick={() => document.getElementById("add_personnel").showModal()}
-            className="btn-green"
-          >
-            เพิ่มบุคลากร
-          </button>
+          onClick={() => document.getElementById("add_personnel").showModal()}
+          className="btn-green"
+        >
+          เพิ่มบุคลากร
+        </button>
         {/* Modal เพิ่มบุคลากร */}
         <ModalAddPersonnel />
       </div>
@@ -197,24 +204,23 @@ const Personnel = () => {
                 <td>{person.prefix}</td>
                 <td>{person.first_name}</td>
                 <td>{person.last_name}</td>
-                <td>{person.rank}</td>
+                <td>{getRoleDisplay(person.role)}</td>
                 <td>{person.phone}</td>
                 <td>{showStatus(person.status)}</td>
                 <td className="flex gap-2">
                   <button
                     onClick={() =>
-                      document.getElementById(`edit_personnel_${person.id}`).showModal()
+                      document
+                        .getElementById(`edit_personnel_${person.id}`)
+                        .showModal()
                     }
                     className="btn btn-warning"
                   >
                     <BiSolidEdit size={20} />
                   </button>
-                  <ModalEditPersonnel
-                    id={person.id}
-                    
-                  />
+                  <ModalEditPersonnel id={person.id} />
                   <button
-                    onClick={() => handleDeleteUser(person.id)}
+                    onClick={() => handleDeleteUser(person.email)}
                     className="btn btn-error"
                   >
                     <AiOutlineDelete size={20} />

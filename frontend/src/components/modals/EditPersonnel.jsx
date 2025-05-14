@@ -1,68 +1,77 @@
-import Userservices from "../../services/user.service";
+import { useFormik } from "formik";
+import Userservices from "../../services/users/users.service";
+import { PersonnelSchema } from "../../schemas/personnel";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
-
 import { useEffect, useState } from "react";
 import TextInputInModal from "./TexInputInModal";
 import SelectInputInModal from "./SelectInputInModal";
 
+
+
 const EditPersonnel = ({ id }) => {
   const navigate = useNavigate();
 
-  const [personnel, setPersonnel] = useState({
-    prefix: "",
-    first_name: "",
-    last_name: "",
-    user_id: "",
-    rank: "",
-    phone: "",
-    status: "รับราชการ",
-  }); // สร้าง state สำหรับเก็บข้อมูลบุคลากร
   const prefixOptions = ["นาย", "นาง", "นางสาว"];
-  const rankOptions = ["เจ้าหน้าที่ฝ่ายทะเบียน", "ครูที่ปรึกษา"];
   const statusOptions = ["ลาออก", "เกษียณ", "รับราชการ"];
+
+  const formik = useFormik({
+    initialValues: {
+      prefix: "",
+      first_name: "",
+      last_name: "",
+      user_id: "",
+      phone: "",
+      status: "รับราชการ",
+    },
+    validationSchema: PersonnelSchema,
+    onSubmit: async (values, actions) => {
+      console.log("Submitting", values);
+      console.log("Submitting", actions);
+      try {
+        const response = await Userservices.updateTeacher(_id, values);
+        toast.success("แก้ไขข้อมูลบุคลากรเรียบร้อยแล้ว!");
+        document.getElementById(`edit_personnel_${id}`).close();
+        setPersonnel({
+          first_name: "",
+          last_name: "",
+          user_id: "",
+          rank: "",
+          prefix: "",
+          status: "",
+        });
+        navigate("/admin/personnel");
+      } catch (error) {
+        toast.error("เกิดข้อผิดพลาดในการแก้ไขข้อมูล!");
+      }
+      actions.resetForm();
+    },
+  });
 
   useEffect(() => {
     const getPersonnelById = async () => {
       try {
-      
         const response = await Userservices.getUserById(id);
         if (response.status === 200) {
+          formik.setValues({
+            prefix: response.data.prefix,
+            first_name: response.data.first_name,
+            last_name: response.data.last_name,
+            user_id: response.data.user_id,
+            rank: response.data.rank,
+            phone: response.data.phone,
+            status: response.data.status,
+          });
           setPersonnel(response.data);
-        console.log(response);
+
+          console.log(response);
         }
-        
       } catch (error) {
         toast.error("เกิดข้อผิดพลาดในการดึงข้อมูล!");
       }
     };
     getPersonnelById();
   }, [id]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPersonnel({ ...personnel, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await Userservices.updateUser(id, personnel);
-      toast.success("แก้ไขข้อมูลบุคลากรเรียบร้อยแล้ว!");
-      document.getElementById(`edit_personnel_${id}`).close();
-      setPersonnel({
-        first_name: "",
-        last_name: "",
-        user_id: "",
-        rank: "",
-        prefix: "",
-        status: "",
-      });
-      navigate("/admin/personnel");
-    } catch (error) {
-      toast.error("เกิดข้อผิดพลาดในการแก้ไขข้อมูล!");
-    }
-  };
   return (
     <div>
       <dialog id={`edit_personnel_${id}`} className="modal">
@@ -70,75 +79,110 @@ const EditPersonnel = ({ id }) => {
           <h3 className="font-bold text-lg text-center">เพิ่มข้อมูลบุคลากร</h3>
           <div className="flex flex-col items-center justify-center space-y-2">
             <SelectInputInModal
-              name={"prefix"}
-              value={personnel.prefix}
-              onChange={handleChange}
-              label={"คำนำหน้า"}
+              name="prefix"
+              value={formik.values.prefix}
+              onChange={formik.handleChange}
+              label="คำนำหน้า"
               disabled={false}
-              defaultOpt={"คำนำหน้า"}
+              defaultOpt="คำนำหน้า"
               options={prefixOptions}
+              error={formik.errors.prefix}
+              touched={formik.touched.prefix}
+              onBlur={formik.handleBlur}
               className="w-64 md:w-72"
             />
+  
             <TextInputInModal
-              name={"first_name"}
-              placeholder={"ชื่อ"}
+              name="first_name"
+              placeholder="ชื่อ"
               disabled={false}
-              value={personnel.first_name}
-              onChange={handleChange}
-              label={"ชื่อ"}
+              value={formik.values.first_name}
+              onChange={formik.handleChange}
+              label="ชื่อ"
+              error={formik.errors.first_name}
+              touched={formik.touched.first_name}
+              onBlur={formik.handleBlur}
             />
+  
             <TextInputInModal
-              name={"last_name"}
-              placeholder={"นามสกุล"}
+              name="last_name"
+              placeholder="นามสกุล"
               disabled={false}
-              value={personnel.last_name}
-              onChange={handleChange}
-              label={"นามสกุล"}
+              value={formik.values.last_name}
+              onChange={formik.handleChange}
+              label="นามสกุล"
+              error={formik.errors.last_name}
+              touched={formik.touched.last_name}
+              onBlur={formik.handleBlur}
             />
+  
             <TextInputInModal
-              name={"user_id"}
-              placeholder={"เลขที่ประจำตัวบุคลากร"}
+              name="user_id"
+              placeholder="เลขที่ประจำตัวบุคลากร"
               disabled={false}
-              value={personnel.user_id}
-              onChange={handleChange}
-              label={"เลขที่ประจำตัวบุคลากร"}
+              value={formik.values.user_id}
+              onChange={formik.handleChange}
+              label="เลขที่ประจำตัวบุคลากร"
+              error={formik.errors.user_id}
+              touched={formik.touched.user_id}
+              onBlur={formik.handleBlur}
             />
+  
             <SelectInputInModal
-              name={"rank"}
-              value={personnel.rank}
-              onChange={handleChange}
-              label={"ตำแหน่ง"}
+              name="rank"
+              value={formik.values.rank}
+              onChange={formik.handleChange}
+              label="ตำแหน่ง"
               disabled={false}
-              defaultOpt={"ตำแหน่ง"}
+              defaultOpt="ตำแหน่ง"
               options={rankOptions}
+              error={formik.errors.rank}
+              touched={formik.touched.rank}
+              onBlur={formik.handleBlur}
               className="w-64 md:w-72"
             />
+  
             <TextInputInModal
-              name={"phone"}
-              placeholder={"เบอร์โทรศัพท์"}
+              name="phone"
+              placeholder="เบอร์โทรศัพท์"
               disabled={false}
-              value={personnel.phone}
-              onChange={handleChange}
-              label={"เบอร์โทรศัพท์"}
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              label="เบอร์โทรศัพท์"
+              error={formik.errors.phone}
+              touched={formik.touched.phone}
+              onBlur={formik.handleBlur}
             />
-          </div>
-          <SelectInputInModal
-            name={"status"}
-            value={personnel.status}
-            onChange={handleChange}
-            label={"สถานะ"}
+
+            <SelectInputInModal
+            name="status"
+            value={formik.values.status}
+            onChange={formik.handleChange}
+            label="สถานะ"
             disabled={false}
-            defaultOpt={"สถานะ"}
             options={statusOptions}
+            error={formik.errors.status}
+            touched={formik.touched.status}
+            onBlur={formik.handleBlur}
             className="w-64 md:w-72"
           />
+          </div>
+          
           <div className="modal-action">
-            <form method="dialog mt-2">
+            <form onSubmit={formik.handleSubmit} method="dialog mt-2">
               <div className="flex gap-6">
-                <button onClick={handleSubmit} className="btn-green">
+                <button disabled={formik.isSubmitting} type="submit" className="btn-green">
                 บันทึก
               </button>
-              <button className="btn-red">ยกเลิก</button>
+              <button
+                  type="button"
+                  className="btn-red"
+                  onClick={() =>
+                    document.getElementById(`edit_personnel_${id}`).close()
+                  }
+                >
+                  ยกเลิก
+                </button>
               </div>
               
             </form>

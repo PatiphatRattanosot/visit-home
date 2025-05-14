@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import Userservices from "../../services/user.service";
+import Userservices from "../../services/users/users.service";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Home = () => {
   const [rankChartData, setRankChartData] = useState(null);
   const [statusChartData, setStatusChartData] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const getChartData = async () => {
       try {
         const response = await Userservices.getAllUsers();
-
+        const users = response.data.users;
+        setUsers(users);
         //สถานะบุคลากร
         const statusCount = {};
-        response.forEach((user) => {
+        users.forEach((user) => {
           const status = user.status;
           statusCount[status] = (statusCount[status] || 0) + 1;
         });
@@ -51,10 +53,10 @@ const Home = () => {
 
         //ตำแหน่งบุคลากร 
         const rankCount = {};
-        response.forEach((user) => {
-          const rank = user.rank;
-          rankCount[rank] = (rankCount[rank] || 0) + 1;
-        });
+       users.forEach((user) => {
+  const rank = user.role;
+  rankCount[rank] = (rankCount[rank] || 0) + 1;
+});
         const rankLabels = Object.keys(rankCount);
         const rankData = Object.values(rankCount);
         setRankChartData({
@@ -95,7 +97,7 @@ const Home = () => {
 
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
+    <div className="w-full section-container">
       <h2 className="text-xl font-bold mb-4 text-center">สัดส่วนบุคลากร</h2>
       
       <div className="flex flex-col md:flex-row justify-center items-start gap-8">

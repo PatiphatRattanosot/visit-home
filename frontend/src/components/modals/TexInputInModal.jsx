@@ -10,6 +10,7 @@ const TextInputInModal = ({
   type = "text",
   disabled,
   className = "",
+  maxLength,
 }) => {
   return (
     <div className={`flex flex-col ${className}`}>
@@ -17,6 +18,7 @@ const TextInputInModal = ({
         {label} : <span className="text-red-600">*</span>
       </label>
       <input
+        maxLength={maxLength}
         type={type}
         id={name}
         name={name}
