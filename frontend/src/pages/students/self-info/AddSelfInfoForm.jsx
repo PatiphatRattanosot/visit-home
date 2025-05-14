@@ -6,7 +6,7 @@ import { useAuthStore } from "../../../stores/auth.store";
 import { useFormik } from "formik";
 import { SelfInfoSchema } from "../../../schemas/selfInfo";
 import Stepper from "../../../components/Stepper";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const AddSelfInfoForm = () => {
   const { userInfo } = useAuthStore();
@@ -14,6 +14,7 @@ const AddSelfInfoForm = () => {
   const [parentFetch, setParentFetch] = useState("dad");
 
   const navigate = useNavigate();
+  const { year } = useParams();
 
   const formik = useFormik({
     initialValues: {
@@ -448,7 +449,7 @@ const AddSelfInfoForm = () => {
               className="btn-red w-1/2"
               onClick={() => {
                 formik.setValues(formik.initialValues);
-                navigate("/student/self-info");
+                navigate(`/student/visit-info/${year}/self-info`);
               }}
             >
               ยกเลิก

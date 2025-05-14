@@ -5,19 +5,20 @@ import TextArea from "../../../components/TextArea";
 import { useAuthStore } from "../../../stores/auth.store";
 import Stepper from "../../../components/Stepper";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { RelationSchema } from "../../../schemas/relation";
 
 const AddRelationForm = () => {
   const { userInfo } = useAuthStore();
   const navigate = useNavigate();
+  const { year } = useParams();
 
   // stepper path
   const stepperPath = {
-    stepOne: `/student/self-info/add`,
-    stepTwo: `/student/relation/add`,
-    stepThree: `/student/family-status/add`,
-    stepFour: `/student/behavior/add`,
+    stepOne: `/student/visit-info/${year}/self-info/add`,
+    stepTwo: `/student/visit-info/${year}/relation/add`,
+    stepThree: `/student/visit-info/${year}/family-status/add`,
+    stepFour: `/student/visit-info/${year}/behavior/add`,
   };
 
   const {
@@ -340,7 +341,7 @@ const AddRelationForm = () => {
               className="btn-gray w-1/2"
               onClick={() => {
                 setValues(initialValues);
-                navigate("/student/self-info/add");
+                navigate(`/student/visit-info/${year}/self-info/add`);
               }}
             >
               ก่อนหน้า

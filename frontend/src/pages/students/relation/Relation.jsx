@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useAuthStore } from "../../../stores/auth.store";
+import { useParams } from "react-router";
 import Stepper from "../../../components/Stepper";
 
 const Relation = () => {
   const { userInfo } = useAuthStore();
   const [relationInfo, setRelationInfo] = useState(null);
 
+  const { year } = useParams();
+
   // stepper path
   const stepperPath = {
-    stepOne: `/student/self-info`,
-    stepTwo: `/student/relation`,
-    stepThree: `/student/family-status`,
-    stepFour: `/student/behavior`,
+    stepOne: `/student/visit-info/${year}/self-info`,
+    stepTwo: `/student/visit-info/${year}/relation`,
+    stepThree: `/student/visit-info/${year}/family-status`,
+    stepFour: `/student/visit-info/${year}/behavior`,
   };
 
   return (
@@ -38,8 +41,8 @@ const Relation = () => {
             className={relationInfo === null ? "btn-green" : "btn-yellow"}
             href={
               relationInfo === null
-                ? `/student/relation/add`
-                : `/student/relation/update`
+                ? `/student/visit-info/${year}/relation/add`
+                : `/student/visit-info/${year}/relation/update`
             }
           >
             {relationInfo === null ? "เพิ่มข้อมูล" : "แก้ไขข้อมูล"}

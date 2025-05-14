@@ -3,14 +3,14 @@ import TextInput from "../../../components/TextInput";
 import SelectInput from "../../../components/SelectInput";
 import TextArea from "../../../components/TextArea";
 import { useAuthStore } from "../../../stores/auth.store";
-import Stepper from "../../../components/Stepper";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { RelationSchema } from "../../../schemas/relation";
 
 const UpdateRelationForm = () => {
   const { userInfo } = useAuthStore();
   const navigate = useNavigate();
+  const { year } = useParams();
 
   const {
     values,
@@ -328,7 +328,7 @@ const UpdateRelationForm = () => {
               className="btn-red w-1/2"
               onClick={() => {
                 setValues(initialValues);
-                navigate("/student/relation/");
+                navigate(`/student/visit-info/${year}/relation`);
               }}
             >
               ยกเลิก
