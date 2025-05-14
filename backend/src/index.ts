@@ -46,17 +46,17 @@ const app = new Elysia()
           },
         ],
         tags: [
-          { 
-            name: "App", 
-            description: "API ทั่วไปของระบบ" 
+          {
+            name: "App",
+            description: "API ทั่วไปของระบบ",
           },
           {
             name: "Auth",
             description: "API สำหรับการเข้าสู่ระบบและยืนยันตัวตน ",
           },
-          { 
-            name: "User", 
-            description: "API สำหรับการจัดการผู้ใช้" 
+          {
+            name: "User",
+            description: "API สำหรับการจัดการผู้ใช้",
           },
           {
             name: "Teacher",
