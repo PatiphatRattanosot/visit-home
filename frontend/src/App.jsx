@@ -72,12 +72,12 @@ function App() {
                 <Route path="add" element={<AddSelfInfoForm />} />
                 <Route path="update" element={<UpdateSelfInfoForm />} />
               </Route>
+              <Route path="relation">
+                <Route path="" element={<Relation />} />
+                <Route path="add" element={<AddRelationForm />} />
+                <Route path="update" element={<UpdateRelationForm />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="relation">
-            <Route path="" element={<Relation />} />
-            <Route path="add" element={<AddRelationForm />} />
-            <Route path="update" element={<UpdateRelationForm />} />
           </Route>
         </Route>
       </Routes>
