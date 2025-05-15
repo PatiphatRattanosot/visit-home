@@ -80,6 +80,7 @@ const app = new Elysia()
         app
           .use(TeacherController.create_teacher)
           .use(TeacherController.get_teacher)
+          .use(TeacherController.get_teacher_by_id)
           .use(TeacherController.update_teacher)
       )
   )
