@@ -17,7 +17,9 @@ export const getNavLinks = (role) => {
             </a>
           </li>
           <li>
-            <a href="/admin/setting"></a>
+            <a href="/admin/manage-admin" className={baseLink}>
+              จัดการสถนะบุคลากร
+            </a>
           </li>
         </>
       );

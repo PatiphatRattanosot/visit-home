@@ -128,19 +128,7 @@ const EditPersonnel = ({ id }) => {
               onBlur={formik.handleBlur}
             />
   
-            <SelectInputInModal
-              name="rank"
-              value={formik.values.rank}
-              onChange={formik.handleChange}
-              label="ตำแหน่ง"
-              disabled={false}
-              defaultOpt="ตำแหน่ง"
-              options={rankOptions}
-              error={formik.errors.rank}
-              touched={formik.touched.rank}
-              onBlur={formik.handleBlur}
-              className="w-64 md:w-72"
-            />
+           
   
             <TextInputInModal
               name="phone"
