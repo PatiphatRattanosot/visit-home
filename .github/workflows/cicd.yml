@@ -50,8 +50,8 @@ jobs:
             docker rm -f visit-home-frontend || true
             docker rm -f visit-home-backend || true
 
-            # สร้าง network 
-            docker network create visit-home-network || true
+            # # สร้าง network 
+            # docker network create visit-home-network || true
 
             # เอา image ไปที่ server
             docker pull ghcr.io/patiphatrattanosot/visit-home-frontend:${{ env.TAG_NAME }}
