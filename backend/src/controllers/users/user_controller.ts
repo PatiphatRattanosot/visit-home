@@ -26,18 +26,30 @@ const get_users = async (app: Elysia) =>
 
 // ฟังก์ชัน deleteUser สำหรับลบผู้ใช้ตามอีเมล์
 const delete_user = async (app: Elysia) =>
-  app.delete("/:email", async ({ params: { email }, set }) => {
-    // ลบข้อมูลที่นี่
-    console.log("ลบผู้ใช้:", email);
-    set.status = 200;
-    return { message: "ลบสำเร็จ" };
-  }, {
-    detail: { tags: ["User"], description: "ลบข้อมูลผู้ใช้" },
-    params: t.Object({
-      email: t.String(),
-    }),
-  });
-
+  app.delete(
+    "/:email",
+    async ({ params: { email }, set }) => {
+      try {
+        const user = await UserModel.findOneAndDelete({ email }, { new: true });
+        if (!user) {
+          set.status = 404;
+          return { message: "ไม่พบผู้ใช้" };
+        }
+        const user_name = `${user.first_name} ${user.last_name}`;
+        set.status = 200;
+        return { message: `ลบผู้ใช้ ${user_name} สำเร็จ` };
+      } catch (error) {
+        set.status = 500;
+        return { message: `เซิฟเวอร์ผิดพลาดไม่สามารถลบผู้ใช้ได้` };
+      }
+    },
+    {
+      detail: { tags: ["User"], description: "ลบข้อมูลผู้ใช้" },
+      params: t.Object({
+        email: t.String(),
+      }),
+    }
+  );
 
 // ฟังก์ชัน addAdminRole เพื่อเพิ่มสิทธิ์ Admin ให้กับผู้ใช้
 const add_admin_role = async (app: Elysia) =>
