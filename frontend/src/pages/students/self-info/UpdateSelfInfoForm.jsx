@@ -77,7 +77,7 @@ const UpdateSelfInfoForm = () => {
       try {
         const res = await axios.get("http://localhost:5000/studentInfo/1");
         if (res.status === 200 && res.data?.personal_info) {
-          const info = res.data.personal_info;
+          const info = res.data.personal_info[0];
           formik.setValues({
             father_prefix: info.father_prefix || "",
             father_first_name: info.father_first_name || "",

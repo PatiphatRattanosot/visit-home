@@ -17,7 +17,7 @@ const SelfInfo = () => {
       try {
         const res = await axios.get("http://localhost:5000/studentInfo/1");
         if (res.status === 200) {
-          setPersonalInfo(res.data.personal_info);
+          setPersonalInfo(res.data.personal_info[0]);
         }
       } catch (error) {
         console.log("ชิบหายแล้วน้อง", error, "บัคว่ะ");

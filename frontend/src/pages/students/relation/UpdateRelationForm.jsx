@@ -6,6 +6,8 @@ import { useAuthStore } from "../../../stores/auth.store";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router";
 import { RelationSchema } from "../../../schemas/relation";
+import { useEffect } from "react";
+import axios from "axios";
 
 const UpdateRelationForm = () => {
   const { userInfo } = useAuthStore();
@@ -70,6 +72,20 @@ const UpdateRelationForm = () => {
   const receivedHelp = ["เบี้ยผู้สูงอายุ", "เบี้ยพิการ"];
 
   console.log(values);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/studentInfo/1");
+        if (res.status === 200) {
+          setValues(res.data.relation_info[0]);
+        }
+      } catch (error) {
+        console.log("บัคดึงข้อมูล", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-9">
