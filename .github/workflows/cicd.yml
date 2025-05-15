@@ -1,0 +1,65 @@
+name: "build and deploy docker image"
+
+on:
+  push:
+    tags:
+      - "*" # Trigger เมื่อ push tag ใด ๆ
+
+jobs:
+  release-docker-image-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Set TAG_NAME from Git tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Run docker compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker/cicd/docker-compose.yml"
+        env:
+          TAG_NAME: ${{ env.TAG_NAME }}
+
+      - name: Push Docker images to GHCR
+        run: |
+          docker push ghcr.io/patiphatrattanosot/visit-home-frontend:${{ env.TAG_NAME }}
+          docker push ghcr.io/patiphatrattanosot/visit-home-backend:${{ env.TAG_NAME }}
+
+  auto-deploy-docker-job:
+    needs: release-docker-image-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract tag name again (ensure env variable is set)
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy via SSH with Password
+        run: |
+          sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no root@128.199.193.212 << 'EOF'
+            docker logout ghcr.io
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u patiphatrattanosot --password-stdin
+
+            # ลบ container เก่า
+            docker rm -f visit-home-frontend || true
+            docker rm -f visit-home-backend || true
+
+            # สร้าง network 
+            docker network create visit-home-network || true
+
+            # เอา image ไปที่ server
+            docker pull ghcr.io/patiphatrattanosot/visit-home-frontend:${{ env.TAG_NAME }}
+            docker pull ghcr.io/patiphatrattanosot/visit-home-backend:${{ env.TAG_NAME }}
+
+            # สั่งให้รัน container ใหม่ และ map environment 
+            docker run --restart=always -d --pull always -e VITE_BASEURL=${{secrets.VITE_BASEURL}} -e VITE_APIKEY=${{secrets.VITE_APIKEY}} -e VITE_APPID=${{secrets.VITE_APPID}} -e VITE_AUTHDOMAIN=${{secrets.VITE_AUTHDOMAIN}} -e VITE_MESSAGINGSENDERID=${{secrets.VITE_MESSAGINGSENDERID}} -e VITE_PROJECTID=${{secrets.VITE_PROJECTID}} -e VITE_STORAGEBUCKET=${{secrets.VITE_STORAGEBUCKET}} --name visit-home-frontend -p 80:5173 --network visit-home-network ghcr.io/patiphatrattanosot/visit-home-frontend:${{ env.TAG_NAME }}
+            docker run --restart=always -d --pull always -e DB_URL=${{secrets.DB_URL}} --name visit-home-backend -p 3000:3000 --network visit-home-network ghcr.io/patiphatrattanosot/visit-home-backend:${{ env.TAG_NAME }}
+            
+          EOF
+

@@ -1,0 +1,19 @@
+# ใช้ Bun image เป็น base
+FROM oven/bun:1 AS builder
+
+# ตั้ง working directory
+WORKDIR /app
+
+# คัดลอกไฟล์ package.json และ bun.lockb
+COPY package.json bun.lock  ./
+
+
+# ติดตั้ง dependencies
+RUN bun install
+
+COPY . . 
+
+EXPOSE 5173
+
+# รัน frontend
+CMD ["bun", "run", "dev"]
