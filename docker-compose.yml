@@ -3,35 +3,42 @@ version: '3.8'
 services:
   backend:
     build: ./backend
-    image: ghcr.io/patiphatrattanosot/visit-home-backend:${TAG_NAME}
     container_name: backend_service
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
+      - ./backend/package.json:/app/package.json
+      - ./backend/bun.lockb:/app/bun.lockb
+      - ./backend/tsconfig.json:/app/tsconfig.json
     working_dir: /app
     ports:
       - "3000:3000"
-    # env_file:
-    #   - ./backend/.env
+    env_file:
+      - ./backend/.env
     restart: always
     networks:
       - app_network
+    command: ["bun", "run", "--watch", "src/index.ts"]
 
   frontend:
     build: ./frontend
-    image: ghcr.io/patiphatrattanosot/visit-home-frontend:${TAG_NAME}
     container_name: frontend_service
     volumes:
-      - ./frontend:/app
+      - ./frontend/src:/app/src
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/bun.lock:/app/bun.lock
+      - ./frontend/.env:/app/.env
+      - ./frontend/public:/app/public
     working_dir: /app
     ports:
-      - "80:5173"
-    # env_file:
-    #   - ./frontend/.env
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
     depends_on:
       - backend
     restart: always
     networks:
       - app_network
+    command: ["bun", "run", "dev"]
 
 networks:
   app_network:
