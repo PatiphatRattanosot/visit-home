@@ -2,31 +2,23 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
+    build: ../../backend
     image: ghcr.io/patiphatrattanosot/visit-home-backend:${TAG_NAME}
     container_name: backend_service
-    volumes:
-      - ./backend:/app
     working_dir: /app
     ports:
       - "3000:3000"
-    # env_file:
-    #   - ./backend/.env
     restart: always
     networks:
       - app_network
 
   frontend:
-    build: ./frontend
+    build: ../../frontend
     image: ghcr.io/patiphatrattanosot/visit-home-frontend:${TAG_NAME}
     container_name: frontend_service
-    volumes:
-      - ./frontend:/app
     working_dir: /app
     ports:
       - "80:5173"
-    # env_file:
-    #   - ./frontend/.env
     depends_on:
       - backend
     restart: always
