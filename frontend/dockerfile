@@ -7,26 +7,13 @@ WORKDIR /app
 # คัดลอกไฟล์ package.json และ bun.lockb
 COPY package.json bun.lock  ./
 
+
 # ติดตั้ง dependencies
 RUN bun install
 
-# คัดลอกโค้ดทั้งหมด
-COPY . .
+COPY . . 
 
-# Build โปรเจค
-RUN bun run build
-
-# Production stage
-FROM oven/bun:1 AS runner
-
-WORKDIR /app
-
-# คัดลอก build output จาก builder
-COPY --from=builder /app/dist ./dist
-
-# ติดตั้ง serve เพื่อรัน static files
-RUN bun add -g serve
 EXPOSE 5173
 
 # รัน frontend
-CMD ["serve", "-s", "dist", "-l", "5173"]
+CMD ["bun", "run", "dev"]
