@@ -12,20 +12,28 @@ const getYears = async () => {
   return await api.get("/users/year/");
 };
 
-const updateYear = async (year_id,data) => {
-  return await api.put("/users/year/", year_id, data);
+//params
+const getYearById = async (year_id) => {
+  return await api.get(`/users/year/${year_id}`);
 };
 
-const deleteYear = async (year_id) => {
-  return await api.delete("/users/year/", year_id);
+const updateYear = async (year_id, data) => {
+  return await api.put(`/users/year/${year_id}`, data);
 };
+
+//body
+const deleteYear = async (id) => {
+  return await api.delete("/users/year", { data: { year_id: id } });
+};
+
 
 const YearServices = {
   createYear,
   createYearAuto,
   getYears,
   updateYear,
-  deleteYear
+  deleteYear,
+  getYearById,
 };
 
 export default YearServices;
