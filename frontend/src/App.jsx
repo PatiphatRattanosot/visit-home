@@ -15,6 +15,9 @@ import VisitInfo from "./pages/students/VisitInfo";
 import Relation from "./pages/students/relation/Relation";
 import AddRelationForm from "./pages/students/relation/AddRelationForm";
 import UpdateRelationForm from "./pages/students/relation/UpdateRelationForm";
+import FamilyStatus from "./pages/students/family-status/FamilyStatus";
+import AddFamilyStatusForm from "./pages/students/family-status/AddFamilyStatusForm";
+import UpdateFamilyStatusForm from "./pages/students/family-status/UpdateFamilyStatusForm";
 
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
@@ -76,6 +79,11 @@ function App() {
                 <Route path="" element={<Relation />} />
                 <Route path="add" element={<AddRelationForm />} />
                 <Route path="update" element={<UpdateRelationForm />} />
+              </Route>
+              <Route path="family-status">
+                <Route path="" element={<FamilyStatus />} />
+                <Route path="add" element={<AddFamilyStatusForm />} />
+                <Route path="update" element={<UpdateFamilyStatusForm />} />
               </Route>
             </Route>
           </Route>
