@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 const RadioInput = ({
   name,
-  id,
   value,
   onChange,
   onBlur,
@@ -31,10 +30,10 @@ const RadioInput = ({
 
   return (
     <div className={`flex flex-col ${className}`}>
-      <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
-        {label} <span className="text-red-600">*</span>
+      <label htmlFor={name} className="mb-1 text-sm font-medium text-gray-700">
+        {label} : <span className="text-red-600">*</span>
       </label>
-      <div className={`grid grid-cols-1 md:${grid} gap-3 mt-2`} id={id}>
+      <div className={`grid grid-cols-1 md:${grid} gap-3 mt-2`} id={name}>
         {options.map((item, index) => (
           <div className="flex items-center text-sm space-x-2" key={index}>
             <input
