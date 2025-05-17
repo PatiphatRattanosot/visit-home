@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const onlyThaiLang = /^[\u0E00-\u0E7F]+$/;
+const onlyThaiLang = /^[\u0E00-\u0E7F\s]+$/;
 
 export const RelationSchema = yup.object().shape({
   family_member: yup

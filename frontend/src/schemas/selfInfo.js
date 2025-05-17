@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const onlyThaiLang = /^[\u0E00-\u0E7F]+$/;
+const onlyThaiLang = /^[\u0E00-\u0E7F\s]+$/;
 const phoneRule = /^\d+$/;
 const latLngRegex = /^-?\d+(\.\d+)?$/;
 

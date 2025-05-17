@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import CheckboxInput from "../../../components/CheckboxInput";
 import RadioInput from "../../../components/RadioInput";
 import TextInput from "../../../components/TextInput";
+import { FamilyStatusSchema } from "../../../schemas/familyStatus";
 
 const AddFamilyStatusForm = () => {
   const { userInfo } = useAuthStore();
@@ -29,6 +30,7 @@ const AddFamilyStatusForm = () => {
       owned_land: 0,
       rented_land: 0,
     },
+    validationSchema: FamilyStatusSchema,
   });
   console.log(values);
 
@@ -124,7 +126,7 @@ const AddFamilyStatusForm = () => {
               >
                 เป็นเกษตรกรมีที่ดินทำกิน (รวมเช่า)
               </label>
-              <div id="farmland" className="flex flex-col mt-3">
+              <div id="farmland" className="flex flex-col mt-3 gap-3">
                 <TextInput
                   label={"เป็นเจ้าของจำนวน (ไร่)"}
                   name={"owned_land"}
