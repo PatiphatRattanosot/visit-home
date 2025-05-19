@@ -54,6 +54,18 @@
           "support_from_organize": "เบี้ยผู้สูงอายุ",
           "parent_concern": "ไม่มี"
         }
+      ],
+      "family_status_info": [
+        {
+          "id": 1,
+          "year": "2568",
+          "household_burdens": ["มีผู้สูงอายุเกิน 60 ปี"],
+          "housing_type": "บ้านของตนเอง",
+          "housing_condition": "สภาพบ้านปกติ",
+          "family_vehicles": ["รถมอเตอร์ไซค์", "รถยนต์ส่วนบุคคล"],
+          "owned_land": 2,
+          "rented_land": 0
+        }
       ]
     }
   ],

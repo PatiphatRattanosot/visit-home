@@ -15,7 +15,7 @@ const FamilyStatus = () => {
       try {
         const res = await axios.get("http://localhost:5000/studentInfo/1");
         if (res.status === 200) {
-          setFamilyStatusInfo(null);
+          setFamilyStatusInfo(res?.data?.family_status_info[0]);
         }
       } catch (error) {
         console.log("บัคดึงข้อมูล", error);
@@ -67,13 +67,62 @@ const FamilyStatus = () => {
         <div className="flex justify-center mt-6">
           <div className="w-full max-w-3xl">
             <div className="bg-gray-50 rounded-lg px-6 py-10">
-              <h3 className="text-xl font-bold text-gray-600 text-center">
+              <h3 className="text-xl font-bold text-gray-600 text-center mb-3">
                 สถานะของครัวเรือน
               </h3>
               {familyStatusInfo !== null ? (
                 <div className="text-left flex flex-col gap-2.5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-gray-600">
-                    {/* Data here */}
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-4 text-gray-600">
+                    <div>
+                      ภาระพึ่งพิงของครัวเรือน:{" "}
+                      <span className="text-black">
+                        {familyStatusInfo?.household_burdens.join(", ")}
+                      </span>
+                    </div>
+                    <div>
+                      ประเภทที่อยู่อาศัย:{" "}
+                      <span className="text-black">
+                        {familyStatusInfo?.housing_type}
+                      </span>
+                    </div>
+                    <div>
+                      สภาพที่อยู่อาศัย:{" "}
+                      <span className="text-black">
+                        {familyStatusInfo?.housing_condition}
+                      </span>
+                    </div>
+                    <div>
+                      ยานพาหนะของครอบครัว:{" "}
+                      <span className="text-black">
+                        {familyStatusInfo?.family_vehicles.join(", ")}
+                      </span>
+                    </div>
+                    <div>
+                      จำนวนที่ดินที่มี:{" "}
+                      <span className="text-black">
+                        {familyStatusInfo?.owned_land !== 0 ? (
+                          <>
+                            {familyStatusInfo.owned_land}{" "}
+                            <span className="text-gray-600">ไร่</span>
+                          </>
+                        ) : (
+                          " ไม่มี"
+                        )}
+                      </span>
+                    </div>
+                    <div>
+                      เช่าที่ดินจำนวน:{" "}
+                      <span className="text-black">
+                        {familyStatusInfo?.rented_land !== 0 ? (
+                          <>
+                            {familyStatusInfo.rented_land}{" "}
+                            <span className="text-gray-600">ไร่</span>
+                          </>
+                        ) : (
+                          " ไม่มี"
+                        )}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ) : (

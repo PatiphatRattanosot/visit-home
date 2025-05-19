@@ -40,7 +40,7 @@ const UpdateFamilyStatusForm = () => {
       try {
         const res = await axios.get("http://localhost:5000/studentInfo/1");
         if (res.status === 200) {
-          setValues(initialValues);
+          setValues(res?.data?.family_status_info[0]);
         }
       } catch (error) {
         console.log("บัคดึงข้อมูล", error);
@@ -102,6 +102,7 @@ const UpdateFamilyStatusForm = () => {
               options={[
                 "สภาพบ้านชำรุดทรุดโทรม หรือ บ้านทำจากวัสดุพื้นบ้าน เช่น ไม้ไผ่ ใบจากหรือวัสดุเหลือใช้",
                 "ไม่มีห้องส้วมในที่อยู่อาศัยและบริเวณ",
+                "สภาพบ้านปกติ",
               ]}
               extraOpt
               grid="grid-cols-1"
