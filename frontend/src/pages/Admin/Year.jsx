@@ -6,9 +6,11 @@ import Swal from "sweetalert2";
 import ModalAddYear from "../../components/modals/AddYear";
 import ModalEditYear from "../../components/modals/EditYear";
 
+import { FaPencilAlt } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 const YearManagement = () => {
   const [years, setYears] = useState([]);
-console.log(years);
+  console.log(years);
 
   // เรียกข้อมูลปีการศึกษา
   useEffect(() => {
@@ -124,25 +126,25 @@ console.log(years);
                         <li>
                           <button
                             onClick={() =>
-                              document.getElementById(`Edit_year_${year._id}`).showModal()
+                              document
+                                .getElementById(`Edit_year_${year._id}`)
+                                .showModal()
                             }
                           >
-                            ✏️ แก้ไข
+                            <FaPencilAlt className="text-yellow"/> แก้ไข
                           </button>
                         </li>
-                        {/* Modal แก้ไขปีการศึกษา */}
-                        <ModalEditYear
-                          year ={year}
-                          onUpdateSuccess={fetchYears}
-                        />
+
                         <li>
                           <button onClick={() => handleDeleteYear(year._id)}>
-                            🗑️ ลบ
+                            <MdDeleteForever className="text-red"/>ลบ
                           </button>
                         </li>
                       </ul>
                     </div>
                   </div>
+                  {/* Modal แก้ไขปีการศึกษา ย้ายออกมาอยู่ส่วนของ div ที่มี key*/}
+                  <ModalEditYear onUpdateSuccess={fetchYears} year={year} />
                 </div>
               ))}
 
