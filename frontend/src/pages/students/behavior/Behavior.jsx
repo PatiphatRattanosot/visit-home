@@ -1,8 +1,94 @@
 import { useState, useEffect } from "react";
+import Stepper from "../../../components/Stepper";
 import axios from "axios";
+import { useParams } from "react-router";
+import { useAuthStore } from "../../../stores/auth.store";
 
 const Behavior = () => {
-  return <div>Behavior</div>;
+  const { userInfo } = useAuthStore();
+
+  const { year } = useParams();
+
+  const [behaviorInfo, setBehaviorInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/studentInfo/1");
+        if (res.status === 200) {
+          setBehaviorInfo(null);
+        }
+      } catch (error) {
+        console.log("บัคดึงข้อมูล", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // stepper path
+  const stepperPath = {
+    stepOne: `/student/visit-info/${year}/self-info`,
+    stepTwo: `/student/visit-info/${year}/relation`,
+    stepThree: `/student/visit-info/${year}/family-status`,
+    stepFour: `/student/visit-info/${year}/behavior`,
+  };
+
+  return (
+    <div className="min-h-screen py-9 bg-gray-100 flex justify-center">
+      <div className="bg-white px-4 py-6 w-9/12 rounded-lg">
+        {/* หัวข้อ */}
+        <h3 className="text-center text-xl font-bold">
+          ข้อมูลการเยี่ยมบ้านของ{" "}
+          <span className="text-gray-600">
+            {userInfo?.prefix +
+              " " +
+              userInfo?.first_name +
+              " " +
+              userInfo?.last_name}
+          </span>
+        </h3>
+        {/* Stepper */}
+        <div className="my-3 flex justify-center">
+          <Stepper step={4} path={stepperPath} />
+        </div>
+        {/* Manage info btn */}
+        <div className="flex justify-end my-6">
+          <a
+            className={behaviorInfo === null ? "btn-green" : "btn-yellow"}
+            href={
+              behaviorInfo === null
+                ? `/student/visit-info/${year}/behavior/add`
+                : `/student/visit-info/${year}/behavior/update`
+            }
+          >
+            {behaviorInfo === null ? "เพิ่มข้อมูล" : "แก้ไขข้อมูล"}
+          </a>
+        </div>
+
+        {/* ข้อมูลนักเรียน */}
+        <div className="flex justify-center mt-6">
+          <div className="w-full max-w-3xl">
+            <div className="bg-gray-50 rounded-lg px-6 py-10">
+              <h3 className="text-xl font-bold text-gray-600 text-center mb-3">
+                พฤติกรรมและความเสี่ยง
+              </h3>
+              {behaviorInfo !== null ? (
+                <div className="text-left flex flex-col gap-2.5">
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-4 text-gray-600">
+                    {/* Data here */}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center my-16 text-gray-500">
+                  ยังไม่มีข้อมูล
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Behavior;
