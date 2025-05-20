@@ -18,6 +18,9 @@ import UpdateRelationForm from "./pages/students/relation/UpdateRelationForm";
 import FamilyStatus from "./pages/students/family-status/FamilyStatus";
 import AddFamilyStatusForm from "./pages/students/family-status/AddFamilyStatusForm";
 import UpdateFamilyStatusForm from "./pages/students/family-status/UpdateFamilyStatusForm";
+import Behavior from "./pages/students/behavior/Behavior";
+import AddBehaviorForm from "./pages/students/behavior/AddBehaviorForm";
+import UpdateBehaviorForm from "./pages/students/behavior/UpdateBehaviorForm";
 
 function App() {
   const { user, userInfo, isLoading, signInSystem, signOutSystem } =
@@ -70,20 +73,29 @@ function App() {
           <Route path="visit-info">
             <Route path="" element={<VisitInfo />} />
             <Route path=":year">
+              {/* ข้อมูลส่วนตัว */}
               <Route path="self-info">
                 <Route path="" element={<SelfInfo />} />
                 <Route path="add" element={<AddSelfInfoForm />} />
                 <Route path="update" element={<UpdateSelfInfoForm />} />
               </Route>
+              {/* ข้อมูลความสัมพันธ์ */}
               <Route path="relation">
                 <Route path="" element={<Relation />} />
                 <Route path="add" element={<AddRelationForm />} />
                 <Route path="update" element={<UpdateRelationForm />} />
               </Route>
+              {/* ข้อมูลสถานะครัวเรือน */}
               <Route path="family-status">
                 <Route path="" element={<FamilyStatus />} />
                 <Route path="add" element={<AddFamilyStatusForm />} />
                 <Route path="update" element={<UpdateFamilyStatusForm />} />
+              </Route>
+              {/* ข้อมูลพฤติกรรม */}
+              <Route path="behavior">
+                <Route path="" element={<Behavior />} />
+                <Route path="add" element={<AddBehaviorForm />} />
+                <Route path="update" element={<UpdateBehaviorForm />} />
               </Route>
             </Route>
           </Route>
