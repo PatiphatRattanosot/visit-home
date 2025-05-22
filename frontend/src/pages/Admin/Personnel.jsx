@@ -20,10 +20,9 @@ const Personnel = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPersonnel.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = Array.isArray(filteredPersonnel)
+    ? filteredPersonnel.slice(indexOfFirstItem, indexOfLastItem)
+    : [];
 
   // ฟังก์ชันสำหรับลบข้อมูลบุคลากร
 
@@ -73,20 +72,23 @@ const Personnel = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchPersonnel = async () => {
-      try {
-        const response = await Userservice.getAllUsers();
-        if (response.status === 200) {
-          setPersonnel(response.data.users); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-          setFilteredPersonnel(response.data.users); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
-        }
-      } catch (error) {
-        console.error(error.response.data.message);
-        toast.error(error.response.data.message);
+  const fetchPersonnel = async () => {
+    try {
+      const response = await Userservice.getAllTeacher();
+      //ถ้า Log User จะต้องเป็น response.data.users
+      console.log("hello teacher", response.data);
+      if (response.status === 200) {
+        setPersonnel(response.data.teachers); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
+        setFilteredPersonnel(response.data.teachers); // ตั้งค่าเริ่มต้นให้ personnel ทั้งหมด
       }
-    };
+    } catch (error) {
+      console.error(error.response.data.message);
+      toast.error(error.response.data.message);
+    }
+  };
 
+  //สาเหตุที่แยก useefect ออกมาเพราะ อยากให้ fetchPersonnel ใส่เข้าไปใน prop ได้
+  useEffect(() => {
     fetchPersonnel(); // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลบุคลากร
   }, []);
 
@@ -213,14 +215,20 @@ const Personnel = () => {
                   <button
                     onClick={() =>
                       document
-                        .getElementById(`edit_personnel_${person.id}`)
+                        .getElementById(`edit_personnel_${person._id}`)
                         .showModal()
                     }
                     className="btn btn-warning"
                   >
                     <BiSolidEdit size={20} />
                   </button>
-                  <ModalEditPersonnel id={person.id} />
+           
+                  
+                  <ModalEditPersonnel
+                    id={person._id}
+                    onSuccesUpdatePerson={fetchPersonnel}
+                  />
+
                   <button
                     onClick={() => handleDeleteUser(person.email)}
                     className="btn btn-error"
