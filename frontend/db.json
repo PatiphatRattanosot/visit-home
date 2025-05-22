@@ -66,6 +66,26 @@
           "owned_land": 2,
           "rented_land": 0
         }
+      ],
+      "behavior_and_risk": [
+        {
+          "id": 1,
+          "year": "2568",
+          "health_risk": ["ร่างกายแข็งแรง"],
+          "welfare_and_safety": ["ไม่มีความเสี่ยงใดๆ"],
+          "distance_to_school": 5,
+          "time_used": 1,
+          "school_transport": "รถโรงเรียน",
+          "student_responsibilities": ["ช่วยงานบ้าน", "ช่วยงานในนาไร่"],
+          "hobbies": ["ดูทีวี/ ฟังเพลง", "ไปสวนสาธารณะ", "แว้น/ สก๊อย"],
+          "drugs_behavior": [],
+          "violent_behavior": ["เพื่อนพาหาเรื่อง"],
+          "sexual_behavior": [],
+          "gaming_behavior": ["เล่นเกมเกินวันละ 1 ชั่วโมง"],
+          "computer_internet_access": "สามารถเข้าถึง Internet ได้จากที่บ้าน",
+          "tech_use_behavior": "ใช้ Social media/game (วันละ 3 ชั่วโมงขึ้นไป)",
+          "information_giver": "มารดา"
+        }
       ]
     }
   ],
