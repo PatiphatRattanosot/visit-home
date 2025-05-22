@@ -9,6 +9,8 @@ import SelectInputInModal from "./SelectInputInModal";
 
 const EditPersonnel = ({ id, onSuccesUpdatePerson }) => {
   const [update, setUpdate] = useState(0);
+  const [teacher, setTeacher] = useState(null); // เพิ่ม state นี้ไว้ข้างบน
+
   const prefixOptions = ["นาย", "นาง", "นางสาว"];
   const statusOptions = ["ลาออก", "เกษียณ", "รับราชการ"];
 
@@ -51,12 +53,11 @@ const EditPersonnel = ({ id, onSuccesUpdatePerson }) => {
   useEffect(() => {
     const getPersonnelById = async () => {
       try {
-        console.log("id: ", id);
         const response = await Userservices.getTeacherById(id);
-        console.log("response: ", response);
 
         if (response.status === 200) {
           const teacher = response.data.teacher;
+          setTeacher(teacher);
           formik.setValues({
             prefix: teacher.prefix,
             first_name: teacher.first_name,
@@ -76,7 +77,9 @@ const EditPersonnel = ({ id, onSuccesUpdatePerson }) => {
     <div>
       <dialog id={`edit_personnel_${id}`} className="modal">
         <div className="modal-box flex flex-col items-center justify-center w-11/12">
-          <h3 className="font-bold text-lg text-center">เพิ่มข้อมูลบุคลากร</h3>
+          <h3 className="font-bold text-lg text-center">แก้ไขข้อมูลบุคลากร</h3>
+          <p className="text-base m-2">{teacher ? `${teacher.first_name} ${teacher.last_name}` : ""}</p>
+
           <form onSubmit={formik.handleSubmit} className="mt-2">
             <div className="flex flex-col items-center justify-center space-y-2">
               <SelectInputInModal
