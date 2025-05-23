@@ -1,6 +1,6 @@
 import YearBtn from "../../components/students/YearBtn";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import YearServices from "../../services/years/years.service";
 
 const VisitInfo = () => {
   const [years, setYears] = useState([]);
@@ -8,7 +8,7 @@ const VisitInfo = () => {
   useEffect(() => {
     const fetchYear = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/years");
+        const res = await YearServices.getYears();
         if (res.status === 200) {
           setYears(res.data);
         }

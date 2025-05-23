@@ -2,7 +2,7 @@ const Landing = () => {
   return (
     <>
       <div
-        className="hero min-h-[73.75vh]"
+        className="hero min-h-screen"
         style={{
           backgroundImage: "url(/hero.webp)",
         }}

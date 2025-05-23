@@ -30,10 +30,10 @@ const SelfInfo = () => {
 
   // stepper path
   const stepperPath = {
-    stepOne: `/student/self-info`,
-    stepTwo: `/student/relation`,
-    stepThree: `/student/family-status`,
-    stepFour: `/student/behavior`,
+    stepOne: `/student/visit-info/${year}/self-info`,
+    stepTwo: `/student/visit-info/${year}/relation`,
+    stepThree: `/student/visit-info/${year}/family-status`,
+    stepFour: `/student/visit-info/${year}/behavior`,
   };
 
   return (

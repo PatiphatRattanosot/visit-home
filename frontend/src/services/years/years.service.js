@@ -26,7 +26,6 @@ const deleteYear = async (id) => {
   return await api.delete("/users/year", { data: { year_id: id } });
 };
 
-
 const YearServices = {
   createYear,
   createYearAuto,
