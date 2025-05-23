@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import AdminPage from "./pages/Admin/Home";
 import Personnel from "./pages/Admin/Personnel";
 import YearManagement from "./pages/admin/Year";
-
+import Classroom from "./pages/Admin/Classroom";
 function App() {
   const {
     user,
@@ -49,11 +49,12 @@ function App() {
           />
           <Route
             path="admin"
-            // element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
+            element={!userInfo?.role.includes("Admin") && <Navigate to={"/"} />}
           >
             <Route index element={<AdminPage />} />
             <Route path="personnel" element={<Personnel />} />
             <Route path="year" element={<YearManagement />} />
+            <Route path="classroom" element={<Classroom />} />
           </Route>
         </Routes>
       </div>
