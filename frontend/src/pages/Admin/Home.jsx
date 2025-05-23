@@ -54,7 +54,7 @@ const Home = () => {
         //ตำแหน่งบุคลากร 
         const rankCount = {};
        users.forEach((user) => {
-  const rank = user.role;
+  const rank = getRoleDisplay(user.role);
   rankCount[rank] = (rankCount[rank] || 0) + 1;
 });
         const rankLabels = Object.keys(rankCount);
@@ -94,39 +94,43 @@ const Home = () => {
     getChartData();
   }, []);
 
+const getRoleDisplay = (role) => {
+    const roles = Array.isArray(role) ? role : [role]; // แปลงให้เป็น array เสมอ
+    //ใช้ includes() เรียงลำดับความสำคัญของบทบาท และ คืนค่าชื่อบทบาทที่เหมาะสม
+    if (roles.includes("Admin")) return "เจ้าหน้าที่ฝ่ายทะเบียน";
+    if (roles.includes("Teacher")) return "คุณครู";
+    if (roles.includes("Student")) return "นักเรียน";
 
+    return "ไม่ทราบบทบาท";
+  };
 
   return (
-    <div className="w-full section-container">
-      <h2 className="text-xl font-bold mb-4 text-center">สัดส่วนบุคลากร</h2>
-      
-      <div className="flex flex-col md:flex-row justify-center items-start gap-8">
-        {/* ชาร์ตสัดส่วนตำแหน่ง */}
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-center mb-2">ตามตำแหน่ง</h3>
-          <div className="relative h-[340px]">
-            {rankChartData ? (
-              <Doughnut data={rankChartData} options={{ maintainAspectRatio: false }} />
-            ) : (
-              <p className="text-center text-gray-500">กำลังโหลดข้อมูล...</p>
-            )}
-          </div>
-          
-        </div>
-  
-        {/* ชาร์ตสัดส่วนสถานะ */}
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-center mb-2">ตามสถานะ</h3>
-          <div className="relative h-[340px]">
-            {statusChartData ? (
-              <Doughnut data={statusChartData} options={{ maintainAspectRatio: false }} />
-            ) : (
-              <p className="text-center text-gray-500">กำลังโหลดข้อมูล...</p>
-            )}
-          </div>
-        </div>
-      </div>
+    // เพิ่มคลาส responsive ให้กับ container ของชาร์ต
+<div className="flex flex-col md:flex-row justify-center items-start section-container gap-4 min-h-[63.5vh]">
+  {/* ชาร์ตสัดส่วนตำแหน่ง */}
+  <div className="flex-1 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+    <h3 className="text-lg font-semibold text-center mb-2">ตามตำแหน่ง</h3>
+    <div className="relative h-[200px] md:h-[340px]">
+      {rankChartData ? (
+        <Doughnut data={rankChartData} options={{ maintainAspectRatio: false }} />
+      ) : (
+        <p className="text-center text-gray-500">กำลังโหลดข้อมูล...</p>
+      )}
     </div>
+  </div>
+
+  {/* ชาร์ตสัดส่วนสถานะ */}
+  <div className="flex-1 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+    <h3 className="text-lg font-semibold text-center mb-2">ตามสถานะ</h3>
+    <div className="relative h-[200px] md:h-[340px]">
+      {statusChartData ? (
+        <Doughnut data={statusChartData} options={{ maintainAspectRatio: false }} />
+      ) : (
+        <p className="text-center text-gray-500">กำลังโหลดข้อมูล...</p>
+      )}
+    </div>
+  </div>
+</div>
   );
   
 };
